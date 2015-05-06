@@ -1,8 +1,8 @@
 /*!
- * \file galileo_e1_dll_pll_veml_tracking_test.cc
+ * \file gps_l2_m_dll_pll_tracking_test.cc
  * \brief  This class implements a tracking test for Galileo_E5a_DLL_PLL_Tracking
  *  implementation based on some input parameters.
- * \author Marc Sales, 2014. marcsales92(at)gmail.com
+ * \author Javier Arribas, 2015. jarribas(at)cttc.es
  *
  *
  * -------------------------------------------------------------------------
@@ -40,18 +40,20 @@
 #include <gnuradio/msg_queue.h>
 #include <gnuradio/blocks/null_sink.h>
 #include <gnuradio/blocks/skiphead.h>
+#include <gtest/gtest.h>
 #include "gnss_block_factory.h"
 #include "gnss_block_interface.h"
+#include "tracking_interface.h"
 #include "in_memory_configuration.h"
 #include "gnss_sdr_valve.h"
 #include "gnss_synchro.h"
-#include "galileo_e5a_dll_pll_tracking.h"
+#include "gps_l2_m_dll_pll_tracking.h"
 
 
-class GalileoE5aTrackingTest: public ::testing::Test
+class GpsL2MDllPllTrackingTest: public ::testing::Test
 {
 protected:
-    GalileoE5aTrackingTest()
+	GpsL2MDllPllTrackingTest()
     {
         factory = std::make_shared<GNSSBlockFactory>();
         config = std::make_shared<InMemoryConfiguration>();
@@ -60,7 +62,7 @@ protected:
         message = 0;
     }
 
-    ~GalileoE5aTrackingTest()
+    ~GpsL2MDllPllTrackingTest()
     {}
 
     void init();
@@ -77,48 +79,41 @@ protected:
 };
 
 
-void GalileoE5aTrackingTest::init()
+void GpsL2MDllPllTrackingTest::init()
 {
     gnss_synchro.Channel_ID = 0;
-    gnss_synchro.System = 'E';
-    std::string signal = "5Q";
+    gnss_synchro.System = 'G';
+    std::string signal = "2S";
     signal.copy(gnss_synchro.Signal, 2, 0);
-    gnss_synchro.PRN = 11;
+    gnss_synchro.PRN = 7;
 
-    config->set_property("GNSS-SDR.internal_fs_hz", "32000000");
-    config->set_property("Tracking_Galileo.item_type", "gr_complex");
-    config->set_property("Tracking_Galileo.dump", "true");
-    config->set_property("Tracking_Galileo.dump_filename", "../data/e5a_tracking_ch_");
-    config->set_property("Tracking_Galileo.implementation", "Galileo_E5a_DLL_PLL_Tracking");
-    config->set_property("Tracking_Galileo.early_late_space_chips", "0.5");
-    config->set_property("Tracking_Galileo.order", "2");
-    config->set_property("Tracking_Galileo.pll_bw_hz_init","20.0");
-    config->set_property("Tracking_Galileo.pll_bw_hz", "5");
-    config->set_property("Tracking_Galileo.dll_bw_hz_init","2.0");
-    config->set_property("Tracking_Galileo.dll_bw_hz", "2");
-    config->set_property("Tracking_Galileo.ti_ms", "1");
+    config->set_property("GNSS-SDR.internal_fs_hz", "5000000");
+    config->set_property("Tracking_GPS.item_type", "gr_complex");
+    config->set_property("Tracking_GPS.dump", "true");
+    config->set_property("Tracking_GPS.dump_filename", "../data/L2m_tracking_ch_");
+    config->set_property("Tracking_GPS.implementation", "GPS_L2_M_DLL_PLL_Tracking");
+    config->set_property("Tracking_GPS.early_late_space_chips", "0.5");
+    config->set_property("Tracking_GPS.order", "2");
+    config->set_property("Tracking_GPS.pll_bw_hz", "2");
+    config->set_property("Tracking_GPS.dll_bw_hz", "0.5");
 }
 
-TEST_F(GalileoE5aTrackingTest, ValidationOfResults)
+TEST_F(GpsL2MDllPllTrackingTest, ValidationOfResults)
 {
     struct timeval tv;
     long long int begin = 0;
     long long int end = 0;
-    int fs_in = 32000000;
-    int nsamples = 32000000*5;
+    int fs_in = 5000000;
+    int nsamples = fs_in*9;
     init();
     queue = gr::msg_queue::make(0);
     top_block = gr::make_top_block("Tracking test");
 
-    // Example using smart pointers and the block factory
-    std::shared_ptr<GNSSBlockInterface> trk_ = factory->GetBlock(config, "Tracking", "Galileo_E5a_DLL_PLL_Tracking", 1, 1, queue);
-    std::shared_ptr<TrackingInterface> tracking = std::dynamic_pointer_cast<TrackingInterface>(trk_);
+    std::shared_ptr<TrackingInterface> tracking = std::make_shared<GpsL2MDllPllTracking>(config.get(), "Tracking_GPS", 1, 1, queue);
 
     //REAL
-    gnss_synchro.Acq_delay_samples = 10; // 32 Msps
-    //    gnss_synchro.Acq_doppler_hz = 3500; // 32 Msps
-    gnss_synchro.Acq_doppler_hz = 2000; // 500 Hz resolution
-    //    gnss_synchro.Acq_samplestamp_samples = 98000;
+    gnss_synchro.Acq_delay_samples = 1;
+    gnss_synchro.Acq_doppler_hz = 1200;//1200;
     gnss_synchro.Acq_samplestamp_samples = 0;
 
     ASSERT_NO_THROW( {
@@ -138,10 +133,20 @@ TEST_F(GalileoE5aTrackingTest, ValidationOfResults)
     }) << "Failure connecting tracking to the top_block." << std::endl;
 
     ASSERT_NO_THROW( {
-        gr::analog::sig_source_c::sptr source = gr::analog::sig_source_c::make(fs_in, gr::analog::GR_SIN_WAVE, 1000, 1, gr_complex(0));
+        //gr::analog::sig_source_c::sptr source = gr::analog::sig_source_c::make(fs_in, gr::analog::GR_SIN_WAVE, 1000, 1, gr_complex(0));
+
+
+        std::string path = std::string(TEST_PATH);
+        //std::string file = path + "signal_samples/GSoC_CTTC_capture_2012_07_26_4Msps_4ms.dat";
+        //std::string file = "/datalogger/signals/Fraunhofer/L125_III1b_210s_L2_resampled.bin";
+        std::string file =  path + "/data/gps_l2c_m_prn7_5msps.dat";
+        const char * file_name = file.c_str();
+        gr::blocks::file_source::sptr file_source = gr::blocks::file_source::make(sizeof(gr_complex), file_name, false);
+
+
         boost::shared_ptr<gr::block> valve = gnss_sdr_make_valve(sizeof(gr_complex), nsamples, queue);
         gr::blocks::null_sink::sptr sink = gr::blocks::null_sink::make(sizeof(Gnss_Synchro));
-        top_block->connect(source, 0, valve, 0);
+        top_block->connect(file_source, 0, valve, 0);
         top_block->connect(valve, 0, tracking->get_left_block(), 0);
         top_block->connect(tracking->get_right_block(), 0, sink, 0);
 
