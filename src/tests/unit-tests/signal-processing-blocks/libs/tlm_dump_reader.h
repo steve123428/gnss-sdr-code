@@ -1,12 +1,11 @@
 /*!
- * \file ls_pvt.h
- * \brief Interface of a base class for Least Squares PVT solutions
- * \author Carles Fernandez-Prades, 2015. cfernandez(at)cttc.es
- *
+ * \file tlm_dump_reader.h
+ * \brief Helper file for unit testing
+ * \author Javier Arribas, 2017. jarribas(at)cttc.es
  *
  * -------------------------------------------------------------------------
  *
- * Copyright (C) 2010-2015  (see AUTHORS file for a list of contributors)
+ * Copyright (C) 2010-2017  (see AUTHORS file for a list of contributors)
  *
  * GNSS-SDR is a software defined Global Navigation
  *          Satellite Systems receiver
@@ -29,36 +28,33 @@
  * -------------------------------------------------------------------------
  */
 
-#ifndef GNSS_SDR_LS_PVT_H_
-#define GNSS_SDR_LS_PVT_H_
+#ifndef GNSS_SDR_tlm_dump_reader_H
+#define GNSS_SDR_tlm_dump_reader_H
 
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <vector>
 
-#include "pvt_solution.h"
+class tlm_dump_reader {
 
-/*!
- * \brief Base class for the Least Squares PVT solution
- *
- */
-class Ls_Pvt : public Pvt_Solution
-{
-private:
-    /*!
-     * \brief Computes the Lorentz inner product between two vectors
-     */
-    double lorentz(const arma::vec & x,const arma::vec & y);
 public:
-    Ls_Pvt();
+    ~tlm_dump_reader();
+    bool read_binary_obs();
+    bool restart();
+    long int num_epochs();
+    bool open_obs_file(std::string out_file);
 
-    /*!
-     * \brief Computes the initial position solution based on the Bancroft algorithm
-     */
-    arma::vec bancroftPos(const arma::mat & satpos, const arma::vec & obs);
+    //telemetry decoder dump variables
+    double TOW_at_current_symbol;
+    double Prn_timestamp_ms;
+    double d_TOW_at_Preamble;
 
-    /*!
-     * \brief Computes the Weighted Least Squares position solution
-     */
-    arma::vec leastSquarePos(const arma::mat & satpos, const arma::vec & obs, const arma::vec & w_vec);
+private:
+
+    std::string d_dump_filename;
+    std::ifstream d_dump_file;
 
 };
 
-#endif
+#endif //GNSS_SDR_tlm_dump_reader_H
