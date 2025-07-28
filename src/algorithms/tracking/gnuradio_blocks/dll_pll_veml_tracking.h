@@ -81,7 +81,7 @@ private:
     void update_tracking_vars();
     void clear_tracking_vars();
     void save_correlation_results();
-    void log_data();
+    void log_data(int tracking_state);
     bool cn0_and_tracking_lock_status(double coh_integration_time_s);
     bool acquire_secondary();
     int64_t uint64diff(uint64_t first, uint64_t second);

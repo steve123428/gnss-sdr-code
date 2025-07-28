@@ -1,0 +1,13 @@
+# Target labels
+ volk_gnsssdr_module
+# Source files and their labels
+/home/suhjw/gnss-sdr/work/CMakeFiles/volk_gnsssdr_module
+/home/suhjw/gnss-sdr/work/CMakeFiles/volk_gnsssdr_module.rule
+/home/suhjw/gnss-sdr/work/CMakeFiles/volk_gnsssdr_module-complete.rule
+/home/suhjw/gnss-sdr/work/volk_gnsssdr_module/src/volk_gnsssdr_module-stamp/volk_gnsssdr_module-build.rule
+/home/suhjw/gnss-sdr/work/volk_gnsssdr_module/src/volk_gnsssdr_module-stamp/volk_gnsssdr_module-configure.rule
+/home/suhjw/gnss-sdr/work/volk_gnsssdr_module/src/volk_gnsssdr_module-stamp/volk_gnsssdr_module-download.rule
+/home/suhjw/gnss-sdr/work/volk_gnsssdr_module/src/volk_gnsssdr_module-stamp/volk_gnsssdr_module-install.rule
+/home/suhjw/gnss-sdr/work/volk_gnsssdr_module/src/volk_gnsssdr_module-stamp/volk_gnsssdr_module-mkdir.rule
+/home/suhjw/gnss-sdr/work/volk_gnsssdr_module/src/volk_gnsssdr_module-stamp/volk_gnsssdr_module-patch.rule
+/home/suhjw/gnss-sdr/work/volk_gnsssdr_module/src/volk_gnsssdr_module-stamp/volk_gnsssdr_module-update.rule

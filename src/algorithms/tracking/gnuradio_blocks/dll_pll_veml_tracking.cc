@@ -59,6 +59,10 @@
 #include <memory>
 #include <numeric>
 #include <vector>
+#include <chrono>
+#include <iomanip>   // <<< MODIFIED for std::put_time
+#include <ctime>     // <<< MODIFIED for std::gmtime
+#include "interface.h"
 
 #if USE_GLOG_AND_GFLAGS
 #include <glog/logging.h>
@@ -159,7 +163,6 @@ dll_pll_veml_tracking::dll_pll_veml_tracking(const Dll_Pll_Conf &conf_)
     // initialize internal vars
     d_dll_filt_history.set_capacity(1000);
     d_signal_type = std::string(d_trk_parameters.signal);
-
     std::map<std::string, std::string> map_signal_pretty_name;
     map_signal_pretty_name["1C"] = "L1 C/A";
     map_signal_pretty_name["1B"] = "E1";
@@ -652,7 +655,7 @@ void dll_pll_veml_tracking::start_tracking()
     d_acq_code_phase_samples = d_acquisition_gnss_synchro->Acq_delay_samples;
     d_acq_carrier_doppler_hz = d_acquisition_gnss_synchro->Acq_doppler_hz;
     d_acq_sample_stamp = d_acquisition_gnss_synchro->Acq_samplestamp_samples;
-
+    init_window();
     d_carrier_doppler_hz = d_acq_carrier_doppler_hz;
     d_carrier_phase_step_rad = TWO_PI * d_carrier_doppler_hz / d_trk_parameters.fs_in;
     d_carrier_phase_rate_step_rad = 0.0;
@@ -1381,7 +1384,7 @@ void dll_pll_veml_tracking::save_correlation_results()
 }
 
 
-void dll_pll_veml_tracking::log_data()
+void dll_pll_veml_tracking::log_data(int tracking_state)
 {
     if (d_dump)
         {
@@ -1396,6 +1399,7 @@ void dll_pll_veml_tracking::log_data()
             float tmp_float;
             double tmp_double;
             uint64_t tmp_long_int;
+            int32_t state = tracking_state;
             if (d_trk_parameters.track_pilot)
                 {
                     prompt_I = d_Prompt_Data.data()->real();
@@ -1471,6 +1475,12 @@ void dll_pll_veml_tracking::log_data()
                     // PRN
                     uint32_t prn_ = d_acquisition_gnss_synchro->PRN;
                     d_dump_file.write(reinterpret_cast<char *>(&prn_), sizeof(uint32_t));
+                    // UTC time
+                    auto now = std::chrono::system_clock::now();
+                    auto duration = now.time_since_epoch();
+                    int64_t milliseconds = std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
+                    d_dump_file.write(reinterpret_cast<char *>(&milliseconds), sizeof(int64_t));
+                    d_dump_file.write(reinterpret_cast<char*>(&state), sizeof(int32_t));
                 }
             catch (const std::ofstream::failure &e)
                 {
@@ -1485,16 +1495,16 @@ int32_t dll_pll_veml_tracking::save_matfile() const
     // READ DUMP FILE
     std::ifstream::pos_type size;
     const int32_t number_of_double_vars = 1;
-    const int32_t number_of_float_vars = 19;
+    const int32_t number_of_float_vars = 22;    
     const int32_t epoch_size_bytes = sizeof(uint64_t) + sizeof(double) * number_of_double_vars +
-                                     sizeof(float) * number_of_float_vars + sizeof(uint32_t);
+                                     sizeof(float) * number_of_float_vars + sizeof(int64_t) + sizeof(int32_t);
     std::ifstream dump_file;
     std::string dump_filename_ = d_dump_filename;
     // add channel number to the filename
     dump_filename_.append(std::to_string(d_channel));
     // add extension
     dump_filename_.append(".dat");
-    std::cout << "Generating .mat file for " << dump_filename_ << '\n';
+    std::cout << "[DEBUG] Starting save_matfile() for " << dump_filename_ << '\n';
     dump_file.exceptions(std::ifstream::failbit | std::ifstream::badbit);
     try
         {
@@ -1539,6 +1549,8 @@ int32_t dll_pll_veml_tracking::save_matfile() const
     auto aux1 = std::vector<float>(num_epoch);
     auto aux2 = std::vector<double>(num_epoch);
     auto PRN = std::vector<uint32_t>(num_epoch);
+    auto utc_millis = std::vector<int64_t>(num_epoch);  // <<< MODIFIED
+    auto state = std::vector<int32_t>(num_epoch);  // <<< MODIFIED
     try
         {
             if (dump_file.is_open())
@@ -1567,6 +1579,8 @@ int32_t dll_pll_veml_tracking::save_matfile() const
                             dump_file.read(reinterpret_cast<char *>(&aux1[i]), sizeof(float));
                             dump_file.read(reinterpret_cast<char *>(&aux2[i]), sizeof(double));
                             dump_file.read(reinterpret_cast<char *>(&PRN[i]), sizeof(uint32_t));
+                            dump_file.read(reinterpret_cast<char *>(&utc_millis[i]), sizeof(int64_t));  // <<< MODIFIED
+                            dump_file.read(reinterpret_cast<char *>(&state[i]), sizeof(int32_t));  // <<< MODIFIED
                         }
                 }
             dump_file.close();
@@ -1672,7 +1686,15 @@ int32_t dll_pll_veml_tracking::save_matfile() const
             Mat_VarFree(matvar);
 
             matvar = Mat_VarCreate("PRN", MAT_C_UINT32, MAT_T_UINT32, 2, dims.data(), PRN.data(), 0);
-            Mat_VarWrite(matfp, matvar, MAT_COMPRESSION_ZLIB);  // or MAT_COMPRESSION_NONE
+            Mat_VarWrite(matfp, matvar, MAT_COMPRESSION_ZLIB);
+            Mat_VarFree(matvar);
+
+            matvar = Mat_VarCreate("utc_millis", MAT_C_INT64, MAT_T_INT64, 2, dims.data(), utc_millis.data(), 0);  // <<< MODIFIED
+            Mat_VarWrite(matfp, matvar, MAT_COMPRESSION_ZLIB);
+            Mat_VarFree(matvar);
+
+            matvar = Mat_VarCreate("tracking_state", MAT_C_INT32, MAT_T_INT32, 2, dims.data(), state.data(), 0);
+            Mat_VarWrite(matfp, matvar, MAT_COMPRESSION_ZLIB);
             Mat_VarFree(matvar);
         }
     Mat_Close(matfp);
@@ -1837,7 +1859,7 @@ int dll_pll_veml_tracking::general_work(int noutput_items __attribute__((unused)
                         update_tracking_vars();
 
                         // enable write dump file this cycle (valid DLL/PLL cycle)
-                        log_data();
+                        log_data(d_state);
 
                         if (!d_pull_in_transitory)
                             {
@@ -1946,7 +1968,7 @@ int dll_pll_veml_tracking::general_work(int noutput_items __attribute__((unused)
                 update_tracking_vars();
                 if (d_current_data_symbol == 0)
                     {
-                        log_data();
+                        log_data(d_state);
                         // ########### Output the tracking results to Telemetry block ##########
                         // Fill the acquisition data
                         current_synchro_data = *d_acquisition_gnss_synchro;
@@ -1981,7 +2003,6 @@ int dll_pll_veml_tracking::general_work(int noutput_items __attribute__((unused)
                 // perform a correlation step
                 do_correlation_step(in);
                 save_correlation_results();
-
                 // check lock status
                 if (!cn0_and_tracking_lock_status(d_code_period * static_cast<double>(d_extend_correlation_symbols)))
                     {
@@ -1998,7 +2019,7 @@ int dll_pll_veml_tracking::general_work(int noutput_items __attribute__((unused)
                         if (d_current_data_symbol == 0)
                             {
                                 // enable write dump file this cycle (valid DLL/PLL cycle)
-                                log_data();
+                                log_data(d_state);
                                 // ########### Output the tracking results to Telemetry block ##########
                                 // Fill the acquisition data
                                 current_synchro_data = *d_acquisition_gnss_synchro;
@@ -2029,6 +2050,7 @@ int dll_pll_veml_tracking::general_work(int noutput_items __attribute__((unused)
                         d_VL_accu = gr_complex(0.0, 0.0);
                         if (d_enable_extended_integration)
                             {
+                                std::cout << "Extended integration enabled!!!!!!!!!!!!!!!";
                                 d_state = 3;  // new coherent integration (correlation time extension) cycle
                             }
                     }
