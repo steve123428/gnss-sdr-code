@@ -7,10 +7,14 @@
 
 if(USE_CMAKE_TARGET_SOURCES)
     add_executable(gnss-sdr)
-    target_sources(gnss-sdr PRIVATE main.cc)
+    target_sources(gnss-sdr PRIVATE main.cc interface.cc) 
 else()
-    add_executable(gnss-sdr main.cc)
+    add_executable(gnss-sdr main.cc interface.cc)
 endif()
+
+find_package(Curses REQUIRED)
+include_directories(${CURSES_INCLUDE_DIR})
+target_link_libraries(gnss-sdr PRIVATE ${CURSES_LIBRARIES})
 
 target_link_libraries(gnss-sdr
     PRIVATE

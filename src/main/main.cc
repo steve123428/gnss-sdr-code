@@ -42,6 +42,7 @@
 #include <memory>                                      // for unique_ptr
 #include <ostream>                                     // for std::flush
 #include <string>                                      // for string
+#include "interface.h"
 
 #if USE_GLOG_AND_GFLAGS
 #include <gflags/gflags.h>  // for ShutDownCommandLineFlags
@@ -107,6 +108,7 @@ Concurrent_Map<Gps_Acq_Assist> global_gps_acq_assist_map;
 
 int main(int argc, char** argv)
 {
+    std::cout << "debugging check";
     try
         {
             const std::string intro_help(
@@ -130,9 +132,9 @@ int main(int argc, char** argv)
                     std::cout << "GNSS-SDR program ended.\n";
                     return 1;
                 }
-
+                
 #endif
-            std::cout << "Initializing GNSS-SDR v" << gnss_sdr_version << " ... Please wait.\n";
+            std::cout << "Initializing GNSS-SDR v" << gnss_sdr_version << " ... Please wait!!!!!!!!!!!!1111\n";
         }
     catch (const std::exception& e)
         {
@@ -167,7 +169,7 @@ int main(int argc, char** argv)
                     std::cout << "Logging will be written at "
                               << fs::temp_directory_path()
                               << '\n'
-                              << "Use gnss-sdr --log_dir=/path/to/log to change that.\n";
+                              << "Use gnss-sdr --log_dir=/path/to/log to change that\n";
                 }
             else
                 {

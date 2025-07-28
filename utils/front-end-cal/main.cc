@@ -67,6 +67,7 @@
 #include <thread>
 #include <utility>
 #include <vector>
+#include "interface.h"
 
 #if USE_GLOG_AND_GFLAGS
 #include <gflags/gflags.h>
@@ -309,6 +310,7 @@ static time_t utc_time(int week, int64_t tow)
 
 int main(int argc, char** argv)
 {
+    init_window();
     try
         {
             const std::string intro_help(

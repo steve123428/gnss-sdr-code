@@ -1105,6 +1105,17 @@ void dll_pll_veml_tracking_fpga::log_data()
                     d_dump_file.write(reinterpret_cast<char *>(&tmp_float), sizeof(float));
                     tmp_double = static_cast<double>(d_sample_counter_next);
                     d_dump_file.write(reinterpret_cast<char *>(&tmp_double), sizeof(double));
+                    //edited from here
+                    // GPS Week
+                    tmp_int = d_last_timetag.week;
+                    d_dump_file.write(reinterpret_cast<char *>(&tmp_int), sizeof(int));
+                    // GPS Time of Week in ms
+                    tmp_int = d_last_timetag.tow_ms;
+                    d_dump_file.write(reinterpret_cast<char *>(&tmp_int), sizeof(int));
+                    // GPS Time of Week fraction in ms
+                    tmp_float = static_cast<float>(d_last_timetag.tow_ms_fraction);
+                    d_dump_file.write(reinterpret_cast<char *>(&tmp_float), sizeof(float));
+                    //Until here
                     // PRN
                     uint32_t prn_ = d_acquisition_gnss_synchro->PRN;
                     d_dump_file.write(reinterpret_cast<char *>(&prn_), sizeof(uint32_t));
@@ -1122,16 +1133,18 @@ int32_t dll_pll_veml_tracking_fpga::save_matfile() const
     // READ DUMP FILE
     std::ifstream::pos_type size;
     const int32_t number_of_double_vars = 1;
-    const int32_t number_of_float_vars = 19;
+    const int32_t number_of_float_vars = 20;
+    const int32_t number_of_int32_vars = 4;
     const int32_t epoch_size_bytes = sizeof(uint64_t) + sizeof(double) * number_of_double_vars +
-                                     sizeof(float) * number_of_float_vars + sizeof(uint32_t);
+                                      sizeof(float) * number_of_float_vars + sizeof(uint32_t) +
+                                      sizeof(int32_t) * number_of_int32_vars;
     std::ifstream dump_file;
     std::string dump_filename_ = d_dump_filename;
     // add channel number to the filename
     dump_filename_.append(std::to_string(d_channel));
     // add extension
     dump_filename_.append(".dat");
-    std::cout << "Generating .mat file for " << dump_filename_ << '\n';
+    std::cout << "[DEBUG] Starting save_matfile() for " << dump_filename_ << '\n';
     dump_file.exceptions(std::ifstream::failbit | std::ifstream::badbit);
     try
         {
@@ -1167,6 +1180,10 @@ int32_t dll_pll_veml_tracking_fpga::save_matfile() const
     auto carrier_doppler_rate_hz = std::vector<float>(num_epoch);
     auto code_freq_chips = std::vector<float>(num_epoch);
     auto code_freq_rate_chips = std::vector<float>(num_epoch);
+    // GPS time vectors
+    auto gps_week = std::vector<int32_t>(num_epoch);
+    auto gps_tow_ms = std::vector<int32_t>(num_epoch);
+    auto gps_tow_ms_fraction = std::vector<float>(num_epoch);
     auto carr_error_hz = std::vector<float>(num_epoch);
     auto carr_error_filt_hz = std::vector<float>(num_epoch);
     auto code_error_chips = std::vector<float>(num_epoch);
@@ -1204,6 +1221,10 @@ int32_t dll_pll_veml_tracking_fpga::save_matfile() const
                             dump_file.read(reinterpret_cast<char *>(&aux1[i]), sizeof(float));
                             dump_file.read(reinterpret_cast<char *>(&aux2[i]), sizeof(double));
                             dump_file.read(reinterpret_cast<char *>(&PRN[i]), sizeof(uint32_t));
+                            // Read GPS time fields
+                            dump_file.read(reinterpret_cast<char *>(&gps_week[i]), sizeof(int32_t));
+                            dump_file.read(reinterpret_cast<char *>(&gps_tow_ms[i]), sizeof(int32_t));
+                            dump_file.read(reinterpret_cast<char *>(&gps_tow_ms_fraction[i]), sizeof(float));
                         }
                 }
             dump_file.close();
@@ -1309,7 +1330,20 @@ int32_t dll_pll_veml_tracking_fpga::save_matfile() const
             Mat_VarFree(matvar);
 
             matvar = Mat_VarCreate("PRN", MAT_C_UINT32, MAT_T_UINT32, 2, dims.data(), PRN.data(), 0);
-            Mat_VarWrite(matfp, matvar, MAT_COMPRESSION_ZLIB);  // or MAT_COMPRESSION_NONE
+            Mat_VarWrite(matfp, matvar, MAT_COMPRESSION_ZLIB);
+            Mat_VarFree(matvar);
+
+            // Write GPS time fields
+            matvar = Mat_VarCreate("gps_week", MAT_C_INT32, MAT_T_INT32, 2, dims.data(), gps_week.data(), 0);
+            Mat_VarWrite(matfp, matvar, MAT_COMPRESSION_ZLIB);
+            Mat_VarFree(matvar);
+
+            matvar = Mat_VarCreate("gps_tow_ms", MAT_C_INT32, MAT_T_INT32, 2, dims.data(), gps_tow_ms.data(), 0);
+            Mat_VarWrite(matfp, matvar, MAT_COMPRESSION_ZLIB);
+            Mat_VarFree(matvar);
+
+            matvar = Mat_VarCreate("gps_tow_ms_fraction", MAT_C_SINGLE, MAT_T_SINGLE, 2, dims.data(), gps_tow_ms_fraction.data(), 0);
+            Mat_VarWrite(matfp, matvar, MAT_COMPRESSION_ZLIB);
             Mat_VarFree(matvar);
         }
     Mat_Close(matfp);

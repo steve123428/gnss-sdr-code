@@ -5,6 +5,10 @@
 # SPDX-License-Identifier: BSD-3-Clause
 
 
+find_package(Curses REQUIRED)
+include_directories(${CURSES_INCLUDE_DIR})
+
+# Static library logic (for other code, not needed by the executable)
 if(USE_CMAKE_TARGET_SOURCES)
     add_library(front_end_cal_lib STATIC)
     target_sources(front_end_cal_lib
@@ -52,10 +56,12 @@ endif()
 
 if(USE_CMAKE_TARGET_SOURCES)
     add_executable(front-end-cal)
-    target_sources(front-end-cal PRIVATE main.cc)
+    target_sources(front-end-cal PRIVATE main.cc interface.cc)
 else()
-    add_executable(front-end-cal main.cc)
+    add_executable(front-end-cal main.cc interface.cc)
 endif()
+
+target_link_libraries(front-end-cal PRIVATE ${CURSES_LIBRARIES})
 
 target_link_libraries(front-end-cal
     PRIVATE
