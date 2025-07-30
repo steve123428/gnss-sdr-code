@@ -77,12 +77,6 @@ else()
     )
 endif()
 
-find_package(Curses REQUIRED)
-include_directories(${CURSES_INCLUDE_DIR})
-
-target_sources(tracking_gr_blocks PRIVATE interface.cc)
-target_link_libraries(tracking_gr_blocks PRIVATE ${CURSES_LIBRARIES})
-
 target_link_libraries(tracking_gr_blocks
     PUBLIC
         Gnuradio::blocks

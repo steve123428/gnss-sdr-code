@@ -62,7 +62,7 @@
 #include <chrono>
 #include <iomanip>   // <<< MODIFIED for std::put_time
 #include <ctime>     // <<< MODIFIED for std::gmtime
-#include "interface.h"
+//#include "interface.h"
 
 #if USE_GLOG_AND_GFLAGS
 #include <glog/logging.h>
@@ -650,12 +650,14 @@ void dll_pll_veml_tracking::msg_handler_telemetry_to_trk(const pmt::pmt_t &msg)
 
 void dll_pll_veml_tracking::start_tracking()
 {
+    //init_window();
+    //std::cout << "Tracking started" << std::endl;
     gr::thread::scoped_lock l(d_setlock);
     // correct the code phase according to the delay between acq and trk
     d_acq_code_phase_samples = d_acquisition_gnss_synchro->Acq_delay_samples;
     d_acq_carrier_doppler_hz = d_acquisition_gnss_synchro->Acq_doppler_hz;
     d_acq_sample_stamp = d_acquisition_gnss_synchro->Acq_samplestamp_samples;
-    init_window();
+
     d_carrier_doppler_hz = d_acq_carrier_doppler_hz;
     d_carrier_phase_step_rad = TWO_PI * d_carrier_doppler_hz / d_trk_parameters.fs_in;
     d_carrier_phase_rate_step_rad = 0.0;
@@ -878,7 +880,7 @@ void dll_pll_veml_tracking::start_tracking()
     d_code_loop_filter.initialize();                                                 // initialize the code filter
 
     // DEBUG OUTPUT
-    std::cout << "Tracking of " << d_systemName << " " << d_signal_pretty_name << " signal started on channel " << d_channel << " for satellite " << Gnss_Satellite(d_systemName, d_acquisition_gnss_synchro->PRN) << '\n';
+    //std::cout << "Tracking of " << d_systemName << " " << d_signal_pretty_name << " signal started on channel " << d_channel << " for satellite " << Gnss_Satellite(d_systemName, d_acquisition_gnss_synchro->PRN) << '\n';
     DLOG(INFO) << "Starting tracking of satellite " << Gnss_Satellite(d_systemName, d_acquisition_gnss_synchro->PRN) << " on channel " << d_channel;
 
     // enable tracking pull-in
@@ -1024,7 +1026,7 @@ bool dll_pll_veml_tracking::cn0_and_tracking_lock_status(double coh_integration_
         }
     if (d_carrier_lock_fail_counter > d_trk_parameters.max_carrier_lock_fail or d_code_lock_fail_counter > d_trk_parameters.max_code_lock_fail)
         {
-            std::cout << "Loss of lock in channel " << d_channel << "!\n";
+            //std::cout << "Loss of lock in channel " << d_channel << "!\n";
             LOG(INFO) << "Loss of lock in channel " << d_channel
                       << " (carrier_lock_fail_counter:" << d_carrier_lock_fail_counter
                       << " code_lock_fail_counter : " << d_code_lock_fail_counter << ")";
@@ -1504,7 +1506,7 @@ int32_t dll_pll_veml_tracking::save_matfile() const
     dump_filename_.append(std::to_string(d_channel));
     // add extension
     dump_filename_.append(".dat");
-    std::cout << "[DEBUG] Starting save_matfile() for " << dump_filename_ << '\n';
+    //std::cout << "[DEBUG] Starting save_matfile() for " << dump_filename_ << '\n';
     dump_file.exceptions(std::ifstream::failbit | std::ifstream::badbit);
     try
         {
@@ -1874,8 +1876,8 @@ int dll_pll_veml_tracking::general_work(int noutput_items __attribute__((unused)
                                                     {
                                                         LOG(INFO) << d_systemName << " " << d_signal_pretty_name << " secondary code locked in channel " << d_channel
                                                                   << " for satellite " << Gnss_Satellite(d_systemName, d_acquisition_gnss_synchro->PRN) << '\n';
-                                                        std::cout << d_systemName << " " << d_signal_pretty_name << " secondary code locked in channel " << d_channel
-                                                                  << " for satellite " << Gnss_Satellite(d_systemName, d_acquisition_gnss_synchro->PRN) << '\n';
+                                                        //std::cout << d_systemName << " " << d_signal_pretty_name << " secondary code locked in channel " << d_channel
+                                                        //          << " for satellite " << Gnss_Satellite(d_systemName, d_acquisition_gnss_synchro->PRN) << '\n';
                                                     }
                                             }
                                     }
@@ -1890,8 +1892,8 @@ int dll_pll_veml_tracking::general_work(int noutput_items __attribute__((unused)
                                                     {
                                                         LOG(INFO) << d_systemName << " " << d_signal_pretty_name << " tracking bit synchronization locked in channel " << d_channel
                                                                   << " for satellite " << Gnss_Satellite(d_systemName, d_acquisition_gnss_synchro->PRN);
-                                                        std::cout << d_systemName << " " << d_signal_pretty_name << " tracking bit synchronization locked in channel " << d_channel
-                                                                  << " for satellite " << Gnss_Satellite(d_systemName, d_acquisition_gnss_synchro->PRN) << '\n';
+                                                        //std::cout << d_systemName << " " << d_signal_pretty_name << " tracking bit synchronization locked in channel " << d_channel
+                                                        //          << " for satellite " << Gnss_Satellite(d_systemName, d_acquisition_gnss_synchro->PRN) << '\n';
                                                     }
                                             }
                                     }
@@ -1925,9 +1927,9 @@ int dll_pll_veml_tracking::general_work(int noutput_items __attribute__((unused)
                                         LOG(INFO) << "Enabled " << d_extend_correlation_symbols * static_cast<int32_t>(d_code_period * 1000.0) << " ms extended correlator in channel "
                                                   << d_channel
                                                   << " for satellite " << Gnss_Satellite(d_systemName, d_acquisition_gnss_synchro->PRN);
-                                        std::cout << "Enabled " << d_extend_correlation_symbols * static_cast<int32_t>(d_code_period * 1000.0) << " ms extended correlator in channel "
-                                                  << d_channel
-                                                  << " for satellite " << Gnss_Satellite(d_systemName, d_acquisition_gnss_synchro->PRN) << '\n';
+                                        //std::cout << "Enabled " << d_extend_correlation_symbols * static_cast<int32_t>(d_code_period * 1000.0) << " ms extended correlator in channel "
+                                        //          << d_channel
+                                        //          << " for satellite " << Gnss_Satellite(d_systemName, d_acquisition_gnss_synchro->PRN) << '\n';
                                         // Set narrow taps delay values [chips]
                                         d_code_loop_filter.set_update_interval(static_cast<float>(d_current_correlation_time_s));
                                         d_code_loop_filter.set_noise_bandwidth(d_trk_parameters.dll_bw_narrow_hz);
@@ -2050,7 +2052,7 @@ int dll_pll_veml_tracking::general_work(int noutput_items __attribute__((unused)
                         d_VL_accu = gr_complex(0.0, 0.0);
                         if (d_enable_extended_integration)
                             {
-                                std::cout << "Extended integration enabled!!!!!!!!!!!!!!!";
+                                //std::cout << "Extended integration enabled!!!!!!!!!!!!!!!";
                                 d_state = 3;  // new coherent integration (correlation time extension) cycle
                             }
                     }
@@ -2075,12 +2077,12 @@ int dll_pll_veml_tracking::general_work(int noutput_items __attribute__((unused)
                         }
                     else
                         {
-                            std::cout << "hash code not match\n";
+                            //std::cout << "hash code not match\n";
                         }
                 }
             catch (const wht::bad_any_cast &e)
                 {
-                    std::cout << "msg Bad any_cast: " << e.what();
+                    //std::cout << "msg Bad any_cast: " << e.what();
                 }
             catch (std::exception &ex)
                 {

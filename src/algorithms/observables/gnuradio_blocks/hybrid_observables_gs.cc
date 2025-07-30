@@ -89,7 +89,7 @@ hybrid_observables_gs::hybrid_observables_gs(const Obs_Conf &conf_)
 #if USE_BOOST_BIND_PLACEHOLDERS
         boost::bind(&hybrid_observables_gs::msg_handler_pvt_to_observables, this, boost::placeholders::_1));
 #else
-        boost::bind(&hybrid_observables_gs::msg_handler_pvt_to_observables, this, _1));
+        boost::bind(&hybrid_observables_gs::msg_handler_pvt_to_observables, this, _1);
 #endif
 #endif
 

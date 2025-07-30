@@ -2,10 +2,10 @@
 <!DOCTYPE boost_serialization>
 <boost_serialization signature="serialization::archive" version="18">
 <GNSS-SDR_utc_model class_id="0" tracking_level="0" version="0">
-	<A0>0.00000000000000000e+00</A0>
-	<A1>3.55271367880050093e-15</A1>
+	<A0>9.31322574615478516e-10</A0>
+	<A1>5.32907051820075139e-15</A1>
 	<A2>0.00000000000000000e+00</A2>
-	<tot>319488</tot>
+	<tot>405504</tot>
 	<WN_T>73</WN_T>
 	<DeltaT_LS>18</DeltaT_LS>
 	<WN_LSF>137</WN_LSF>
