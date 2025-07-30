@@ -2,45 +2,45 @@
 <!DOCTYPE boost_serialization>
 <boost_serialization signature="serialization::archive" version="18">
 <GNSS-SDR_ephemeris_map class_id="0" tracking_level="0" version="0">
-	<count>10</count>
+	<count>13</count>
 	<item_version>0</item_version>
 	<item class_id="1" tracking_level="0" version="0">
 		<first>5</first>
 		<second class_id="2" tracking_level="0" version="0">
 			<PRN>5</PRN>
-			<M_0>2.23295797129667362e+00</M_0>
-			<delta_n>4.29410743823951641e-09</delta_n>
-			<ecc>5.80633699428290042e-03</ecc>
-			<sqrtA>5.15359128952026367e+03</sqrtA>
-			<OMEGA_0>1.66409176071848464e+00</OMEGA_0>
-			<i_0>9.76982608481445358e-01</i_0>
-			<omega>1.40518456293732519e+00</omega>
-			<OMEGAdot>-8.11605235187181112e-09</OMEGAdot>
-			<idot>2.15723271454434663e-10</idot>
-			<Cuc>3.06777656078338623e-06</Cuc>
-			<Cus>4.11644577980041504e-06</Cus>
-			<Crc>3.08062500000000000e+02</Crc>
-			<Crs>6.20312500000000000e+01</Crs>
-			<Cic>1.52736902236938477e-07</Cic>
-			<Cis>-3.72529029846191406e-08</Cis>
-			<toe>115200</toe>
-			<toc>115200</toc>
-			<af0>-2.15921550989151001e-04</af0>
+			<M_0>1.25426265001100834e+00</M_0>
+			<delta_n>4.13767235066163217e-09</delta_n>
+			<ecc>5.80123532563447866e-03</ecc>
+			<sqrtA>5.15359276008605957e+03</sqrtA>
+			<OMEGA_0>1.66275766720527773e+00</OMEGA_0>
+			<i_0>9.77036754005395136e-01</i_0>
+			<omega>1.40640404705944810e+00</omega>
+			<OMEGAdot>-8.00711924294200462e-09</OMEGAdot>
+			<idot>2.55367779950200009e-10</idot>
+			<Cuc>1.28708779811859131e-06</Cuc>
+			<Cus>7.86408782005310059e-06</Cus>
+			<Crc>2.40375000000000000e+02</Crc>
+			<Crs>2.74375000000000000e+01</Crs>
+			<Cic>-5.58793544769287109e-09</Cic>
+			<Cis>-6.51925802230834961e-08</Cis>
+			<toe>280800</toe>
+			<toc>280800</toc>
+			<af0>-2.16069165617227554e-04</af0>
 			<af1>-9.09494701772928036e-13</af1>
 			<af2>0.00000000000000000e+00</af2>
 			<WN>329</WN>
-			<tow>111888</tow>
+			<tow>279732</tow>
 			<satClkDrift>0.00000000000000000e+00</satClkDrift>
 			<dtr>0.00000000000000000e+00</dtr>
-			<IODE_SF2>56</IODE_SF2>
-			<IODE_SF3>56</IODE_SF3>
+			<IODE_SF2>28</IODE_SF2>
+			<IODE_SF3>28</IODE_SF3>
 			<code_on_L2>1</code_on_L2>
 			<L2_P_data_flag>0</L2_P_data_flag>
 			<SV_accuracy>0</SV_accuracy>
 			<SV_health>0</SV_health>
 			<TGD>-1.07102096080780029e-08</TGD>
-			<IODC>56</IODC>
-			<AODO>6300</AODO>
+			<IODC>28</IODC>
+			<AODO>15300</AODO>
 			<fit_interval_flag>0</fit_interval_flag>
 			<spare1>0.00000000000000000e+00</spare1>
 			<spare2>0.00000000000000000e+00</spare2>
@@ -50,42 +50,42 @@
 		</second>
 	</item>
 	<item>
-		<first>10</first>
+		<first>7</first>
 		<second>
-			<PRN>10</PRN>
-			<M_0>-2.34334435968711663e+00</M_0>
-			<delta_n>3.92980654935951140e-09</delta_n>
-			<ecc>1.02878228062763793e-02</ecc>
-			<sqrtA>5.15364542388916016e+03</sqrtA>
-			<OMEGA_0>1.71849279355129148e+00</OMEGA_0>
-			<i_0>9.89835047471403495e-01</i_0>
-			<omega>-2.31854659478352954e+00</omega>
-			<OMEGAdot>-7.81139680460255074e-09</OMEGAdot>
-			<idot>3.21799118510671568e-10</idot>
-			<Cuc>2.83308327198028564e-06</Cuc>
-			<Cus>4.73670661449432373e-06</Cus>
-			<Crc>3.04156250000000000e+02</Crc>
-			<Crs>5.46875000000000000e+01</Crs>
-			<Cic>4.28408384323120117e-08</Cic>
-			<Cis>-1.24797224998474121e-07</Cis>
-			<toe>115200</toe>
-			<toc>115200</toc>
-			<af0>-4.92270104587078094e-04</af0>
-			<af1>-9.43600753089412885e-12</af1>
+			<PRN>7</PRN>
+			<M_0>-1.89871281115841106e+00</M_0>
+			<delta_n>4.58126225653316828e-09</delta_n>
+			<ecc>1.98023476405069197e-02</ecc>
+			<sqrtA>5.15370374298095703e+03</sqrtA>
+			<OMEGA_0>-2.47975103558411991e+00</OMEGA_0>
+			<i_0>9.50743990691980789e-01</i_0>
+			<omega>-2.03216174611648936e+00</omega>
+			<OMEGAdot>-7.73675083815556860e-09</OMEGAdot>
+			<idot>1.57149403046276922e-10</idot>
+			<Cuc>-6.23986124992370605e-07</Cuc>
+			<Cus>9.75653529167175293e-06</Cus>
+			<Crc>1.76562500000000000e+02</Crc>
+			<Crs>-1.00312500000000000e+01</Crs>
+			<Cic>3.33413481712341309e-07</Cic>
+			<Cis>5.58793544769287109e-09</Cis>
+			<toe>280784</toe>
+			<toc>280784</toc>
+			<af0>-5.38663007318973541e-05</af0>
+			<af1>-4.88853402202948847e-12</af1>
 			<af2>0.00000000000000000e+00</af2>
 			<WN>329</WN>
-			<tow>111888</tow>
+			<tow>276012</tow>
 			<satClkDrift>0.00000000000000000e+00</satClkDrift>
 			<dtr>0.00000000000000000e+00</dtr>
-			<IODE_SF2>33</IODE_SF2>
-			<IODE_SF3>33</IODE_SF3>
+			<IODE_SF2>19</IODE_SF2>
+			<IODE_SF3>19</IODE_SF3>
 			<code_on_L2>1</code_on_L2>
 			<L2_P_data_flag>0</L2_P_data_flag>
 			<SV_accuracy>0</SV_accuracy>
 			<SV_health>0</SV_health>
-			<TGD>2.32830643653869629e-09</TGD>
-			<IODC>33</IODC>
-			<AODO>6300</AODO>
+			<TGD>-1.07102096080780029e-08</TGD>
+			<IODC>19</IODC>
+			<AODO>15300</AODO>
 			<fit_interval_flag>0</fit_interval_flag>
 			<spare1>0.00000000000000000e+00</spare1>
 			<spare2>0.00000000000000000e+00</spare2>
@@ -95,42 +95,42 @@
 		</second>
 	</item>
 	<item>
-		<first>12</first>
+		<first>11</first>
 		<second>
-			<PRN>12</PRN>
-			<M_0>-1.61580687384770694e+00</M_0>
-			<delta_n>5.03949562950674392e-09</delta_n>
-			<ecc>8.69812327437102621e-03</ecc>
-			<sqrtA>5.15364981842041016e+03</sqrtA>
-			<OMEGA_0>-1.36129134297424459e+00</OMEGA_0>
-			<i_0>9.59549297536925971e-01</i_0>
-			<omega>1.51555215429336743e+00</omega>
-			<OMEGAdot>-8.29570269217244098e-09</OMEGAdot>
-			<idot>3.75015620905888082e-10</idot>
-			<Cuc>2.54809856414794922e-06</Cuc>
-			<Cus>5.61028718948364258e-06</Cus>
-			<Crc>2.73093750000000000e+02</Crc>
-			<Crs>4.30937500000000000e+01</Crs>
-			<Cic>8.94069671630859375e-08</Cic>
-			<Cis>2.06753611564636230e-07</Cis>
-			<toe>115200</toe>
-			<toc>115200</toc>
-			<af0>-5.93878328800201416e-04</af0>
-			<af1>-1.25055521493777613e-12</af1>
+			<PRN>11</PRN>
+			<M_0>6.05139099043875195e-01</M_0>
+			<delta_n>4.26482050403543817e-09</delta_n>
+			<ecc>1.98130519129335837e-03</ecc>
+			<sqrtA>5.15370348358154297e+03</sqrtA>
+			<OMEGA_0>7.07257839556455492e-01</OMEGA_0>
+			<i_0>9.65300285980107087e-01</i_0>
+			<omega>-2.42033992087272143e+00</omega>
+			<OMEGAdot>-8.00533345427102381e-09</OMEGAdot>
+			<idot>-2.76082928533572830e-10</idot>
+			<Cuc>-5.96046447753906250e-07</Cuc>
+			<Cus>9.61497426033020020e-06</Cus>
+			<Crc>1.96468750000000000e+02</Crc>
+			<Crs>-1.28125000000000000e+01</Crs>
+			<Cic>2.60770320892333984e-08</Cic>
+			<Cis>3.91155481338500977e-08</Cis>
+			<toe>283472</toe>
+			<toc>283472</toc>
+			<af0>-6.59589655697345734e-04</af0>
+			<af1>9.89075488178059297e-12</af1>
 			<af2>0.00000000000000000e+00</af2>
 			<WN>329</WN>
-			<tow>111888</tow>
+			<tow>278748</tow>
 			<satClkDrift>0.00000000000000000e+00</satClkDrift>
 			<dtr>0.00000000000000000e+00</dtr>
-			<IODE_SF2>42</IODE_SF2>
-			<IODE_SF3>42</IODE_SF3>
+			<IODE_SF2>17</IODE_SF2>
+			<IODE_SF3>17</IODE_SF3>
 			<code_on_L2>1</code_on_L2>
 			<L2_P_data_flag>0</L2_P_data_flag>
 			<SV_accuracy>0</SV_accuracy>
 			<SV_health>0</SV_health>
-			<TGD>-1.25728547573089600e-08</TGD>
-			<IODC>42</IODC>
-			<AODO>6300</AODO>
+			<TGD>-8.84756445884704590e-09</TGD>
+			<IODC>17</IODC>
+			<AODO>15300</AODO>
 			<fit_interval_flag>0</fit_interval_flag>
 			<spare1>0.00000000000000000e+00</spare1>
 			<spare2>0.00000000000000000e+00</spare2>
@@ -143,39 +143,39 @@
 		<first>13</first>
 		<second>
 			<PRN>13</PRN>
-			<M_0>1.67377428005713713e+00</M_0>
-			<delta_n>4.15910181471339697e-09</delta_n>
-			<ecc>9.53777506947517222e-03</ecc>
-			<sqrtA>5.15368667793273926e+03</sqrtA>
-			<OMEGA_0>2.90433158168523420e+00</OMEGA_0>
-			<i_0>9.74734296498798169e-01</i_0>
-			<omega>9.74735010402820845e-01</omega>
-			<OMEGAdot>-8.06855037322373172e-09</OMEGAdot>
-			<idot>-2.74297139862592430e-10</idot>
-			<Cuc>-4.85219061374664307e-06</Cuc>
-			<Cus>7.24755227565765381e-06</Cus>
-			<Crc>2.48125000000000000e+02</Crc>
-			<Crs>-9.18437500000000000e+01</Crs>
-			<Cic>-2.12341547012329102e-07</Cic>
-			<Cis>-6.89178705215454102e-08</Cis>
-			<toe>115200</toe>
-			<toc>115200</toc>
-			<af0>7.00516160577535629e-04</af0>
+			<M_0>6.93450610989964744e-01</M_0>
+			<delta_n>4.37518224390202750e-09</delta_n>
+			<ecc>9.54576535150408571e-03</ecc>
+			<sqrtA>5.15368006515502930e+03</sqrtA>
+			<OMEGA_0>2.90299644950019076e+00</OMEGA_0>
+			<i_0>9.74694377853169258e-01</i_0>
+			<omega>9.76324434322992651e-01</omega>
+			<OMEGAdot>-8.16784022333024315e-09</OMEGAdot>
+			<idot>-1.74292974287688943e-10</idot>
+			<Cuc>-2.50153243541717529e-06</Cuc>
+			<Cus>6.18956983089447021e-06</Cus>
+			<Crc>2.68781250000000000e+02</Crc>
+			<Crs>-4.64687500000000000e+01</Crs>
+			<Cic>-1.43423676490783691e-07</Cic>
+			<Cis>5.02914190292358398e-08</Cis>
+			<toe>280800</toe>
+			<toc>280800</toc>
+			<af0>7.00450502336025238e-04</af0>
 			<af1>-3.41060513164847988e-13</af1>
 			<af2>0.00000000000000000e+00</af2>
 			<WN>329</WN>
-			<tow>111888</tow>
+			<tow>279732</tow>
 			<satClkDrift>0.00000000000000000e+00</satClkDrift>
 			<dtr>0.00000000000000000e+00</dtr>
-			<IODE_SF2>36</IODE_SF2>
-			<IODE_SF3>36</IODE_SF3>
+			<IODE_SF2>183</IODE_SF2>
+			<IODE_SF3>183</IODE_SF3>
 			<code_on_L2>1</code_on_L2>
 			<L2_P_data_flag>0</L2_P_data_flag>
 			<SV_accuracy>0</SV_accuracy>
 			<SV_health>0</SV_health>
 			<TGD>-1.16415321826934814e-08</TGD>
-			<IODC>36</IODC>
-			<AODO>6300</AODO>
+			<IODC>183</IODC>
+			<AODO>15300</AODO>
 			<fit_interval_flag>0</fit_interval_flag>
 			<spare1>0.00000000000000000e+00</spare1>
 			<spare2>0.00000000000000000e+00</spare2>
@@ -188,39 +188,39 @@
 		<first>14</first>
 		<second>
 			<PRN>14</PRN>
-			<M_0>-1.79072526609513583e+00</M_0>
-			<delta_n>5.30343519507764934e-09</delta_n>
-			<ecc>6.07288768514990720e-03</ecc>
-			<sqrtA>5.15370845031738281e+03</sqrtA>
-			<OMEGA_0>-1.41249435642527899e+00</OMEGA_0>
-			<i_0>9.42875214743020829e-01</i_0>
-			<omega>-2.77391015276636299e+00</omega>
-			<OMEGAdot>-8.45642367256067785e-09</OMEGAdot>
-			<idot>4.33946647048241918e-10</idot>
-			<Cuc>2.18115746974945068e-06</Cuc>
-			<Cus>5.58793544769287109e-06</Cus>
-			<Crc>2.61593750000000000e+02</Crc>
-			<Crs>4.55000000000000000e+01</Crs>
-			<Cic>6.70552253723144531e-08</Cic>
-			<Cis>-3.35276126861572266e-08</Cis>
-			<toe>115184</toe>
-			<toc>115184</toc>
-			<af0>6.77615404129028320e-04</af0>
-			<af1>4.54747350886464038e-12</af1>
+			<M_0>-2.76765547870265394e+00</M_0>
+			<delta_n>5.07664003386313642e-09</delta_n>
+			<ecc>6.07608631253242406e-03</ecc>
+			<sqrtA>5.15371470832824707e+03</sqrtA>
+			<OMEGA_0>-1.41388201760979437e+00</OMEGA_0>
+			<i_0>9.42921558524853931e-01</i_0>
+			<omega>-2.77365415673167215e+00</omega>
+			<OMEGAdot>-8.26248702289220479e-09</OMEGAdot>
+			<idot>2.79654505875533683e-10</idot>
+			<Cuc>3.69362533092498779e-06</Cuc>
+			<Cus>7.59959220886230469e-06</Cus>
+			<Crc>2.26625000000000000e+02</Crc>
+			<Crs>7.27187500000000000e+01</Crs>
+			<Cic>-4.84287738800048828e-08</Cic>
+			<Cis>-7.82310962677001953e-08</Cis>
+			<toe>280800</toe>
+			<toc>280800</toc>
+			<af0>6.78357668220996857e-04</af0>
+			<af1>4.43378667114302435e-12</af1>
 			<af2>0.00000000000000000e+00</af2>
 			<WN>329</WN>
-			<tow>111828</tow>
+			<tow>279732</tow>
 			<satClkDrift>0.00000000000000000e+00</satClkDrift>
 			<dtr>0.00000000000000000e+00</dtr>
-			<IODE_SF2>144</IODE_SF2>
-			<IODE_SF3>144</IODE_SF3>
+			<IODE_SF2>168</IODE_SF2>
+			<IODE_SF3>168</IODE_SF3>
 			<code_on_L2>1</code_on_L2>
 			<L2_P_data_flag>0</L2_P_data_flag>
 			<SV_accuracy>0</SV_accuracy>
 			<SV_health>0</SV_health>
 			<TGD>-7.91624188423156738e-09</TGD>
-			<IODC>144</IODC>
-			<AODO>6300</AODO>
+			<IODC>168</IODC>
+			<AODO>15300</AODO>
 			<fit_interval_flag>0</fit_interval_flag>
 			<spare1>0.00000000000000000e+00</spare1>
 			<spare2>0.00000000000000000e+00</spare2>
@@ -233,39 +233,39 @@
 		<first>15</first>
 		<second>
 			<PRN>15</PRN>
-			<M_0>9.13964982310082719e-01</M_0>
-			<delta_n>5.25200448135341365e-09</delta_n>
-			<ecc>1.65508578065782751e-02</ecc>
-			<sqrtA>5.15361274719238281e+03</sqrtA>
-			<OMEGA_0>2.59359313637599787e+00</OMEGA_0>
-			<i_0>9.40166932057890481e-01</i_0>
-			<omega>1.43972630583099259e+00</omega>
-			<OMEGAdot>-8.87251243289911654e-09</OMEGAdot>
-			<idot>-3.27870799992005013e-10</idot>
-			<Cuc>-3.96184623241424561e-06</Cuc>
-			<Cus>4.74788248538970947e-06</Cus>
-			<Crc>2.83968750000000000e+02</Crc>
-			<Crs>-7.30000000000000000e+01</Crs>
-			<Cic>-2.44006514549255371e-07</Cic>
-			<Cis>-1.32247805595397949e-07</Cis>
-			<toe>115200</toe>
-			<toc>115200</toc>
-			<af0>3.22012696415185928e-04</af0>
-			<af1>3.97903932025656023e-12</af1>
+			<M_0>-6.50619561716271333e-02</M_0>
+			<delta_n>5.22307470488353091e-09</delta_n>
+			<ecc>1.65563608752563561e-02</ecc>
+			<sqrtA>5.15360916137695312e+03</sqrtA>
+			<OMEGA_0>2.59216998041012525e+00</OMEGA_0>
+			<i_0>9.40148652896490078e-01</i_0>
+			<omega>1.44115885080509787e+00</omega>
+			<OMEGAdot>-8.77500837146358593e-09</OMEGAdot>
+			<idot>9.32181686251778899e-11</idot>
+			<Cuc>-1.32434070110321045e-06</Cuc>
+			<Cus>4.98257577419281006e-06</Cus>
+			<Crc>2.75218750000000000e+02</Crc>
+			<Crs>-2.66250000000000000e+01</Crs>
+			<Cic>-3.12924385070800781e-07</Cic>
+			<Cis>1.13621354103088379e-07</Cis>
+			<toe>280800</toe>
+			<toc>280800</toc>
+			<af0>3.22660431265830994e-04</af0>
+			<af1>3.86535248253494420e-12</af1>
 			<af2>0.00000000000000000e+00</af2>
 			<WN>329</WN>
-			<tow>111888</tow>
+			<tow>279732</tow>
 			<satClkDrift>0.00000000000000000e+00</satClkDrift>
 			<dtr>0.00000000000000000e+00</dtr>
-			<IODE_SF2>12</IODE_SF2>
-			<IODE_SF3>12</IODE_SF3>
+			<IODE_SF2>64</IODE_SF2>
+			<IODE_SF3>64</IODE_SF3>
 			<code_on_L2>1</code_on_L2>
 			<L2_P_data_flag>0</L2_P_data_flag>
 			<SV_accuracy>0</SV_accuracy>
 			<SV_health>0</SV_health>
 			<TGD>-1.02445483207702637e-08</TGD>
-			<IODC>12</IODC>
-			<AODO>6300</AODO>
+			<IODC>64</IODC>
+			<AODO>15300</AODO>
 			<fit_interval_flag>0</fit_interval_flag>
 			<spare1>0.00000000000000000e+00</spare1>
 			<spare2>0.00000000000000000e+00</spare2>
@@ -278,39 +278,39 @@
 		<first>18</first>
 		<second>
 			<PRN>18</PRN>
-			<M_0>-9.56590033700280423e-02</M_0>
-			<delta_n>4.03623955414994443e-09</delta_n>
-			<ecc>5.41586359031498345e-03</ecc>
-			<sqrtA>5.15368807983398438e+03</sqrtA>
-			<OMEGA_0>6.83045619317439789e-01</OMEGA_0>
-			<i_0>9.73474160809088662e-01</i_0>
-			<omega>-2.94135185597968274e+00</omega>
-			<OMEGAdot>-7.85425573270608036e-09</OMEGAdot>
-			<idot>-2.15723271454434663e-10</idot>
-			<Cuc>1.83098018169403076e-06</Cuc>
-			<Cus>1.13546848297119141e-05</Cus>
-			<Crc>1.65375000000000000e+02</Crc>
-			<Crs>4.00000000000000000e+01</Crs>
-			<Cic>4.65661287307739258e-08</Cic>
-			<Cis>2.98023223876953125e-08</Cis>
-			<toe>115200</toe>
-			<toc>115200</toc>
-			<af0>-5.86252659559249878e-04</af0>
-			<af1>7.16227077646180826e-12</af1>
+			<M_0>-1.07521020634088682e+00</M_0>
+			<delta_n>3.99445209924900214e-09</delta_n>
+			<ecc>5.42529509402811441e-03</ecc>
+			<sqrtA>5.15368580436706543e+03</sqrtA>
+			<OMEGA_0>6.81755313868181556e-01</OMEGA_0>
+			<i_0>9.73462047847392320e-01</i_0>
+			<omega>-2.94066727176114506e+00</omega>
+			<OMEGAdot>-7.79568186429792388e-09</OMEGAdot>
+			<idot>-2.71082720254827698e-10</idot>
+			<Cuc>-1.35600566864013672e-06</Cuc>
+			<Cus>9.40449535846710205e-06</Cus>
+			<Crc>2.07093750000000000e+02</Crc>
+			<Crs>-2.43750000000000000e+01</Crs>
+			<Cic>1.04308128356933594e-07</Cic>
+			<Cis>-1.67638063430786133e-07</Cis>
+			<toe>280800</toe>
+			<toc>280800</toc>
+			<af0>-5.85057772696018219e-04</af0>
+			<af1>7.27595761418342429e-12</af1>
 			<af2>0.00000000000000000e+00</af2>
 			<WN>329</WN>
-			<tow>111888</tow>
+			<tow>279732</tow>
 			<satClkDrift>0.00000000000000000e+00</satClkDrift>
 			<dtr>0.00000000000000000e+00</dtr>
-			<IODE_SF2>198</IODE_SF2>
-			<IODE_SF3>198</IODE_SF3>
+			<IODE_SF2>223</IODE_SF2>
+			<IODE_SF3>223</IODE_SF3>
 			<code_on_L2>1</code_on_L2>
 			<L2_P_data_flag>0</L2_P_data_flag>
 			<SV_accuracy>0</SV_accuracy>
 			<SV_health>0</SV_health>
 			<TGD>-8.38190317153930664e-09</TGD>
-			<IODC>454</IODC>
-			<AODO>6300</AODO>
+			<IODC>479</IODC>
+			<AODO>15300</AODO>
 			<fit_interval_flag>0</fit_interval_flag>
 			<spare1>0.00000000000000000e+00</spare1>
 			<spare2>0.00000000000000000e+00</spare2>
@@ -320,42 +320,87 @@
 		</second>
 	</item>
 	<item>
-		<first>22</first>
+		<first>20</first>
 		<second>
-			<PRN>22</PRN>
-			<M_0>2.46748419392378393e+00</M_0>
-			<delta_n>4.95734935064164467e-09</delta_n>
-			<ecc>1.30417185137048346e-02</ecc>
-			<sqrtA>5.15364469528198242e+03</sqrtA>
-			<OMEGA_0>-1.34066679912492259e+00</OMEGA_0>
-			<i_0>9.58202618539483186e-01</i_0>
-			<omega>-1.05495186307100308e+00</omega>
-			<OMEGAdot>-8.14998233662043832e-09</OMEGAdot>
-			<idot>1.96436753807846147e-10</idot>
-			<Cuc>2.27428972721099854e-06</Cuc>
-			<Cus>5.26569783687591553e-06</Cus>
-			<Crc>2.74843750000000000e+02</Crc>
-			<Crs>4.56250000000000000e+01</Crs>
-			<Cic>2.29105353355407715e-07</Cic>
-			<Cis>6.70552253723144531e-08</Cis>
-			<toe>115200</toe>
-			<toc>115200</toc>
-			<af0>-9.93050634860992432e-05</af0>
-			<af1>1.25055521493777613e-12</af1>
+			<PRN>20</PRN>
+			<M_0>-8.32426577725387196e-01</M_0>
+			<delta_n>4.49590155806030373e-09</delta_n>
+			<ecc>3.39843600522726731e-03</ecc>
+			<sqrtA>5.15355233955383301e+03</sqrtA>
+			<OMEGA_0>1.52641585855882744e+00</OMEGA_0>
+			<i_0>9.59030862776322990e-01</i_0>
+			<omega>-2.25835227469419753e+00</omega>
+			<OMEGAdot>-8.18605526777424348e-09</OMEGAdot>
+			<idot>2.58582199557964740e-10</idot>
+			<Cuc>1.66520476341247559e-06</Cuc>
+			<Cus>8.13603401184082031e-06</Cus>
+			<Crc>2.22875000000000000e+02</Crc>
+			<Crs>3.20937500000000000e+01</Crs>
+			<Cic>6.89178705215454102e-08</Cic>
+			<Cis>1.11758708953857422e-07</Cis>
+			<toe>280800</toe>
+			<toc>280800</toc>
+			<af0>3.63361556082963943e-04</af0>
+			<af1>-1.13686837721616004e-13</af1>
 			<af2>0.00000000000000000e+00</af2>
 			<WN>329</WN>
-			<tow>111888</tow>
+			<tow>279732</tow>
 			<satClkDrift>0.00000000000000000e+00</satClkDrift>
 			<dtr>0.00000000000000000e+00</dtr>
-			<IODE_SF2>22</IODE_SF2>
-			<IODE_SF3>22</IODE_SF3>
+			<IODE_SF2>43</IODE_SF2>
+			<IODE_SF3>43</IODE_SF3>
 			<code_on_L2>1</code_on_L2>
 			<L2_P_data_flag>0</L2_P_data_flag>
 			<SV_accuracy>0</SV_accuracy>
 			<SV_health>0</SV_health>
-			<TGD>-1.11758708953857422e-08</TGD>
-			<IODC>22</IODC>
-			<AODO>6300</AODO>
+			<TGD>-8.38190317153930664e-09</TGD>
+			<IODC>43</IODC>
+			<AODO>15300</AODO>
+			<fit_interval_flag>0</fit_interval_flag>
+			<spare1>0.00000000000000000e+00</spare1>
+			<spare2>0.00000000000000000e+00</spare2>
+			<integrity_status_flag>0</integrity_status_flag>
+			<alert_flag>0</alert_flag>
+			<antispoofing_flag>1</antispoofing_flag>
+		</second>
+	</item>
+	<item>
+		<first>21</first>
+		<second>
+			<PRN>21</PRN>
+			<M_0>2.15982938535753810e+00</M_0>
+			<delta_n>4.53090301601151991e-09</delta_n>
+			<ecc>1.36001617647707435e-04</ecc>
+			<sqrtA>5.15363868904113770e+03</sqrtA>
+			<OMEGA_0>1.73241765828637218e+00</OMEGA_0>
+			<i_0>9.59732056966732694e-01</i_0>
+			<omega>9.80610044058697339e-01</omega>
+			<OMEGAdot>-8.20748473182600829e-09</OMEGAdot>
+			<idot>3.21441960776475498e-10</idot>
+			<Cuc>1.67824327945709229e-06</Cuc>
+			<Cus>6.99423253536224365e-06</Cus>
+			<Crc>2.44937500000000000e+02</Crc>
+			<Crs>3.26562500000000000e+01</Crs>
+			<Cic>5.40167093276977539e-08</Cic>
+			<Cis>3.53902578353881836e-08</Cis>
+			<toe>280800</toe>
+			<toc>280800</toc>
+			<af0>1.43993180245161057e-04</af0>
+			<af1>2.67164068645797605e-11</af1>
+			<af2>0.00000000000000000e+00</af2>
+			<WN>329</WN>
+			<tow>279732</tow>
+			<satClkDrift>0.00000000000000000e+00</satClkDrift>
+			<dtr>0.00000000000000000e+00</dtr>
+			<IODE_SF2>177</IODE_SF2>
+			<IODE_SF3>177</IODE_SF3>
+			<code_on_L2>1</code_on_L2>
+			<L2_P_data_flag>0</L2_P_data_flag>
+			<SV_accuracy>0</SV_accuracy>
+			<SV_health>0</SV_health>
+			<TGD>-8.38190317153930664e-09</TGD>
+			<IODC>689</IODC>
+			<AODO>15300</AODO>
 			<fit_interval_flag>0</fit_interval_flag>
 			<spare1>0.00000000000000000e+00</spare1>
 			<spare2>0.00000000000000000e+00</spare2>
@@ -368,39 +413,39 @@
 		<first>23</first>
 		<second>
 			<PRN>23</PRN>
-			<M_0>-1.15632130279505496e+00</M_0>
-			<delta_n>4.09195616068453276e-09</delta_n>
-			<ecc>5.44307648669928226e-03</ecc>
-			<sqrtA>5.15365771102905273e+03</sqrtA>
-			<OMEGA_0>1.68743237144003677e+00</OMEGA_0>
-			<i_0>9.84898464060032230e-01</i_0>
-			<omega>-2.84720499203061728e+00</omega>
-			<OMEGAdot>-8.01033366254976910e-09</OMEGAdot>
-			<idot>2.07865801302120818e-10</idot>
-			<Cuc>2.99699604511260986e-06</Cuc>
-			<Cus>4.90806996822357178e-06</Cus>
-			<Crc>3.02000000000000000e+02</Crc>
-			<Crs>5.85000000000000000e+01</Crs>
-			<Cic>1.41561031341552734e-07</Cic>
-			<Cis>-1.93715095520019531e-07</Cis>
-			<toe>115200</toe>
-			<toc>115200</toc>
-			<af0>5.17841894179582596e-04</af0>
-			<af1>6.13908923696726399e-12</af1>
+			<M_0>-2.13532182390208947e+00</M_0>
+			<delta_n>3.81015870840382333e-09</delta_n>
+			<ecc>5.45574864372610959e-03</ecc>
+			<sqrtA>5.15366036987304688e+03</sqrtA>
+			<OMEGA_0>1.68611147198498679e+00</OMEGA_0>
+			<i_0>9.84952796837496258e-01</i_0>
+			<omega>-2.84668031938732424e+00</omega>
+			<OMEGAdot>-7.70460664207792222e-09</OMEGAdot>
+			<idot>3.75015620905888082e-10</idot>
+			<Cuc>1.18836760520935059e-06</Cuc>
+			<Cus>7.53812491893768311e-06</Cus>
+			<Crc>2.47593750000000000e+02</Crc>
+			<Crs>2.15000000000000000e+01</Crs>
+			<Cic>-3.16649675369262695e-08</Cic>
+			<Cis>-4.84287738800048828e-08</Cis>
+			<toe>280800</toe>
+			<toc>280800</toc>
+			<af0>5.18848653882741928e-04</af0>
+			<af1>6.02540239924564796e-12</af1>
 			<af2>0.00000000000000000e+00</af2>
 			<WN>329</WN>
-			<tow>111888</tow>
+			<tow>279732</tow>
 			<satClkDrift>0.00000000000000000e+00</satClkDrift>
 			<dtr>0.00000000000000000e+00</dtr>
-			<IODE_SF2>202</IODE_SF2>
-			<IODE_SF3>202</IODE_SF3>
+			<IODE_SF2>227</IODE_SF2>
+			<IODE_SF3>227</IODE_SF3>
 			<code_on_L2>1</code_on_L2>
 			<L2_P_data_flag>0</L2_P_data_flag>
 			<SV_accuracy>0</SV_accuracy>
 			<SV_health>0</SV_health>
 			<TGD>-8.38190317153930664e-09</TGD>
-			<IODC>714</IODC>
-			<AODO>6300</AODO>
+			<IODC>739</IODC>
+			<AODO>15300</AODO>
 			<fit_interval_flag>0</fit_interval_flag>
 			<spare1>0.00000000000000000e+00</spare1>
 			<spare2>0.00000000000000000e+00</spare2>
@@ -413,39 +458,129 @@
 		<first>24</first>
 		<second>
 			<PRN>24</PRN>
-			<M_0>6.92518193819618433e-02</M_0>
-			<delta_n>4.92913388964015376e-09</delta_n>
-			<ecc>1.70217410195618833e-02</ecc>
-			<sqrtA>5.15367633819580078e+03</sqrtA>
-			<OMEGA_0>-2.58299777663673602e+00</OMEGA_0>
-			<i_0>9.34693681537894339e-01</i_0>
-			<omega>1.07599241400869028e+00</omega>
-			<OMEGAdot>-8.44892336014256075e-09</OMEGAdot>
-			<idot>1.34291308057727553e-10</idot>
-			<Cuc>-1.38953328132629395e-06</Cuc>
-			<Cus>1.17141753435134888e-05</Cus>
-			<Crc>1.45187500000000000e+02</Crc>
-			<Crs>-2.58750000000000000e+01</Crs>
-			<Cic>-1.49011611938476562e-07</Cic>
-			<Cis>2.58907675743103027e-07</Cis>
-			<toe>115200</toe>
-			<toc>115200</toc>
-			<af0>-3.46454326063394547e-04</af0>
-			<af1>9.89075488178059297e-12</af1>
+			<M_0>-9.09912623158772638e-01</M_0>
+			<delta_n>5.19307345521106002e-09</delta_n>
+			<ecc>1.70341596240177716e-02</ecc>
+			<sqrtA>5.15366913414001465e+03</sqrtA>
+			<OMEGA_0>-2.58435218423039137e+00</OMEGA_0>
+			<i_0>9.34683252394907238e-01</i_0>
+			<omega>1.07663178528107006e+00</omega>
+			<OMEGAdot>-8.47642450567565900e-09</OMEGAdot>
+			<idot>-9.42896418277661509e-11</idot>
+			<Cuc>-1.44168734550476074e-06</Cuc>
+			<Cus>9.90740954875946045e-06</Cus>
+			<Crc>1.76406250000000000e+02</Crc>
+			<Crs>-3.40625000000000000e+01</Crs>
+			<Cic>6.14672899246215820e-08</Cic>
+			<Cis>3.33413481712341309e-07</Cis>
+			<toe>280800</toe>
+			<toc>280800</toc>
+			<af0>-3.44807282090187073e-04</af0>
+			<af1>1.00044417195022090e-11</af1>
 			<af2>0.00000000000000000e+00</af2>
 			<WN>329</WN>
-			<tow>111888</tow>
+			<tow>279732</tow>
 			<satClkDrift>0.00000000000000000e+00</satClkDrift>
 			<dtr>0.00000000000000000e+00</dtr>
-			<IODE_SF2>93</IODE_SF2>
-			<IODE_SF3>93</IODE_SF3>
+			<IODE_SF2>45</IODE_SF2>
+			<IODE_SF3>45</IODE_SF3>
 			<code_on_L2>1</code_on_L2>
 			<L2_P_data_flag>0</L2_P_data_flag>
 			<SV_accuracy>0</SV_accuracy>
 			<SV_health>0</SV_health>
 			<TGD>2.32830643653869629e-09</TGD>
-			<IODC>93</IODC>
-			<AODO>6300</AODO>
+			<IODC>45</IODC>
+			<AODO>15300</AODO>
+			<fit_interval_flag>0</fit_interval_flag>
+			<spare1>0.00000000000000000e+00</spare1>
+			<spare2>0.00000000000000000e+00</spare2>
+			<integrity_status_flag>0</integrity_status_flag>
+			<alert_flag>0</alert_flag>
+			<antispoofing_flag>1</antispoofing_flag>
+		</second>
+	</item>
+	<item>
+		<first>29</first>
+		<second>
+			<PRN>29</PRN>
+			<M_0>8.37300104978787707e-01</M_0>
+			<delta_n>4.72555398114838563e-09</delta_n>
+			<ecc>3.34533420391380744e-03</ecc>
+			<sqrtA>5.15361196517944336e+03</sqrtA>
+			<OMEGA_0>-3.10037733881792787e-01</OMEGA_0>
+			<i_0>9.65175728746084149e-01</i_0>
+			<omega>2.74806880939925868e+00</omega>
+			<OMEGAdot>-8.29105964162789119e-09</OMEGAdot>
+			<idot>-3.44300055765024893e-10</idot>
+			<Cuc>-4.74974513053894043e-07</Cuc>
+			<Cus>4.70131635665893555e-06</Cus>
+			<Crc>2.87000000000000000e+02</Crc>
+			<Crs>-5.68750000000000000e+00</Crs>
+			<Cic>-7.45058059692382812e-09</Cic>
+			<Cis>1.86264514923095703e-09</Cis>
+			<toe>280800</toe>
+			<toc>280800</toc>
+			<af0>-4.75914217531681061e-04</af0>
+			<af1>5.00222085975110450e-12</af1>
+			<af2>0.00000000000000000e+00</af2>
+			<WN>329</WN>
+			<tow>279732</tow>
+			<satClkDrift>0.00000000000000000e+00</satClkDrift>
+			<dtr>0.00000000000000000e+00</dtr>
+			<IODE_SF2>48</IODE_SF2>
+			<IODE_SF3>48</IODE_SF3>
+			<code_on_L2>1</code_on_L2>
+			<L2_P_data_flag>0</L2_P_data_flag>
+			<SV_accuracy>0</SV_accuracy>
+			<SV_health>0</SV_health>
+			<TGD>-9.77888703346252441e-09</TGD>
+			<IODC>48</IODC>
+			<AODO>15300</AODO>
+			<fit_interval_flag>0</fit_interval_flag>
+			<spare1>0.00000000000000000e+00</spare1>
+			<spare2>0.00000000000000000e+00</spare2>
+			<integrity_status_flag>0</integrity_status_flag>
+			<alert_flag>0</alert_flag>
+			<antispoofing_flag>1</antispoofing_flag>
+		</second>
+	</item>
+	<item>
+		<first>30</first>
+		<second>
+			<PRN>30</PRN>
+			<M_0>-2.06783865492294483e+00</M_0>
+			<delta_n>4.95413493103387937e-09</delta_n>
+			<ecc>7.69978482276201161e-03</ecc>
+			<sqrtA>5.15364924621582031e+03</sqrtA>
+			<OMEGA_0>-2.48555378938353577e+00</OMEGA_0>
+			<i_0>9.35954364358965618e-01</i_0>
+			<omega>-2.35303054217263918e+00</omega>
+			<OMEGAdot>-8.11212361679565399e-09</OMEGAdot>
+			<idot>7.96461747257267093e-11</idot>
+			<Cuc>-1.37835741043090820e-06</Cuc>
+			<Cus>1.01048499345779419e-05</Cus>
+			<Crc>1.67468750000000000e+02</Crc>
+			<Crs>-2.06562500000000000e+01</Crs>
+			<Cic>1.35973095893859863e-07</Cic>
+			<Cis>-1.11758708953857422e-08</Cis>
+			<toe>280800</toe>
+			<toc>280800</toc>
+			<af0>-7.83833675086498260e-05</af0>
+			<af1>1.04591890703886731e-11</af1>
+			<af2>0.00000000000000000e+00</af2>
+			<WN>329</WN>
+			<tow>279708</tow>
+			<satClkDrift>0.00000000000000000e+00</satClkDrift>
+			<dtr>0.00000000000000000e+00</dtr>
+			<IODE_SF2>101</IODE_SF2>
+			<IODE_SF3>101</IODE_SF3>
+			<code_on_L2>1</code_on_L2>
+			<L2_P_data_flag>0</L2_P_data_flag>
+			<SV_accuracy>0</SV_accuracy>
+			<SV_health>0</SV_health>
+			<TGD>3.72529029846191406e-09</TGD>
+			<IODC>101</IODC>
+			<AODO>15300</AODO>
 			<fit_interval_flag>0</fit_interval_flag>
 			<spare1>0.00000000000000000e+00</spare1>
 			<spare2>0.00000000000000000e+00</spare2>

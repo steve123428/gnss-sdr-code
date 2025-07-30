@@ -71,7 +71,14 @@ void log_data_to_csv(float left_values[])
     fclose(log_file);
 }
 */
+
+void update_dashboard(uint32_t prn)
+{
+    mvwprintw(dashboard_win, prn*2, 1, "PRN: %d", prn);
+}
+
 //First window
+/*
 void update_dashboard(const char *left_names[], float left_values[], DataArray chan[], int data_count, const char *right_names[])
 {
     wclear(dashboard_win);
@@ -135,7 +142,7 @@ void update_dashboard(const char *left_names[], float left_values[], DataArray c
         }
     }
     wrefresh(dashboard_win);
-}
+}*/
 
 void update_time() {
     struct timeval tv;

@@ -1,0 +1,4 @@
+/home/suhjw/gnss-sdr/monitoring-client/build/CMakeFiles/monitoring_lib.dir
+/home/suhjw/gnss-sdr/monitoring-client/build/CMakeFiles/monitoring-client.dir
+/home/suhjw/gnss-sdr/monitoring-client/build/CMakeFiles/edit_cache.dir
+/home/suhjw/gnss-sdr/monitoring-client/build/CMakeFiles/rebuild_cache.dir

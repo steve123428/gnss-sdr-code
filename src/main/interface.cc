@@ -39,6 +39,10 @@ void init_window()
     command_win = newwin(10, width, start_y + 30, start_x);
     debug_win = newwin(10, width, start_y + 40, start_x);
 
+    wrefresh(dashboard_win);
+    wrefresh(command_win);
+    wrefresh(debug_win);
+
     scrollok(command_win, TRUE);
     scrollok(debug_win, TRUE);
     nodelay(command_win, TRUE); 
