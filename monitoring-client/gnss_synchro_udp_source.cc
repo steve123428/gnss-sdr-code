@@ -45,7 +45,7 @@ bool Gnss_Synchro_Udp_Source::print_table()
 
             // Print table header.
             attron(A_REVERSE);
-            printw("%3s%6s%14s%17s\n", "CH", "PRN", "CN0 [dB-Hz]", "Doppler [Hz]");
+            printw("%3s%6s%14s%17s%17s%17s%17s\n", "CH", "PRN", "CN0 [dB-Hz]", "Doppler [Hz]", "Pseudorange [m]", "Carrier phase [rad]", "Code phase [samples]");
             attroff(A_REVERSE);
 
             // Print table contents.
@@ -54,7 +54,7 @@ bool Gnss_Synchro_Udp_Source::print_table()
                     int channel_id = ch.first;      // Key
                     gnss_sdr::GnssSynchro data = ch.second;  // Value
 
-                    printw("%3d%6d%14f%17f%17f\n", channel_id, data.prn(), data.cn0_db_hz(), data.carrier_doppler_hz(), data.pseudorange_m());
+                    printw("%3d%6d%14f%17f%17f%17f%17f\n", channel_id, data.prn(), data.cn0_db_hz(), data.carrier_doppler_hz(), data.pseudorange_m(), data.carrier_phase_rads(), data.code_phase_samples());
                 }
             refresh();  // Update the screen.
         }
