@@ -29,3 +29,5 @@
 .vs/
 .vscode/
 *.kml
+work/pvt.dat_*.kml
+work/pvt.dat_*.gpx
