@@ -83,30 +83,14 @@ src/main/CMakeFiles/gnss-sdr.dir/main.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/gnss-sdr.dir/main.cc.s"
 	cd /home/suhjw/gnss-sdr/work/src/main && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/suhjw/gnss-sdr/src/main/main.cc -o CMakeFiles/gnss-sdr.dir/main.cc.s
 
-src/main/CMakeFiles/gnss-sdr.dir/interface.cc.o: src/main/CMakeFiles/gnss-sdr.dir/flags.make
-src/main/CMakeFiles/gnss-sdr.dir/interface.cc.o: ../src/main/interface.cc
-src/main/CMakeFiles/gnss-sdr.dir/interface.cc.o: src/main/CMakeFiles/gnss-sdr.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/suhjw/gnss-sdr/work/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object src/main/CMakeFiles/gnss-sdr.dir/interface.cc.o"
-	cd /home/suhjw/gnss-sdr/work/src/main && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT src/main/CMakeFiles/gnss-sdr.dir/interface.cc.o -MF CMakeFiles/gnss-sdr.dir/interface.cc.o.d -o CMakeFiles/gnss-sdr.dir/interface.cc.o -c /home/suhjw/gnss-sdr/src/main/interface.cc
-
-src/main/CMakeFiles/gnss-sdr.dir/interface.cc.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/gnss-sdr.dir/interface.cc.i"
-	cd /home/suhjw/gnss-sdr/work/src/main && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/suhjw/gnss-sdr/src/main/interface.cc > CMakeFiles/gnss-sdr.dir/interface.cc.i
-
-src/main/CMakeFiles/gnss-sdr.dir/interface.cc.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/gnss-sdr.dir/interface.cc.s"
-	cd /home/suhjw/gnss-sdr/work/src/main && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/suhjw/gnss-sdr/src/main/interface.cc -o CMakeFiles/gnss-sdr.dir/interface.cc.s
-
 # Object files for target gnss-sdr
 gnss__sdr_OBJECTS = \
-"CMakeFiles/gnss-sdr.dir/main.cc.o" \
-"CMakeFiles/gnss-sdr.dir/interface.cc.o"
+"CMakeFiles/gnss-sdr.dir/main.cc.o"
 
 # External object files for target gnss-sdr
 gnss__sdr_EXTERNAL_OBJECTS =
 
 src/main/gnss-sdr: src/main/CMakeFiles/gnss-sdr.dir/main.cc.o
-src/main/gnss-sdr: src/main/CMakeFiles/gnss-sdr.dir/interface.cc.o
 src/main/gnss-sdr: src/main/CMakeFiles/gnss-sdr.dir/build.make
 src/main/gnss-sdr: /usr/lib/x86_64-linux-gnu/libcurses.so
 src/main/gnss-sdr: /usr/lib/x86_64-linux-gnu/libform.so
@@ -141,8 +125,6 @@ src/main/gnss-sdr: src/algorithms/acquisition/gnuradio_blocks/libacquisition_gr_
 src/main/gnss-sdr: src/algorithms/acquisition/libs/libacquisition_libs.a
 src/main/gnss-sdr: src/algorithms/tracking/adapters/libtracking_adapters.a
 src/main/gnss-sdr: src/algorithms/tracking/gnuradio_blocks/libtracking_gr_blocks.a
-src/main/gnss-sdr: /usr/lib/x86_64-linux-gnu/libcurses.so
-src/main/gnss-sdr: /usr/lib/x86_64-linux-gnu/libform.so
 src/main/gnss-sdr: src/algorithms/tracking/libs/libtracking_libs.a
 src/main/gnss-sdr: src/algorithms/channel/adapters/libchannel_adapters.a
 src/main/gnss-sdr: src/algorithms/channel/libs/libchannel_libs.a
@@ -196,7 +178,7 @@ src/main/gnss-sdr: /usr/lib/x86_64-linux-gnu/libpugixml.so
 src/main/gnss-sdr: /usr/lib/x86_64-linux-gnu/openblas-pthread/liblapack.so
 src/main/gnss-sdr: /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so
 src/main/gnss-sdr: src/main/CMakeFiles/gnss-sdr.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/suhjw/gnss-sdr/work/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable gnss-sdr"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/suhjw/gnss-sdr/work/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable gnss-sdr"
 	cd /home/suhjw/gnss-sdr/work/src/main && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/gnss-sdr.dir/link.txt --verbose=$(VERBOSE)
 	cd /home/suhjw/gnss-sdr/work/src/main && /usr/bin/cmake -E copy /home/suhjw/gnss-sdr/work/src/main/gnss-sdr /home/suhjw/gnss-sdr/install/gnss-sdr
 

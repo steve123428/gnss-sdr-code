@@ -223,20 +223,6 @@ src/algorithms/tracking/gnuradio_blocks/CMakeFiles/tracking_gr_blocks.dir/kf_tra
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/tracking_gr_blocks.dir/kf_tracking.cc.s"
 	cd /home/suhjw/gnss-sdr/work/src/algorithms/tracking/gnuradio_blocks && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/suhjw/gnss-sdr/src/algorithms/tracking/gnuradio_blocks/kf_tracking.cc -o CMakeFiles/tracking_gr_blocks.dir/kf_tracking.cc.s
 
-src/algorithms/tracking/gnuradio_blocks/CMakeFiles/tracking_gr_blocks.dir/__/__/__/main/interface.cc.o: src/algorithms/tracking/gnuradio_blocks/CMakeFiles/tracking_gr_blocks.dir/flags.make
-src/algorithms/tracking/gnuradio_blocks/CMakeFiles/tracking_gr_blocks.dir/__/__/__/main/interface.cc.o: ../src/main/interface.cc
-src/algorithms/tracking/gnuradio_blocks/CMakeFiles/tracking_gr_blocks.dir/__/__/__/main/interface.cc.o: src/algorithms/tracking/gnuradio_blocks/CMakeFiles/tracking_gr_blocks.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/suhjw/gnss-sdr/work/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object src/algorithms/tracking/gnuradio_blocks/CMakeFiles/tracking_gr_blocks.dir/__/__/__/main/interface.cc.o"
-	cd /home/suhjw/gnss-sdr/work/src/algorithms/tracking/gnuradio_blocks && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT src/algorithms/tracking/gnuradio_blocks/CMakeFiles/tracking_gr_blocks.dir/__/__/__/main/interface.cc.o -MF CMakeFiles/tracking_gr_blocks.dir/__/__/__/main/interface.cc.o.d -o CMakeFiles/tracking_gr_blocks.dir/__/__/__/main/interface.cc.o -c /home/suhjw/gnss-sdr/src/main/interface.cc
-
-src/algorithms/tracking/gnuradio_blocks/CMakeFiles/tracking_gr_blocks.dir/__/__/__/main/interface.cc.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/tracking_gr_blocks.dir/__/__/__/main/interface.cc.i"
-	cd /home/suhjw/gnss-sdr/work/src/algorithms/tracking/gnuradio_blocks && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/suhjw/gnss-sdr/src/main/interface.cc > CMakeFiles/tracking_gr_blocks.dir/__/__/__/main/interface.cc.i
-
-src/algorithms/tracking/gnuradio_blocks/CMakeFiles/tracking_gr_blocks.dir/__/__/__/main/interface.cc.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/tracking_gr_blocks.dir/__/__/__/main/interface.cc.s"
-	cd /home/suhjw/gnss-sdr/work/src/algorithms/tracking/gnuradio_blocks && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/suhjw/gnss-sdr/src/main/interface.cc -o CMakeFiles/tracking_gr_blocks.dir/__/__/__/main/interface.cc.s
-
 # Object files for target tracking_gr_blocks
 tracking_gr_blocks_OBJECTS = \
 "CMakeFiles/tracking_gr_blocks.dir/dll_pll_veml_tracking.cc.o" \
@@ -249,8 +235,7 @@ tracking_gr_blocks_OBJECTS = \
 "CMakeFiles/tracking_gr_blocks.dir/glonass_l2_ca_dll_pll_tracking_cc.cc.o" \
 "CMakeFiles/tracking_gr_blocks.dir/gps_l1_ca_gaussian_tracking_cc.cc.o" \
 "CMakeFiles/tracking_gr_blocks.dir/gps_l1_ca_tcp_connector_tracking_cc.cc.o" \
-"CMakeFiles/tracking_gr_blocks.dir/kf_tracking.cc.o" \
-"CMakeFiles/tracking_gr_blocks.dir/__/__/__/main/interface.cc.o"
+"CMakeFiles/tracking_gr_blocks.dir/kf_tracking.cc.o"
 
 # External object files for target tracking_gr_blocks
 tracking_gr_blocks_EXTERNAL_OBJECTS =
@@ -266,10 +251,9 @@ src/algorithms/tracking/gnuradio_blocks/libtracking_gr_blocks.a: src/algorithms/
 src/algorithms/tracking/gnuradio_blocks/libtracking_gr_blocks.a: src/algorithms/tracking/gnuradio_blocks/CMakeFiles/tracking_gr_blocks.dir/gps_l1_ca_gaussian_tracking_cc.cc.o
 src/algorithms/tracking/gnuradio_blocks/libtracking_gr_blocks.a: src/algorithms/tracking/gnuradio_blocks/CMakeFiles/tracking_gr_blocks.dir/gps_l1_ca_tcp_connector_tracking_cc.cc.o
 src/algorithms/tracking/gnuradio_blocks/libtracking_gr_blocks.a: src/algorithms/tracking/gnuradio_blocks/CMakeFiles/tracking_gr_blocks.dir/kf_tracking.cc.o
-src/algorithms/tracking/gnuradio_blocks/libtracking_gr_blocks.a: src/algorithms/tracking/gnuradio_blocks/CMakeFiles/tracking_gr_blocks.dir/__/__/__/main/interface.cc.o
 src/algorithms/tracking/gnuradio_blocks/libtracking_gr_blocks.a: src/algorithms/tracking/gnuradio_blocks/CMakeFiles/tracking_gr_blocks.dir/build.make
 src/algorithms/tracking/gnuradio_blocks/libtracking_gr_blocks.a: src/algorithms/tracking/gnuradio_blocks/CMakeFiles/tracking_gr_blocks.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/suhjw/gnss-sdr/work/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Linking CXX static library libtracking_gr_blocks.a"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/suhjw/gnss-sdr/work/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Linking CXX static library libtracking_gr_blocks.a"
 	cd /home/suhjw/gnss-sdr/work/src/algorithms/tracking/gnuradio_blocks && $(CMAKE_COMMAND) -P CMakeFiles/tracking_gr_blocks.dir/cmake_clean_target.cmake
 	cd /home/suhjw/gnss-sdr/work/src/algorithms/tracking/gnuradio_blocks && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/tracking_gr_blocks.dir/link.txt --verbose=$(VERBOSE)
 

@@ -149,8 +149,6 @@ tests/acq_test: src/algorithms/resampler/adapters/libresampler_adapters.a
 tests/acq_test: src/algorithms/resampler/gnuradio_blocks/libresampler_gr_blocks.a
 tests/acq_test: src/algorithms/tracking/adapters/libtracking_adapters.a
 tests/acq_test: src/algorithms/tracking/gnuradio_blocks/libtracking_gr_blocks.a
-tests/acq_test: /usr/lib/x86_64-linux-gnu/libcurses.so
-tests/acq_test: /usr/lib/x86_64-linux-gnu/libform.so
 tests/acq_test: src/algorithms/tracking/libs/libtracking_libs.a
 tests/acq_test: src/algorithms/channel/adapters/libchannel_adapters.a
 tests/acq_test: src/algorithms/channel/libs/libchannel_libs.a

@@ -209,6 +209,7 @@ class GnssSynchro PROTOBUF_FINAL :
     kRxTimeFieldNumber = 23,
     kInterpTowMsFieldNumber = 25,
     kFlagPLL180DegPhaseLockedFieldNumber = 26,
+    kCarrierLockTestFieldNumber = 27,
   };
   // string system = 1;
   void clear_system();
@@ -476,6 +477,15 @@ class GnssSynchro PROTOBUF_FINAL :
   void _internal_set_flag_pll_180_deg_phase_locked(bool value);
   public:
 
+  // float carrier_lock_test = 27;
+  void clear_carrier_lock_test();
+  float carrier_lock_test() const;
+  void set_carrier_lock_test(float value);
+  private:
+  float _internal_carrier_lock_test() const;
+  void _internal_set_carrier_lock_test(float value);
+  public:
+
   // @@protoc_insertion_point(class_scope:gnss_sdr.GnssSynchro)
  private:
   class _Internal;
@@ -509,6 +519,7 @@ class GnssSynchro PROTOBUF_FINAL :
   double rx_time_;
   double interp_tow_ms_;
   bool flag_pll_180_deg_phase_locked_;
+  float carrier_lock_test_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_gnss_5fsynchro_2eproto;
 };
@@ -1309,6 +1320,26 @@ inline void GnssSynchro::_internal_set_flag_pll_180_deg_phase_locked(bool value)
 inline void GnssSynchro::set_flag_pll_180_deg_phase_locked(bool value) {
   _internal_set_flag_pll_180_deg_phase_locked(value);
   // @@protoc_insertion_point(field_set:gnss_sdr.GnssSynchro.flag_PLL_180_deg_phase_locked)
+}
+
+// float carrier_lock_test = 27;
+inline void GnssSynchro::clear_carrier_lock_test() {
+  carrier_lock_test_ = 0;
+}
+inline float GnssSynchro::_internal_carrier_lock_test() const {
+  return carrier_lock_test_;
+}
+inline float GnssSynchro::carrier_lock_test() const {
+  // @@protoc_insertion_point(field_get:gnss_sdr.GnssSynchro.carrier_lock_test)
+  return _internal_carrier_lock_test();
+}
+inline void GnssSynchro::_internal_set_carrier_lock_test(float value) {
+  
+  carrier_lock_test_ = value;
+}
+inline void GnssSynchro::set_carrier_lock_test(float value) {
+  _internal_set_carrier_lock_test(value);
+  // @@protoc_insertion_point(field_set:gnss_sdr.GnssSynchro.carrier_lock_test)
 }
 
 // -------------------------------------------------------------------

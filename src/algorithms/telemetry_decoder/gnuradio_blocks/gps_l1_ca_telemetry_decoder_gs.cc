@@ -687,6 +687,30 @@ int gps_l1_ca_telemetry_decoder_gs::general_work(int noutput_items __attribute__
                             d_dump_file.write(reinterpret_cast<char *>(&tmp_int), sizeof(int32_t));
                             tmp_int = static_cast<int32_t>(current_symbol.PRN);
                             d_dump_file.write(reinterpret_cast<char *>(&tmp_int), sizeof(int32_t));
+                            tmp_double = static_cast<double>(current_symbol.carrier_lock_test);
+                            d_dump_file.write(reinterpret_cast<char *>(&tmp_double), sizeof(double));
+                            tmp_double = static_cast<double>(current_symbol.acc_carrier_phase_rad);
+                            d_dump_file.write(reinterpret_cast<char *>(&tmp_double), sizeof(double));
+                            tmp_double = static_cast<double>(current_symbol.carr_error_hz);
+                            d_dump_file.write(reinterpret_cast<char *>(&tmp_double), sizeof(double));
+                            tmp_double = static_cast<double>(current_symbol.carr_error_filt_hz);
+                            d_dump_file.write(reinterpret_cast<char *>(&tmp_double), sizeof(double));
+                            tmp_double = static_cast<double>(current_symbol.code_error_chips);
+                            d_dump_file.write(reinterpret_cast<char *>(&tmp_double), sizeof(double));
+                            tmp_double = static_cast<double>(current_symbol.code_error_filt_chips);
+                            d_dump_file.write(reinterpret_cast<char *>(&tmp_double), sizeof(double));
+                            tmp_double = static_cast<double>(current_symbol.CN0_SNV_dB_Hz);
+                            d_dump_file.write(reinterpret_cast<char *>(&tmp_double), sizeof(double));
+                            tmp_double = static_cast<double>(current_symbol.abs_VE);
+                            d_dump_file.write(reinterpret_cast<char *>(&tmp_double), sizeof(double));
+                            tmp_double = static_cast<double>(current_symbol.abs_E);
+                            d_dump_file.write(reinterpret_cast<char *>(&tmp_double), sizeof(double));
+                            tmp_double = static_cast<double>(current_symbol.abs_P);
+                            d_dump_file.write(reinterpret_cast<char *>(&tmp_double), sizeof(double));
+                            tmp_double = static_cast<double>(current_symbol.abs_L);
+                            d_dump_file.write(reinterpret_cast<char *>(&tmp_double), sizeof(double));
+                            tmp_double = static_cast<double>(current_symbol.abs_VL);
+                            d_dump_file.write(reinterpret_cast<char *>(&tmp_double), sizeof(double));
                         }
                     catch (const std::ofstream::failure &e)
                         {

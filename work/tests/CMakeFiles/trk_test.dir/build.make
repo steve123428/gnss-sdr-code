@@ -186,8 +186,6 @@ tests/trk_test: /usr/lib/x86_64-linux-gnu/libgnuradio-analog.so
 tests/trk_test: tests/libgtest_main.a
 tests/trk_test: src/algorithms/tracking/adapters/libtracking_adapters.a
 tests/trk_test: src/algorithms/tracking/gnuradio_blocks/libtracking_gr_blocks.a
-tests/trk_test: /usr/lib/x86_64-linux-gnu/libcurses.so
-tests/trk_test: /usr/lib/x86_64-linux-gnu/libform.so
 tests/trk_test: src/algorithms/tracking/libs/libtracking_libs.a
 tests/trk_test: src/core/monitor/libcore_monitor.a
 tests/trk_test: src/algorithms/signal_source/adapters/libsignal_source_adapters.a

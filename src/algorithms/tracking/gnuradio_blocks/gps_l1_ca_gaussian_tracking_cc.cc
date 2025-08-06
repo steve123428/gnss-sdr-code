@@ -621,6 +621,7 @@ int Gps_L1_Ca_Gaussian_Tracking_cc::general_work(int noutput_items __attribute__
     // GNSS_SYNCHRO OBJECT to interchange data between tracking->telemetry_decoder
     Gnss_Synchro current_synchro_data = Gnss_Synchro();
     gr::thread::scoped_lock l(d_setlock);
+    std::cout << "checking_gaussian_tracking " << std::endl;
     if (d_enable_tracking == true)
         {
             // Fill the acquisition data

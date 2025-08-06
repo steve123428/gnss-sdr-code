@@ -8,7 +8,6 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/home/suhjw/gnss-sdr/src/main/interface.cc" "src/main/CMakeFiles/gnss-sdr.dir/interface.cc.o" "gcc" "src/main/CMakeFiles/gnss-sdr.dir/interface.cc.o.d"
   "/home/suhjw/gnss-sdr/src/main/main.cc" "src/main/CMakeFiles/gnss-sdr.dir/main.cc.o" "gcc" "src/main/CMakeFiles/gnss-sdr.dir/main.cc.o.d"
   )
 

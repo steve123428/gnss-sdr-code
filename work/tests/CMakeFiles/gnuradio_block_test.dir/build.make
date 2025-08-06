@@ -146,8 +146,6 @@ tests/gnuradio_block_test: src/algorithms/acquisition/gnuradio_blocks/libacquisi
 tests/gnuradio_block_test: src/algorithms/acquisition/libs/libacquisition_libs.a
 tests/gnuradio_block_test: src/algorithms/tracking/adapters/libtracking_adapters.a
 tests/gnuradio_block_test: src/algorithms/tracking/gnuradio_blocks/libtracking_gr_blocks.a
-tests/gnuradio_block_test: /usr/lib/x86_64-linux-gnu/libcurses.so
-tests/gnuradio_block_test: /usr/lib/x86_64-linux-gnu/libform.so
 tests/gnuradio_block_test: src/algorithms/tracking/libs/libtracking_libs.a
 tests/gnuradio_block_test: src/algorithms/channel/adapters/libchannel_adapters.a
 tests/gnuradio_block_test: src/algorithms/channel/libs/libchannel_libs.a

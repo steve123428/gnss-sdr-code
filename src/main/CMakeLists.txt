@@ -7,9 +7,9 @@
 
 if(USE_CMAKE_TARGET_SOURCES)
     add_executable(gnss-sdr)
-    target_sources(gnss-sdr PRIVATE main.cc interface.cc) 
+    target_sources(gnss-sdr PRIVATE main.cc) 
 else()
-    add_executable(gnss-sdr main.cc interface.cc)
+    add_executable(gnss-sdr main.cc)
 endif()
 
 find_package(Curses REQUIRED)

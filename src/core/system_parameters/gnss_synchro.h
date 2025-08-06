@@ -64,6 +64,18 @@ public:
     double Code_phase_samples{};         //!< Set by Tracking processing block
     uint64_t Tracking_sample_counter{};  //!< Set by Tracking processing block
     int32_t correlation_length_ms{};     //!< Set by Tracking processing block
+    float carrier_lock_test{};           //!< Set by Tracking processing block
+    float acc_carrier_phase_rad{};       //!< Set by Tracking processing block
+    float carr_error_hz{};               //!< Set by Tracking processing block
+    float carr_error_filt_hz{};          //!< Set by Tracking processing block
+    float code_error_chips{};            //!< Set by Tracking processing block
+    float code_error_filt_chips{};       //!< Set by Tracking processing block
+    float CN0_SNV_dB_Hz{};               //!< Set by Tracking processing block
+    float abs_VE{};                      //!< Set by Tracking processing block
+    float abs_E{};                       //!< Set by Tracking processing block
+    float abs_P{};                       //!< Set by Tracking processing block
+    float abs_L{};                       //!< Set by Tracking processing block
+    float abs_VL{};                      //!< Set by Tracking processing block
 
     // Telemetry Decoder
     uint32_t TOW_at_current_symbol_ms{};  //!< Set by Telemetry Decoder processing block
@@ -117,6 +129,18 @@ public:
                 this->Flag_valid_word = rhs.Flag_valid_word;
                 this->Flag_valid_pseudorange = rhs.Flag_valid_pseudorange;
                 this->Flag_PLL_180_deg_phase_locked = rhs.Flag_PLL_180_deg_phase_locked;
+                this->carrier_lock_test = rhs.carrier_lock_test;
+                this->acc_carrier_phase_rad = rhs.acc_carrier_phase_rad;
+                this->carr_error_hz = rhs.carr_error_hz;
+                this->carr_error_filt_hz = rhs.carr_error_filt_hz;
+                this->code_error_chips = rhs.code_error_chips;
+                this->code_error_filt_chips = rhs.code_error_filt_chips;
+                this->CN0_SNV_dB_Hz = rhs.CN0_SNV_dB_Hz;
+                this->abs_VE = rhs.abs_VE;
+                this->abs_E = rhs.abs_E;
+                this->abs_P = rhs.abs_P;
+                this->abs_L = rhs.abs_L;
+                this->abs_VL = rhs.abs_VL;
             }
         return *this;
     };
@@ -157,6 +181,18 @@ public:
                 this->Flag_valid_word = other.Flag_valid_word;
                 this->Flag_valid_pseudorange = other.Flag_valid_pseudorange;
                 this->Flag_PLL_180_deg_phase_locked = other.Flag_PLL_180_deg_phase_locked;
+                this->carrier_lock_test = other.carrier_lock_test;
+                this->acc_carrier_phase_rad = other.acc_carrier_phase_rad;
+                this->carr_error_hz = other.carr_error_hz;
+                this->carr_error_filt_hz = other.carr_error_filt_hz;
+                this->code_error_chips = other.code_error_chips;
+                this->code_error_filt_chips = other.code_error_filt_chips;
+                this->CN0_SNV_dB_Hz = other.CN0_SNV_dB_Hz;
+                this->abs_VE = other.abs_VE;
+                this->abs_E = other.abs_E;
+                this->abs_P = other.abs_P;
+                this->abs_L = other.abs_L;
+                this->abs_VL = other.abs_VL;
 
                 // Leave the source object in a valid but unspecified state
                 other.Signal[0] = '\0';
@@ -187,6 +223,18 @@ public:
                 other.Flag_valid_word = false;
                 other.Flag_valid_pseudorange = false;
                 other.Flag_PLL_180_deg_phase_locked = false;
+                other.carrier_lock_test = 0.0;
+                other.acc_carrier_phase_rad = 0.0;
+                other.carr_error_hz = 0.0;
+                other.carr_error_filt_hz = 0.0;
+                other.code_error_chips = 0.0;
+                other.code_error_filt_chips = 0.0;
+                other.CN0_SNV_dB_Hz = 0.0;
+                other.abs_VE = 0.0;
+                other.abs_E = 0.0;
+                other.abs_P = 0.0;
+                other.abs_L = 0.0;
+                other.abs_VL = 0.0;
             }
         return *this;
     };
@@ -222,6 +270,7 @@ public:
         ar& BOOST_SERIALIZATION_NVP(Code_phase_samples);
         ar& BOOST_SERIALIZATION_NVP(Tracking_sample_counter);
         ar& BOOST_SERIALIZATION_NVP(correlation_length_ms);
+        ar& BOOST_SERIALIZATION_NVP(carrier_lock_test);
         // Telemetry Decoder
         ar& BOOST_SERIALIZATION_NVP(TOW_at_current_symbol_ms);
         // Observables

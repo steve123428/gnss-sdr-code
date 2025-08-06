@@ -27,7 +27,7 @@
 int save_tlm_matfile(const std::string &dumpfile)
 {
     std::ifstream::pos_type size;
-    const int32_t number_of_double_vars = 2;
+    const int32_t number_of_double_vars = 14;
     const int32_t number_of_int_vars = 2;
     const int32_t epoch_size_bytes = sizeof(uint64_t) + sizeof(double) * number_of_double_vars +
                                      sizeof(int32_t) * number_of_int_vars;
@@ -67,6 +67,18 @@ int save_tlm_matfile(const std::string &dumpfile)
     auto TOW_at_Preamble_ms = std::vector<double>(num_epoch);
     auto nav_symbol = std::vector<int32_t>(num_epoch);
     auto prn = std::vector<int32_t>(num_epoch);
+    auto carrier_lock_test = std::vector<double>(num_epoch);
+    auto acc_carrier_phase_rad = std::vector<double>(num_epoch);
+    auto carr_error_hz = std::vector<double>(num_epoch);
+    auto carr_error_filt_hz = std::vector<double>(num_epoch);
+    auto code_error_chips = std::vector<double>(num_epoch);
+    auto code_error_filt_chips = std::vector<double>(num_epoch);
+    auto CN0_SNV_dB_Hz = std::vector<double>(num_epoch);
+    auto abs_VE = std::vector<double>(num_epoch);
+    auto abs_E = std::vector<double>(num_epoch);
+    auto abs_P = std::vector<double>(num_epoch);
+    auto abs_L = std::vector<double>(num_epoch);
+    auto abs_VL = std::vector<double>(num_epoch);
 
     try
         {
@@ -79,6 +91,18 @@ int save_tlm_matfile(const std::string &dumpfile)
                             dump_file.read(reinterpret_cast<char *>(&TOW_at_Preamble_ms[i]), sizeof(double));
                             dump_file.read(reinterpret_cast<char *>(&nav_symbol[i]), sizeof(int32_t));
                             dump_file.read(reinterpret_cast<char *>(&prn[i]), sizeof(int32_t));
+                            dump_file.read(reinterpret_cast<char *>(&carrier_lock_test[i]), sizeof(double));
+                            dump_file.read(reinterpret_cast<char *>(&acc_carrier_phase_rad[i]), sizeof(double));
+                            dump_file.read(reinterpret_cast<char *>(&carr_error_hz[i]), sizeof(double));
+                            dump_file.read(reinterpret_cast<char *>(&carr_error_filt_hz[i]), sizeof(double));
+                            dump_file.read(reinterpret_cast<char *>(&code_error_chips[i]), sizeof(double));
+                            dump_file.read(reinterpret_cast<char *>(&code_error_filt_chips[i]), sizeof(double));
+                            dump_file.read(reinterpret_cast<char *>(&CN0_SNV_dB_Hz[i]), sizeof(double));
+                            dump_file.read(reinterpret_cast<char *>(&abs_VE[i]), sizeof(double));
+                            dump_file.read(reinterpret_cast<char *>(&abs_E[i]), sizeof(double));
+                            dump_file.read(reinterpret_cast<char *>(&abs_P[i]), sizeof(double));
+                            dump_file.read(reinterpret_cast<char *>(&abs_L[i]), sizeof(double));
+                            dump_file.read(reinterpret_cast<char *>(&abs_VL[i]), sizeof(double));
                         }
                 }
             dump_file.close();
@@ -119,6 +143,54 @@ int save_tlm_matfile(const std::string &dumpfile)
 
                     matvar = Mat_VarCreate("PRN", MAT_C_INT32, MAT_T_INT32, 2, dims.data(), prn.data(), 0);
                     Mat_VarWrite(matfp, matvar, MAT_COMPRESSION_ZLIB);  // or MAT_COMPRESSION_NONE
+                    Mat_VarFree(matvar);
+
+                    matvar = Mat_VarCreate("carrier_lock_test", MAT_C_DOUBLE, MAT_T_DOUBLE, 2, dims.data(), carrier_lock_test.data(), 0);
+                    Mat_VarWrite(matfp, matvar, MAT_COMPRESSION_ZLIB);  // or MAT_COMPRESSION_NONE
+                    Mat_VarFree(matvar);
+
+                    matvar = Mat_VarCreate("acc_carrier_phase_rad", MAT_C_DOUBLE, MAT_T_DOUBLE, 2, dims.data(), acc_carrier_phase_rad.data(), 0);
+                    Mat_VarWrite(matfp, matvar, MAT_COMPRESSION_ZLIB);
+                    Mat_VarFree(matvar);
+
+                    matvar = Mat_VarCreate("carr_error_hz", MAT_C_DOUBLE, MAT_T_DOUBLE, 2, dims.data(), carr_error_hz.data(), 0);
+                    Mat_VarWrite(matfp, matvar, MAT_COMPRESSION_ZLIB);
+                    Mat_VarFree(matvar);
+
+                    matvar = Mat_VarCreate("carr_error_filt_hz", MAT_C_DOUBLE, MAT_T_DOUBLE, 2, dims.data(), carr_error_filt_hz.data(), 0);
+                    Mat_VarWrite(matfp, matvar, MAT_COMPRESSION_ZLIB);
+                    Mat_VarFree(matvar);
+
+                    matvar = Mat_VarCreate("code_error_chips", MAT_C_DOUBLE, MAT_T_DOUBLE, 2, dims.data(), code_error_chips.data(), 0);
+                    Mat_VarWrite(matfp, matvar, MAT_COMPRESSION_ZLIB);
+                    Mat_VarFree(matvar);
+
+                    matvar = Mat_VarCreate("code_error_filt_chips", MAT_C_DOUBLE, MAT_T_DOUBLE, 2, dims.data(), code_error_filt_chips.data(), 0);
+                    Mat_VarWrite(matfp, matvar, MAT_COMPRESSION_ZLIB);
+                    Mat_VarFree(matvar);
+
+                    matvar = Mat_VarCreate("CN0_SNV_dB_Hz", MAT_C_DOUBLE, MAT_T_DOUBLE, 2, dims.data(), CN0_SNV_dB_Hz.data(), 0);
+                    Mat_VarWrite(matfp, matvar, MAT_COMPRESSION_ZLIB);
+                    Mat_VarFree(matvar);
+
+                    matvar = Mat_VarCreate("abs_VE", MAT_C_DOUBLE, MAT_T_DOUBLE, 2, dims.data(), abs_VE.data(), 0);
+                    Mat_VarWrite(matfp, matvar, MAT_COMPRESSION_ZLIB);
+                    Mat_VarFree(matvar);
+
+                    matvar = Mat_VarCreate("abs_E", MAT_C_DOUBLE, MAT_T_DOUBLE, 2, dims.data(), abs_E.data(), 0);
+                    Mat_VarWrite(matfp, matvar, MAT_COMPRESSION_ZLIB);
+                    Mat_VarFree(matvar);
+
+                    matvar = Mat_VarCreate("abs_P", MAT_C_DOUBLE, MAT_T_DOUBLE, 2, dims.data(), abs_P.data(), 0);
+                    Mat_VarWrite(matfp, matvar, MAT_COMPRESSION_ZLIB);
+                    Mat_VarFree(matvar);
+
+                    matvar = Mat_VarCreate("abs_L", MAT_C_DOUBLE, MAT_T_DOUBLE, 2, dims.data(), abs_L.data(), 0);
+                    Mat_VarWrite(matfp, matvar, MAT_COMPRESSION_ZLIB);
+                    Mat_VarFree(matvar);
+
+                    matvar = Mat_VarCreate("abs_VL", MAT_C_DOUBLE, MAT_T_DOUBLE, 2, dims.data(), abs_VL.data(), 0);
+                    Mat_VarWrite(matfp, matvar, MAT_COMPRESSION_ZLIB);
                     Mat_VarFree(matvar);
                 }
             Mat_Close(matfp);
