@@ -147,8 +147,6 @@ tests/flowgraph_test: src/algorithms/channel/libs/libchannel_libs.a
 tests/flowgraph_test: src/algorithms/acquisition/libs/libacquisition_libs.a
 tests/flowgraph_test: src/algorithms/tracking/adapters/libtracking_adapters.a
 tests/flowgraph_test: src/algorithms/tracking/gnuradio_blocks/libtracking_gr_blocks.a
-tests/flowgraph_test: /usr/lib/x86_64-linux-gnu/libcurses.so
-tests/flowgraph_test: /usr/lib/x86_64-linux-gnu/libform.so
 tests/flowgraph_test: src/algorithms/tracking/libs/libtracking_libs.a
 tests/flowgraph_test: src/algorithms/telemetry_decoder/adapters/libtelemetry_decoder_adapters.a
 tests/flowgraph_test: src/algorithms/telemetry_decoder/gnuradio_blocks/libtelemetry_decoder_gr_blocks.a

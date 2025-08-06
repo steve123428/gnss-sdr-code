@@ -185,30 +185,6 @@ tracking_gr_blocks/fast:
 	cd /home/suhjw/gnss-sdr/work && $(MAKE) $(MAKESILENT) -f src/algorithms/tracking/gnuradio_blocks/CMakeFiles/tracking_gr_blocks.dir/build.make src/algorithms/tracking/gnuradio_blocks/CMakeFiles/tracking_gr_blocks.dir/build
 .PHONY : tracking_gr_blocks/fast
 
-__/__/__/main/interface.o: __/__/__/main/interface.cc.o
-.PHONY : __/__/__/main/interface.o
-
-# target to build an object file
-__/__/__/main/interface.cc.o:
-	cd /home/suhjw/gnss-sdr/work && $(MAKE) $(MAKESILENT) -f src/algorithms/tracking/gnuradio_blocks/CMakeFiles/tracking_gr_blocks.dir/build.make src/algorithms/tracking/gnuradio_blocks/CMakeFiles/tracking_gr_blocks.dir/__/__/__/main/interface.cc.o
-.PHONY : __/__/__/main/interface.cc.o
-
-__/__/__/main/interface.i: __/__/__/main/interface.cc.i
-.PHONY : __/__/__/main/interface.i
-
-# target to preprocess a source file
-__/__/__/main/interface.cc.i:
-	cd /home/suhjw/gnss-sdr/work && $(MAKE) $(MAKESILENT) -f src/algorithms/tracking/gnuradio_blocks/CMakeFiles/tracking_gr_blocks.dir/build.make src/algorithms/tracking/gnuradio_blocks/CMakeFiles/tracking_gr_blocks.dir/__/__/__/main/interface.cc.i
-.PHONY : __/__/__/main/interface.cc.i
-
-__/__/__/main/interface.s: __/__/__/main/interface.cc.s
-.PHONY : __/__/__/main/interface.s
-
-# target to generate assembly for a file
-__/__/__/main/interface.cc.s:
-	cd /home/suhjw/gnss-sdr/work && $(MAKE) $(MAKESILENT) -f src/algorithms/tracking/gnuradio_blocks/CMakeFiles/tracking_gr_blocks.dir/build.make src/algorithms/tracking/gnuradio_blocks/CMakeFiles/tracking_gr_blocks.dir/__/__/__/main/interface.cc.s
-.PHONY : __/__/__/main/interface.cc.s
-
 dll_pll_veml_tracking.o: dll_pll_veml_tracking.cc.o
 .PHONY : dll_pll_veml_tracking.o
 
@@ -487,9 +463,6 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... test"
 	@echo "... tracking_gr_blocks"
-	@echo "... __/__/__/main/interface.o"
-	@echo "... __/__/__/main/interface.i"
-	@echo "... __/__/__/main/interface.s"
 	@echo "... dll_pll_veml_tracking.o"
 	@echo "... dll_pll_veml_tracking.i"
 	@echo "... dll_pll_veml_tracking.s"

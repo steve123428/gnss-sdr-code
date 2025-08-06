@@ -140,8 +140,6 @@ utils/front-end-cal/front-end-cal: src/algorithms/resampler/adapters/libresample
 utils/front-end-cal/front-end-cal: src/algorithms/resampler/gnuradio_blocks/libresampler_gr_blocks.a
 utils/front-end-cal/front-end-cal: src/algorithms/tracking/adapters/libtracking_adapters.a
 utils/front-end-cal/front-end-cal: src/algorithms/tracking/gnuradio_blocks/libtracking_gr_blocks.a
-utils/front-end-cal/front-end-cal: /usr/lib/x86_64-linux-gnu/libcurses.so
-utils/front-end-cal/front-end-cal: /usr/lib/x86_64-linux-gnu/libform.so
 utils/front-end-cal/front-end-cal: src/algorithms/tracking/libs/libtracking_libs.a
 utils/front-end-cal/front-end-cal: src/algorithms/channel/adapters/libchannel_adapters.a
 utils/front-end-cal/front-end-cal: src/algorithms/telemetry_decoder/adapters/libtelemetry_decoder_adapters.a

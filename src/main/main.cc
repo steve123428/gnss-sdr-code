@@ -42,7 +42,6 @@
 #include <memory>                                      // for unique_ptr
 #include <ostream>                                     // for std::flush
 #include <string>                                      // for string
-#include "interface.h"
 
 #if USE_GLOG_AND_GFLAGS
 #include <gflags/gflags.h>  // for ShutDownCommandLineFlags

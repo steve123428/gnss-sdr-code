@@ -262,8 +262,6 @@ tests/gnss_block_test: src/algorithms/channel/libs/libchannel_libs.a
 tests/gnss_block_test: src/algorithms/acquisition/libs/libacquisition_libs.a
 tests/gnss_block_test: src/algorithms/tracking/adapters/libtracking_adapters.a
 tests/gnss_block_test: src/algorithms/tracking/gnuradio_blocks/libtracking_gr_blocks.a
-tests/gnss_block_test: /usr/lib/x86_64-linux-gnu/libcurses.so
-tests/gnss_block_test: /usr/lib/x86_64-linux-gnu/libform.so
 tests/gnss_block_test: src/algorithms/tracking/libs/libtracking_libs.a
 tests/gnss_block_test: src/algorithms/telemetry_decoder/adapters/libtelemetry_decoder_adapters.a
 tests/gnss_block_test: src/algorithms/telemetry_decoder/gnuradio_blocks/libtelemetry_decoder_gr_blocks.a

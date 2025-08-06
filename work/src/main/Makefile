@@ -185,30 +185,6 @@ gnss-sdr/fast:
 	cd /home/suhjw/gnss-sdr/work && $(MAKE) $(MAKESILENT) -f src/main/CMakeFiles/gnss-sdr.dir/build.make src/main/CMakeFiles/gnss-sdr.dir/build
 .PHONY : gnss-sdr/fast
 
-interface.o: interface.cc.o
-.PHONY : interface.o
-
-# target to build an object file
-interface.cc.o:
-	cd /home/suhjw/gnss-sdr/work && $(MAKE) $(MAKESILENT) -f src/main/CMakeFiles/gnss-sdr.dir/build.make src/main/CMakeFiles/gnss-sdr.dir/interface.cc.o
-.PHONY : interface.cc.o
-
-interface.i: interface.cc.i
-.PHONY : interface.i
-
-# target to preprocess a source file
-interface.cc.i:
-	cd /home/suhjw/gnss-sdr/work && $(MAKE) $(MAKESILENT) -f src/main/CMakeFiles/gnss-sdr.dir/build.make src/main/CMakeFiles/gnss-sdr.dir/interface.cc.i
-.PHONY : interface.cc.i
-
-interface.s: interface.cc.s
-.PHONY : interface.s
-
-# target to generate assembly for a file
-interface.cc.s:
-	cd /home/suhjw/gnss-sdr/work && $(MAKE) $(MAKESILENT) -f src/main/CMakeFiles/gnss-sdr.dir/build.make src/main/CMakeFiles/gnss-sdr.dir/interface.cc.s
-.PHONY : interface.cc.s
-
 main.o: main.cc.o
 .PHONY : main.o
 
@@ -247,9 +223,6 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... test"
 	@echo "... gnss-sdr"
-	@echo "... interface.o"
-	@echo "... interface.i"
-	@echo "... interface.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

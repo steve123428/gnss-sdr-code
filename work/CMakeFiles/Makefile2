@@ -1561,7 +1561,7 @@ src/algorithms/observables/adapters/CMakeFiles/obs_adapters.dir/all: src/algorit
 src/algorithms/observables/adapters/CMakeFiles/obs_adapters.dir/all: src/core/system_parameters/CMakeFiles/core_system_parameters.dir/all
 	$(MAKE) $(MAKESILENT) -f src/algorithms/observables/adapters/CMakeFiles/obs_adapters.dir/build.make src/algorithms/observables/adapters/CMakeFiles/obs_adapters.dir/depend
 	$(MAKE) $(MAKESILENT) -f src/algorithms/observables/adapters/CMakeFiles/obs_adapters.dir/build.make src/algorithms/observables/adapters/CMakeFiles/obs_adapters.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/suhjw/gnss-sdr/work/CMakeFiles --progress-num= "Built target obs_adapters"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/suhjw/gnss-sdr/work/CMakeFiles --progress-num=74 "Built target obs_adapters"
 .PHONY : src/algorithms/observables/adapters/CMakeFiles/obs_adapters.dir/all
 
 # Build rule for subdir invocation for target.
@@ -1591,12 +1591,12 @@ src/algorithms/observables/gnuradio_blocks/CMakeFiles/obs_gr_blocks.dir/all: src
 src/algorithms/observables/gnuradio_blocks/CMakeFiles/obs_gr_blocks.dir/all: src/core/system_parameters/CMakeFiles/core_system_parameters.dir/all
 	$(MAKE) $(MAKESILENT) -f src/algorithms/observables/gnuradio_blocks/CMakeFiles/obs_gr_blocks.dir/build.make src/algorithms/observables/gnuradio_blocks/CMakeFiles/obs_gr_blocks.dir/depend
 	$(MAKE) $(MAKESILENT) -f src/algorithms/observables/gnuradio_blocks/CMakeFiles/obs_gr_blocks.dir/build.make src/algorithms/observables/gnuradio_blocks/CMakeFiles/obs_gr_blocks.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/suhjw/gnss-sdr/work/CMakeFiles --progress-num=74 "Built target obs_gr_blocks"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/suhjw/gnss-sdr/work/CMakeFiles --progress-num= "Built target obs_gr_blocks"
 .PHONY : src/algorithms/observables/gnuradio_blocks/CMakeFiles/obs_gr_blocks.dir/all
 
 # Build rule for subdir invocation for target.
 src/algorithms/observables/gnuradio_blocks/CMakeFiles/obs_gr_blocks.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/suhjw/gnss-sdr/work/CMakeFiles 11
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/suhjw/gnss-sdr/work/CMakeFiles 10
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 src/algorithms/observables/gnuradio_blocks/CMakeFiles/obs_gr_blocks.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/suhjw/gnss-sdr/work/CMakeFiles 0
 .PHONY : src/algorithms/observables/gnuradio_blocks/CMakeFiles/obs_gr_blocks.dir/rule
@@ -2400,12 +2400,12 @@ src/main/CMakeFiles/gnss-sdr.dir/all: src/core/receiver/CMakeFiles/core_receiver
 src/main/CMakeFiles/gnss-sdr.dir/all: src/core/monitor/CMakeFiles/core_monitor.dir/all
 	$(MAKE) $(MAKESILENT) -f src/main/CMakeFiles/gnss-sdr.dir/build.make src/main/CMakeFiles/gnss-sdr.dir/depend
 	$(MAKE) $(MAKESILENT) -f src/main/CMakeFiles/gnss-sdr.dir/build.make src/main/CMakeFiles/gnss-sdr.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/suhjw/gnss-sdr/work/CMakeFiles --progress-num= "Built target gnss-sdr"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/suhjw/gnss-sdr/work/CMakeFiles --progress-num=69 "Built target gnss-sdr"
 .PHONY : src/main/CMakeFiles/gnss-sdr.dir/all
 
 # Build rule for subdir invocation for target.
 src/main/CMakeFiles/gnss-sdr.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/suhjw/gnss-sdr/work/CMakeFiles 93
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/suhjw/gnss-sdr/work/CMakeFiles 94
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 src/main/CMakeFiles/gnss-sdr.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/suhjw/gnss-sdr/work/CMakeFiles 0
 .PHONY : src/main/CMakeFiles/gnss-sdr.dir/rule
@@ -2616,12 +2616,12 @@ tests/CMakeFiles/flowgraph_test.dir/all: tests/CMakeFiles/gtest.dir/all
 tests/CMakeFiles/flowgraph_test.dir/all: tests/CMakeFiles/gtest_main.dir/all
 	$(MAKE) $(MAKESILENT) -f tests/CMakeFiles/flowgraph_test.dir/build.make tests/CMakeFiles/flowgraph_test.dir/depend
 	$(MAKE) $(MAKESILENT) -f tests/CMakeFiles/flowgraph_test.dir/build.make tests/CMakeFiles/flowgraph_test.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/suhjw/gnss-sdr/work/CMakeFiles --progress-num= "Built target flowgraph_test"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/suhjw/gnss-sdr/work/CMakeFiles --progress-num=68 "Built target flowgraph_test"
 .PHONY : tests/CMakeFiles/flowgraph_test.dir/all
 
 # Build rule for subdir invocation for target.
 tests/CMakeFiles/flowgraph_test.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/suhjw/gnss-sdr/work/CMakeFiles 93
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/suhjw/gnss-sdr/work/CMakeFiles 94
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 tests/CMakeFiles/flowgraph_test.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/suhjw/gnss-sdr/work/CMakeFiles 0
 .PHONY : tests/CMakeFiles/flowgraph_test.dir/rule
@@ -2680,12 +2680,12 @@ tests/CMakeFiles/gnss_block_test.dir/all: tests/CMakeFiles/gtest.dir/all
 tests/CMakeFiles/gnss_block_test.dir/all: tests/CMakeFiles/gtest_main.dir/all
 	$(MAKE) $(MAKESILENT) -f tests/CMakeFiles/gnss_block_test.dir/build.make tests/CMakeFiles/gnss_block_test.dir/depend
 	$(MAKE) $(MAKESILENT) -f tests/CMakeFiles/gnss_block_test.dir/build.make tests/CMakeFiles/gnss_block_test.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/suhjw/gnss-sdr/work/CMakeFiles --progress-num=69,70 "Built target gnss_block_test"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/suhjw/gnss-sdr/work/CMakeFiles --progress-num=70 "Built target gnss_block_test"
 .PHONY : tests/CMakeFiles/gnss_block_test.dir/all
 
 # Build rule for subdir invocation for target.
 tests/CMakeFiles/gnss_block_test.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/suhjw/gnss-sdr/work/CMakeFiles 95
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/suhjw/gnss-sdr/work/CMakeFiles 94
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 tests/CMakeFiles/gnss_block_test.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/suhjw/gnss-sdr/work/CMakeFiles 0
 .PHONY : tests/CMakeFiles/gnss_block_test.dir/rule
@@ -3180,12 +3180,12 @@ utils/front-end-cal/CMakeFiles/front-end-cal.dir/all: src/core/monitor/CMakeFile
 utils/front-end-cal/CMakeFiles/front-end-cal.dir/all: utils/front-end-cal/CMakeFiles/front_end_cal_lib.dir/all
 	$(MAKE) $(MAKESILENT) -f utils/front-end-cal/CMakeFiles/front-end-cal.dir/build.make utils/front-end-cal/CMakeFiles/front-end-cal.dir/depend
 	$(MAKE) $(MAKESILENT) -f utils/front-end-cal/CMakeFiles/front-end-cal.dir/build.make utils/front-end-cal/CMakeFiles/front-end-cal.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/suhjw/gnss-sdr/work/CMakeFiles --progress-num=68 "Built target front-end-cal"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/suhjw/gnss-sdr/work/CMakeFiles --progress-num= "Built target front-end-cal"
 .PHONY : utils/front-end-cal/CMakeFiles/front-end-cal.dir/all
 
 # Build rule for subdir invocation for target.
 utils/front-end-cal/CMakeFiles/front-end-cal.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/suhjw/gnss-sdr/work/CMakeFiles 94
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/suhjw/gnss-sdr/work/CMakeFiles 93
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 utils/front-end-cal/CMakeFiles/front-end-cal.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/suhjw/gnss-sdr/work/CMakeFiles 0
 .PHONY : utils/front-end-cal/CMakeFiles/front-end-cal.dir/rule

@@ -1,6 +1,4 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/gnss-sdr.dir/interface.cc.o"
-  "CMakeFiles/gnss-sdr.dir/interface.cc.o.d"
   "CMakeFiles/gnss-sdr.dir/main.cc.o"
   "CMakeFiles/gnss-sdr.dir/main.cc.o.d"
   "gnss-sdr"

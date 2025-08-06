@@ -62,7 +62,6 @@
 #include <chrono>
 #include <iomanip>   // <<< MODIFIED for std::put_time
 #include <ctime>     // <<< MODIFIED for std::gmtime
-//#include "interface.h"
 
 #if USE_GLOG_AND_GFLAGS
 #include <glog/logging.h>
@@ -156,7 +155,7 @@ dll_pll_veml_tracking::dll_pll_veml_tracking(const Dll_Pll_Conf &conf_)
 #if USE_BOOST_BIND_PLACEHOLDERS
         boost::bind(&dll_pll_veml_tracking::msg_handler_telemetry_to_trk, this, boost::placeholders::_1));
 #else
-        boost::bind(&dll_pll_veml_tracking::msg_handler_telemetry_to_trk, this, _1));
+        boost::bind(&dll_pll_veml_tracking::msg_handler_telemetry_to_trk, this, _1);
 #endif
 #endif
 
@@ -1425,7 +1424,7 @@ void dll_pll_veml_tracking::log_data(int tracking_state)
             tmp_E = std::abs<float>(d_E_accu);
             tmp_P = std::abs<float>(d_P_accu);
             tmp_L = std::abs<float>(d_L_accu);
-
+            
             try
                 {
                     // Dump correlators output
@@ -1478,10 +1477,10 @@ void dll_pll_veml_tracking::log_data(int tracking_state)
                     uint32_t prn_ = d_acquisition_gnss_synchro->PRN;
                     d_dump_file.write(reinterpret_cast<char *>(&prn_), sizeof(uint32_t));
                     // UTC time
-                    auto now = std::chrono::system_clock::now();
+                    /*auto now = std::chrono::system_clock::now();
                     auto duration = now.time_since_epoch();
                     int64_t milliseconds = std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
-                    d_dump_file.write(reinterpret_cast<char *>(&milliseconds), sizeof(int64_t));
+                    d_dump_file.write(reinterpret_cast<char *>(&milliseconds), sizeof(int64_t));*/
                     d_dump_file.write(reinterpret_cast<char*>(&state), sizeof(int32_t));
                 }
             catch (const std::ofstream::failure &e)
@@ -1491,7 +1490,6 @@ void dll_pll_veml_tracking::log_data(int tracking_state)
         }
 }
 
-
 int32_t dll_pll_veml_tracking::save_matfile() const
 {
     // READ DUMP FILE
@@ -1499,7 +1497,7 @@ int32_t dll_pll_veml_tracking::save_matfile() const
     const int32_t number_of_double_vars = 1;
     const int32_t number_of_float_vars = 22;    
     const int32_t epoch_size_bytes = sizeof(uint64_t) + sizeof(double) * number_of_double_vars +
-                                     sizeof(float) * number_of_float_vars + sizeof(int64_t) + sizeof(int32_t);
+                                     sizeof(float) * number_of_float_vars + sizeof(double) + sizeof(int32_t);
     std::ifstream dump_file;
     std::string dump_filename_ = d_dump_filename;
     // add channel number to the filename
@@ -1551,7 +1549,7 @@ int32_t dll_pll_veml_tracking::save_matfile() const
     auto aux1 = std::vector<float>(num_epoch);
     auto aux2 = std::vector<double>(num_epoch);
     auto PRN = std::vector<uint32_t>(num_epoch);
-    auto utc_millis = std::vector<int64_t>(num_epoch);  // <<< MODIFIED
+    //auto utc_millis = std::vector<int64_t>(num_epoch);  // <<< MODIFIED
     auto state = std::vector<int32_t>(num_epoch);  // <<< MODIFIED
     try
         {
@@ -1581,7 +1579,7 @@ int32_t dll_pll_veml_tracking::save_matfile() const
                             dump_file.read(reinterpret_cast<char *>(&aux1[i]), sizeof(float));
                             dump_file.read(reinterpret_cast<char *>(&aux2[i]), sizeof(double));
                             dump_file.read(reinterpret_cast<char *>(&PRN[i]), sizeof(uint32_t));
-                            dump_file.read(reinterpret_cast<char *>(&utc_millis[i]), sizeof(int64_t));  // <<< MODIFIED
+                            //dump_file.read(reinterpret_cast<char *>(&utc_millis[i]), sizeof(int64_t));  // <<< MODIFIED
                             dump_file.read(reinterpret_cast<char *>(&state[i]), sizeof(int32_t));  // <<< MODIFIED
                         }
                 }
@@ -1691,9 +1689,9 @@ int32_t dll_pll_veml_tracking::save_matfile() const
             Mat_VarWrite(matfp, matvar, MAT_COMPRESSION_ZLIB);
             Mat_VarFree(matvar);
 
-            matvar = Mat_VarCreate("utc_millis", MAT_C_INT64, MAT_T_INT64, 2, dims.data(), utc_millis.data(), 0);  // <<< MODIFIED
-            Mat_VarWrite(matfp, matvar, MAT_COMPRESSION_ZLIB);
-            Mat_VarFree(matvar);
+            //matvar = Mat_VarCreate("utc_millis", MAT_C_INT64, MAT_T_INT64, 2, dims.data(), utc_millis.data(), 0);  // <<< MODIFIED
+            //Mat_VarWrite(matfp, matvar, MAT_COMPRESSION_ZLIB);
+            //Mat_VarFree(matvar);
 
             matvar = Mat_VarCreate("tracking_state", MAT_C_INT32, MAT_T_INT32, 2, dims.data(), state.data(), 0);
             Mat_VarWrite(matfp, matvar, MAT_COMPRESSION_ZLIB);
@@ -1990,6 +1988,7 @@ int dll_pll_veml_tracking::general_work(int noutput_items __attribute__((unused)
                         current_synchro_data.CN0_dB_hz = d_CN0_SNV_dB_Hz;
                         current_synchro_data.correlation_length_ms = d_correlation_length_ms;
                         current_synchro_data.Flag_valid_symbol_output = true;
+                        current_synchro_data.carrier_lock_test = d_carrier_lock_test;
                         d_P_data_accu = gr_complex(0.0, 0.0);
                     }
                 d_extend_correlation_symbols_count++;
@@ -2041,6 +2040,18 @@ int dll_pll_veml_tracking::general_work(int noutput_items __attribute__((unused)
                                 current_synchro_data.CN0_dB_hz = d_CN0_SNV_dB_Hz;
                                 current_synchro_data.correlation_length_ms = d_correlation_length_ms;
                                 current_synchro_data.Flag_valid_symbol_output = true;
+                                current_synchro_data.carrier_lock_test = d_carrier_lock_test;
+                                current_synchro_data.acc_carrier_phase_rad = d_acc_carrier_phase_rad;
+                                current_synchro_data.carr_error_hz = d_carr_freq_error_hz;
+                                current_synchro_data.carr_error_filt_hz = d_carr_error_filt_hz;
+                                current_synchro_data.code_error_chips = d_code_error_chips;
+                                current_synchro_data.code_error_filt_chips = d_code_error_filt_chips;
+                                current_synchro_data.CN0_SNV_dB_Hz = d_CN0_SNV_dB_Hz;
+                                current_synchro_data.abs_VE = std::abs(d_VE_accu);
+                                current_synchro_data.abs_E = std::abs(d_E_accu);
+                                current_synchro_data.abs_P = std::abs(d_P_accu);
+                                current_synchro_data.abs_L = std::abs(d_L_accu);
+                                current_synchro_data.abs_VL = std::abs(d_VL_accu);
                                 d_P_data_accu = gr_complex(0.0, 0.0);
                             }
 
@@ -2052,7 +2063,6 @@ int dll_pll_veml_tracking::general_work(int noutput_items __attribute__((unused)
                         d_VL_accu = gr_complex(0.0, 0.0);
                         if (d_enable_extended_integration)
                             {
-                                //std::cout << "Extended integration enabled!!!!!!!!!!!!!!!";
                                 d_state = 3;  // new coherent integration (correlation time extension) cycle
                             }
                     }

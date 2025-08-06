@@ -90,6 +90,7 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_gnss_5fsynchro_2eproto::offset
   PROTOBUF_FIELD_OFFSET(::gnss_sdr::GnssSynchro, flag_valid_pseudorange_),
   PROTOBUF_FIELD_OFFSET(::gnss_sdr::GnssSynchro, interp_tow_ms_),
   PROTOBUF_FIELD_OFFSET(::gnss_sdr::GnssSynchro, flag_pll_180_deg_phase_locked_),
+  PROTOBUF_FIELD_OFFSET(::gnss_sdr::GnssSynchro, carrier_lock_test_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::gnss_sdr::Observables, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -99,7 +100,7 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_gnss_5fsynchro_2eproto::offset
 };
 static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, sizeof(::gnss_sdr::GnssSynchro)},
-  { 31, -1, sizeof(::gnss_sdr::Observables)},
+  { 32, -1, sizeof(::gnss_sdr::Observables)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
@@ -108,7 +109,7 @@ static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] =
 };
 
 const char descriptor_table_protodef_gnss_5fsynchro_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
-  "\n\022gnss_synchro.proto\022\010gnss_sdr\"\226\005\n\013GnssS"
+  "\n\022gnss_synchro.proto\022\010gnss_sdr\"\261\005\n\013GnssS"
   "ynchro\022\016\n\006system\030\001 \001(\t\022\016\n\006signal\030\002 \001(\t\022\013"
   "\n\003prn\030\003 \001(\r\022\022\n\nchannel_id\030\004 \001(\005\022\031\n\021acq_d"
   "elay_samples\030\005 \001(\001\022\026\n\016acq_doppler_hz\030\006 \001"
@@ -125,9 +126,9 @@ const char descriptor_table_protodef_gnss_5fsynchro_2eproto[] PROTOBUF_SECTION_V
   "\r\022\025\n\rpseudorange_m\030\026 \001(\001\022\017\n\007rx_time\030\027 \001("
   "\001\022\036\n\026flag_valid_pseudorange\030\030 \001(\010\022\025\n\rint"
   "erp_tow_ms\030\031 \001(\001\022%\n\035flag_PLL_180_deg_pha"
-  "se_locked\030\032 \001(\010\"8\n\013Observables\022)\n\nobserv"
-  "able\030\001 \003(\0132\025.gnss_sdr.GnssSynchrob\006proto"
-  "3"
+  "se_locked\030\032 \001(\010\022\031\n\021carrier_lock_test\030\033 \001"
+  "(\002\"8\n\013Observables\022)\n\nobservable\030\001 \003(\0132\025."
+  "gnss_sdr.GnssSynchrob\006proto3"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_gnss_5fsynchro_2eproto_deps[1] = {
 };
@@ -137,7 +138,7 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_gns
 };
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_gnss_5fsynchro_2eproto_once;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_gnss_5fsynchro_2eproto = {
-  false, false, descriptor_table_protodef_gnss_5fsynchro_2eproto, "gnss_synchro.proto", 761,
+  false, false, descriptor_table_protodef_gnss_5fsynchro_2eproto, "gnss_synchro.proto", 788,
   &descriptor_table_gnss_5fsynchro_2eproto_once, descriptor_table_gnss_5fsynchro_2eproto_sccs, descriptor_table_gnss_5fsynchro_2eproto_deps, 2, 0,
   schemas, file_default_instances, TableStruct_gnss_5fsynchro_2eproto::offsets,
   file_level_metadata_gnss_5fsynchro_2eproto, 2, file_level_enum_descriptors_gnss_5fsynchro_2eproto, file_level_service_descriptors_gnss_5fsynchro_2eproto,
@@ -175,8 +176,8 @@ GnssSynchro::GnssSynchro(const GnssSynchro& from)
       GetArena());
   }
   ::memcpy(&prn_, &from.prn_,
-    static_cast<size_t>(reinterpret_cast<char*>(&flag_pll_180_deg_phase_locked_) -
-    reinterpret_cast<char*>(&prn_)) + sizeof(flag_pll_180_deg_phase_locked_));
+    static_cast<size_t>(reinterpret_cast<char*>(&carrier_lock_test_) -
+    reinterpret_cast<char*>(&prn_)) + sizeof(carrier_lock_test_));
   // @@protoc_insertion_point(copy_constructor:gnss_sdr.GnssSynchro)
 }
 
@@ -185,8 +186,8 @@ void GnssSynchro::SharedCtor() {
   system_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   signal_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   ::memset(&prn_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&flag_pll_180_deg_phase_locked_) -
-      reinterpret_cast<char*>(&prn_)) + sizeof(flag_pll_180_deg_phase_locked_));
+      reinterpret_cast<char*>(&carrier_lock_test_) -
+      reinterpret_cast<char*>(&prn_)) + sizeof(carrier_lock_test_));
 }
 
 GnssSynchro::~GnssSynchro() {
@@ -225,8 +226,8 @@ void GnssSynchro::Clear() {
   system_.ClearToEmpty(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
   signal_.ClearToEmpty(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
   ::memset(&prn_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&flag_pll_180_deg_phase_locked_) -
-      reinterpret_cast<char*>(&prn_)) + sizeof(flag_pll_180_deg_phase_locked_));
+      reinterpret_cast<char*>(&carrier_lock_test_) -
+      reinterpret_cast<char*>(&prn_)) + sizeof(carrier_lock_test_));
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -424,6 +425,13 @@ const char* GnssSynchro::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
+      // float carrier_lock_test = 27;
+      case 27:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 221)) {
+          carrier_lock_test_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<float>(ptr);
+          ptr += sizeof(float);
+        } else goto handle_unusual;
+        continue;
       default: {
       handle_unusual:
         if ((tag & 7) == 4 || tag == 0) {
@@ -616,6 +624,12 @@ failure:
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBoolToArray(26, this->_internal_flag_pll_180_deg_phase_locked(), target);
   }
 
+  // float carrier_lock_test = 27;
+  if (!(this->carrier_lock_test() <= 0 && this->carrier_lock_test() >= 0)) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteFloatToArray(27, this->_internal_carrier_lock_test(), target);
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
@@ -782,6 +796,11 @@ size_t GnssSynchro::ByteSizeLong() const {
     total_size += 2 + 1;
   }
 
+  // float carrier_lock_test = 27;
+  if (!(this->carrier_lock_test() <= 0 && this->carrier_lock_test() >= 0)) {
+    total_size += 2 + 4;
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
         _internal_metadata_, total_size, &_cached_size_);
@@ -891,6 +910,9 @@ void GnssSynchro::MergeFrom(const GnssSynchro& from) {
   if (from.flag_pll_180_deg_phase_locked() != 0) {
     _internal_set_flag_pll_180_deg_phase_locked(from._internal_flag_pll_180_deg_phase_locked());
   }
+  if (!(from.carrier_lock_test() <= 0 && from.carrier_lock_test() >= 0)) {
+    _internal_set_carrier_lock_test(from._internal_carrier_lock_test());
+  }
 }
 
 void GnssSynchro::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
@@ -917,8 +939,8 @@ void GnssSynchro::InternalSwap(GnssSynchro* other) {
   system_.Swap(&other->system_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
   signal_.Swap(&other->signal_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(GnssSynchro, flag_pll_180_deg_phase_locked_)
-      + sizeof(GnssSynchro::flag_pll_180_deg_phase_locked_)
+      PROTOBUF_FIELD_OFFSET(GnssSynchro, carrier_lock_test_)
+      + sizeof(GnssSynchro::carrier_lock_test_)
       - PROTOBUF_FIELD_OFFSET(GnssSynchro, prn_)>(
           reinterpret_cast<char*>(&prn_),
           reinterpret_cast<char*>(&other->prn_));

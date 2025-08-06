@@ -1,6 +1,4 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/tracking_gr_blocks.dir/__/__/__/main/interface.cc.o"
-  "CMakeFiles/tracking_gr_blocks.dir/__/__/__/main/interface.cc.o.d"
   "CMakeFiles/tracking_gr_blocks.dir/dll_pll_veml_tracking.cc.o"
   "CMakeFiles/tracking_gr_blocks.dir/dll_pll_veml_tracking.cc.o.d"
   "CMakeFiles/tracking_gr_blocks.dir/galileo_e1_tcp_connector_tracking_cc.cc.o"

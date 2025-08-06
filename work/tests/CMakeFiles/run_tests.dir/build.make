@@ -146,8 +146,6 @@ tests/run_tests: src/algorithms/acquisition/libs/libacquisition_libs.a
 tests/run_tests: src/algorithms/tracking/adapters/libtracking_adapters.a
 tests/run_tests: src/algorithms/tracking/gnuradio_blocks/libtracking_gr_blocks.a
 tests/run_tests: src/algorithms/tracking/libs/libtracking_libs.a
-tests/run_tests: /usr/lib/x86_64-linux-gnu/libcurses.so
-tests/run_tests: /usr/lib/x86_64-linux-gnu/libform.so
 tests/run_tests: src/algorithms/telemetry_decoder/adapters/libtelemetry_decoder_adapters.a
 tests/run_tests: src/algorithms/telemetry_decoder/gnuradio_blocks/libtelemetry_decoder_gr_blocks.a
 tests/run_tests: src/algorithms/telemetry_decoder/libs/libswiftcnav/libtelemetry_decoder_libswiftcnav.a
