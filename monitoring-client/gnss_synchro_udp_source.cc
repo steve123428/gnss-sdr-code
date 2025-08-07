@@ -58,7 +58,7 @@ bool Gnss_Synchro_Udp_Source::print_table()
 
                     printw("%3d%6d%14f%17f%17f%17f%17f%17ld\n", 
                         channel_id, data.prn(), data.cn0_db_hz(), data.carrier_doppler_hz(), data.pseudorange_m(), 
-                        data.carrier_phase_rads(), data.code_phase_samples(), data.tracking_sample_counter());
+                        data.carrier_phase_rads(), data.code_phase_samples(), data.tracking_sample_counter()%1023);
                 }
             refresh();  // Update the screen.
         }
