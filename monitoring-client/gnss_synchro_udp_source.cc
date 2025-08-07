@@ -45,7 +45,9 @@ bool Gnss_Synchro_Udp_Source::print_table()
 
             // Print table header.
             attron(A_REVERSE);
-            printw("%3s%6s%14s%17s%17s%17s%17s%17s%17s%17s%17s\n", "CH", "PRN", "CN0 [dB-Hz]", "Doppler [Hz]", "Pseudorange [m]", "Carrier phase [rad]", "Code phase [samples]", "TOW [ms]", "RX_time", "interp_TOW [ms]", "Carrier lock test");
+            printw("%3s %6s %14s %17s %17s %17s %17s %17s\n", 
+                "CH", "PRN", "CN0 [dB-Hz]", "Doppler [Hz]", "Pseudorange [m]", 
+                "Carrier phase [rad]", "Code phase [samples]", "sample counter");
             attroff(A_REVERSE);
 
             // Print table contents.
@@ -54,7 +56,9 @@ bool Gnss_Synchro_Udp_Source::print_table()
                     int channel_id = ch.first;      // Key
                     gnss_sdr::GnssSynchro data = ch.second;  // Value
 
-                    printw("%3d%6d%14f%17f%17f%17f%17f%17u%17f%17f%17f\n", channel_id, data.prn(), data.cn0_db_hz(), data.carrier_doppler_hz(), data.pseudorange_m(), data.carrier_phase_rads(), data.code_phase_samples(), data.tow_at_current_symbol_ms(), data.rx_time(), data.interp_tow_ms(), data.carrier_lock_test());
+                    printw("%3d%6d%14f%17f%17f%17f%17f%17ld\n", 
+                        channel_id, data.prn(), data.cn0_db_hz(), data.carrier_doppler_hz(), data.pseudorange_m(), 
+                        data.carrier_phase_rads(), data.code_phase_samples(), data.tracking_sample_counter());
                 }
             refresh();  // Update the screen.
         }
