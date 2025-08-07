@@ -1,1 +1,0 @@
-/usr/bin/c++ CMakeFiles/monitoring-client.dir/main.cc.o -o monitoring-client  libmonitoring_lib.a /usr/lib/x86_64-linux-gnu/libboost_system.so.1.74.0 -lncurses /usr/lib/x86_64-linux-gnu/libform.so /usr/lib/x86_64-linux-gnu/libprotobuf.so -lpthread 
