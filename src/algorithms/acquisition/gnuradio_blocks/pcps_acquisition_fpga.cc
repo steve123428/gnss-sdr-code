@@ -72,6 +72,7 @@ void pcps_acquisition_fpga::set_local_code()
 
 void pcps_acquisition_fpga::init()
 {
+    std::cout << "pcps_acquisition_fpga::init()" << std::endl;
     d_acquisition_fpga->init(d_acq_parameters->code_length, d_doppler_max, d_acq_parameters->fft_size,
         d_acq_parameters->resampled_fs, d_acq_parameters->downsampling_filter_num, d_acq_parameters->excludelimit, d_acq_parameters->all_fft_codes);
     d_gnss_synchro->Flag_valid_acquisition = false;

@@ -1025,7 +1025,7 @@ bool dll_pll_veml_tracking::cn0_and_tracking_lock_status(double coh_integration_
         }
     if (d_carrier_lock_fail_counter > d_trk_parameters.max_carrier_lock_fail or d_code_lock_fail_counter > d_trk_parameters.max_code_lock_fail)
         {
-            //std::cout << "Loss of lock in channel " << d_channel << "!\n";
+            std::cout << "Loss of lock in channel " << d_channel << "!\n";
             LOG(INFO) << "Loss of lock in channel " << d_channel
                       << " (carrier_lock_fail_counter:" << d_carrier_lock_fail_counter
                       << " code_lock_fail_counter : " << d_code_lock_fail_counter << ")";

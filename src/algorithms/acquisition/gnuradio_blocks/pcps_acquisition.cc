@@ -631,7 +631,6 @@ void pcps_acquisition::acquisition_core(uint64_t samp_count)
 
     d_mag = 0.0;
     d_num_noncoherent_integrations_counter++;
-
     DLOG(INFO) << "Channel: " << d_channel
                << " , doing acquisition of satellite: " << d_gnss_synchro->System << " " << d_gnss_synchro->PRN
                << " ,sample stamp: " << samp_count << ", threshold: "
@@ -868,14 +867,13 @@ void pcps_acquisition::acquisition_core(uint64_t samp_count)
                 }
         }
     d_worker_active = false;
-
-    if ((d_num_noncoherent_integrations_counter == d_acq_parameters.max_dwells) or (d_positive_acq == 1) or (d_acq_parameters.bit_transition_flag))
+    //if ((d_num_noncoherent_integrations_counter == d_acq_parameters.max_dwells) or (d_positive_acq == 1) or (d_acq_parameters.bit_transition_flag))
+    if ((d_num_noncoherent_integrations_counter == d_acq_parameters.max_dwells))
         {
             // Record results to file if required
-            if (d_dump and d_channel == d_dump_channel)
-                {
-                    pcps_acquisition::dump_results(effective_fft_size);
-                }
+            if (d_dump and d_channel == d_dump_channel){
+                pcps_acquisition::dump_results(effective_fft_size);
+            }
             d_num_noncoherent_integrations_counter = 0U;
             d_positive_acq = 0;
         }
