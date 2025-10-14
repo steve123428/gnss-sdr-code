@@ -34,6 +34,8 @@ work/pvt.dat_*.gpx
 work/log/Observables/*.dat
 work/log/tracking/Telemetry*.dat
 work/log/Observables/Observables.dat
+work/log/acq
+work/log/tracking*
 
 ### additional
 monitoring-client/build/
