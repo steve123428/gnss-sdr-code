@@ -1,0 +1,424 @@
+[33mcommit 872c06b8f09fda660e31a066e94ab55cd9342ad0[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m)[m
+Author: suhjw <suhjw0323@kaist.ac.kr>
+Date:   Tue Oct 14 20:47:14 2025 +0900
+
+    Add for pps
+
+ .gitignore                                                                                           |   2 [32m++[m
+ work/log/.mat                                                                                        | Bin [31m209143[m -> [32m0[m bytes
+ work/log/Observables/.gitkeep                                                                        |   0
+ work/log/Observables/Observables.mat                                                                 | Bin [31m909707907[m -> [32m0[m bytes
+ work/log/Telemetry0.dat                                                                              |   0
+ work/log/Telemetry0.mat                                                                              | Bin [31m27045510[m -> [32m0[m bytes
+ work/log/Telemetry1.dat                                                                              |   0
+ work/log/Telemetry1.mat                                                                              | Bin [31m40229423[m -> [32m0[m bytes
+ work/log/Telemetry10.dat                                                                             |   0
+ work/log/Telemetry10.mat                                                                             | Bin [31m35327835[m -> [32m0[m bytes
+ work/log/Telemetry11.dat                                                                             |   0
+ work/log/Telemetry11.mat                                                                             | Bin [31m40891556[m -> [32m0[m bytes
+ work/log/Telemetry12.dat                                                                             |   0
+ work/log/Telemetry12.mat                                                                             | Bin [31m40107966[m -> [32m0[m bytes
+ work/log/Telemetry13.dat                                                                             |   0
+ work/log/Telemetry13.mat                                                                             | Bin [31m40143723[m -> [32m0[m bytes
+ work/log/Telemetry14.dat                                                                             |   0
+ work/log/Telemetry14.mat                                                                             | Bin [31m38576796[m -> [32m0[m bytes
+ work/log/Telemetry15.dat                                                                             |   0
+ work/log/Telemetry15.mat                                                                             | Bin [31m42803906[m -> [32m0[m bytes
+ work/log/Telemetry16.dat                                                                             |   0
+ work/log/Telemetry16.mat                                                                             | Bin [31m24258226[m -> [32m0[m bytes
+ work/log/Telemetry17.dat                                                                             |   0
+ work/log/Telemetry17.mat                                                                             | Bin [31m43473930[m -> [32m0[m bytes
+ work/log/Telemetry18.dat                                                                             |   0
+ work/log/Telemetry18.mat                                                                             | Bin [31m29160277[m -> [32m0[m bytes
+ work/log/Telemetry19.dat                                                                             |   0
+ work/log/Telemetry19.mat                                                                             | Bin [31m39757758[m -> [32m0[m bytes
+ work/log/Telemetry2.dat                                                                              |   0
+ work/log/Telemetry2.mat                                                                              | Bin [31m43494201[m -> [32m0[m bytes
+ work/log/Telemetry20.dat                                                                             |   0
+ work/log/Telemetry20.mat                                                                             | Bin [31m46933130[m -> [32m0[m bytes
+ work/log/Telemetry21.dat                                                                             |   0
+ work/log/Telemetry21.mat                                                                             | Bin [31m44207338[m -> [32m0[m bytes
+ work/log/Telemetry22.dat                                                                             |   0
+ work/log/Telemetry22.mat                                                                             | Bin [31m38557271[m -> [32m0[m bytes
+ work/log/Telemetry23.dat                                                                             |   0
+ work/log/Telemetry23.mat                                                                             | Bin [31m32789856[m -> [32m0[m bytes
+ work/log/Telemetry24.dat                                                                             |   0
+ work/log/Telemetry24.mat                                                                             | Bin [31m36620734[m -> [32m0[m bytes
+ work/log/Telemetry25.dat                                                                             |   0
+ work/log/Telemetry25.mat                                                                             | Bin [31m20756876[m -> [32m0[m bytes
+ work/log/Telemetry26.dat                                                                             |   0
+ work/log/Telemetry26.mat                                                                             | Bin [31m13159968[m -> [32m0[m bytes
+ work/log/Telemetry27.dat                                                                             |   0
+ work/log/Telemetry27.mat                                                                             | Bin [31m25460139[m -> [32m0[m bytes
+ work/log/Telemetry28.dat                                                                             |   0
+ work/log/Telemetry28.mat                                                                             | Bin [31m11509084[m -> [32m0[m bytes
+ work/log/Telemetry29.dat                                                                             |   0
+ work/log/Telemetry29.mat                                                                             | Bin [31m25611716[m -> [32m0[m bytes
+ work/log/Telemetry3.dat                                                                              |   0
+ work/log/Telemetry3.mat                                                                              | Bin [31m35471636[m -> [32m0[m bytes
+ work/log/Telemetry30.dat                                                                             |   0
+ work/log/Telemetry30.mat                                                                             | Bin [31m50811129[m -> [32m0[m bytes
+ work/log/Telemetry4.dat                                                                              |   0
+ work/log/Telemetry4.mat                                                                              | Bin [31m31570664[m -> [32m0[m bytes
+ work/log/Telemetry5.dat                                                                              |   0
+ work/log/Telemetry5.mat                                                                              | Bin [31m46422081[m -> [32m0[m bytes
+ work/log/Telemetry6.dat                                                                              |   0
+ work/log/Telemetry6.mat                                                                              | Bin [31m45385840[m -> [32m0[m bytes
+ work/log/Telemetry7.dat                                                                              |   0
+ work/log/Telemetry7.mat                                                                              | Bin [31m46631502[m -> [32m0[m bytes
+ work/log/Telemetry8.dat                                                                              |   0
+ work/log/Telemetry8.mat                                                                              | Bin [31m36841903[m -> [32m0[m bytes
+ work/log/Telemetry9.dat                                                                              |   0
+ work/log/Telemetry9.mat                                                                              | Bin [31m42951102[m -> [32m0[m bytes
+ work/log/acq/.mat                                                                                    | Bin [31m14602217[m -> [32m0[m bytes
+ work/log/acq/Authenticated sat/10-10 sate 28, doppler~3000/acq_dump_G_1C_ch_28_10_sat_28.mat         | Bin [31m14600523[m -> [32m0[m bytes
+ work/log/acq/Authenticated sat/10-10 sate 28, doppler~3000/acq_dump_G_1C_ch_28_11_sat_28.mat         | Bin [31m14594771[m -> [32m0[m bytes
+ work/log/acq/Authenticated sat/10-10 sate 28, doppler~3000/acq_dump_G_1C_ch_28_12_sat_28.mat         | Bin [31m14592270[m -> [32m0[m bytes
+ work/log/acq/Authenticated sat/10-10 sate 28, doppler~3000/acq_dump_G_1C_ch_28_13_sat_28.mat         | Bin [31m14596114[m -> [32m0[m bytes
+ work/log/acq/Authenticated sat/10-10 sate 28, doppler~3000/acq_dump_G_1C_ch_28_14_sat_28.mat         | Bin [31m14599669[m -> [32m0[m bytes
+ work/log/acq/Authenticated sat/10-10 sate 28, doppler~3000/acq_dump_G_1C_ch_28_15_sat_28.mat         | Bin [31m14603416[m -> [32m0[m bytes
+ work/log/acq/Authenticated sat/10-10 sate 28, doppler~3000/acq_dump_G_1C_ch_28_16_sat_28.mat         | Bin [31m14604928[m -> [32m0[m bytes
+ work/log/acq/Authenticated sat/10-10 sate 28, doppler~3000/acq_dump_G_1C_ch_28_17_sat_28.mat         | Bin [31m14600557[m -> [32m0[m bytes
+ work/log/acq/Authenticated sat/10-10 sate 28, doppler~3000/acq_dump_G_1C_ch_28_18_sat_28.mat         | Bin [31m14595617[m -> [32m0[m bytes
+ work/log/acq/Authenticated sat/10-10 sate 28, doppler~3000/acq_dump_G_1C_ch_28_19_sat_28.mat         | Bin [31m14603096[m -> [32m0[m bytes
+ work/log/acq/Authenticated sat/10-10 sate 28, doppler~3000/acq_dump_G_1C_ch_28_1_sat_28.mat          | Bin [31m14598133[m -> [32m0[m bytes
+ work/log/acq/Authenticated sat/10-10 sate 28, doppler~3000/acq_dump_G_1C_ch_28_20_sat_28.mat         | Bin [31m14600559[m -> [32m0[m bytes
+ work/log/acq/Authenticated sat/10-10 sate 28, doppler~3000/acq_dump_G_1C_ch_28_21_sat_28.mat         | Bin [31m14597613[m -> [32m0[m bytes
+ work/log/acq/Authenticated sat/10-10 sate 28, doppler~3000/acq_dump_G_1C_ch_28_22_sat_28.mat         | Bin [31m14601648[m -> [32m0[m bytes
+ work/log/acq/Authenticated sat/10-10 sate 28, doppler~3000/acq_dump_G_1C_ch_28_23_sat_28.mat         | Bin [31m14600694[m -> [32m0[m bytes
+ work/log/acq/Authenticated sat/10-10 sate 28, doppler~3000/acq_dump_G_1C_ch_28_24_sat_28.mat         | Bin [31m14598700[m -> [32m0[m bytes
+ work/log/acq/Authenticated sat/10-10 sate 28, doppler~3000/acq_dump_G_1C_ch_28_25_sat_28.mat         | Bin [31m14600447[m -> [32m0[m bytes
+ work/log/acq/Authenticated sat/10-10 sate 28, doppler~3000/acq_dump_G_1C_ch_28_26_sat_28.mat         | Bin [31m14600559[m -> [32m0[m bytes
+ work/log/acq/Authenticated sat/10-10 sate 28, doppler~3000/acq_dump_G_1C_ch_28_27_sat_28.mat         | Bin [31m14601811[m -> [32m0[m bytes
+ work/log/acq/Authenticated sat/10-10 sate 28, doppler~3000/acq_dump_G_1C_ch_28_28_sat_28.mat         | Bin [31m14597841[m -> [32m0[m bytes
+ work/log/acq/Authenticated sat/10-10 sate 28, doppler~3000/acq_dump_G_1C_ch_28_29_sat_28.mat         | Bin [31m14604275[m -> [32m0[m bytes
+ work/log/acq/Authenticated sat/10-10 sate 28, doppler~3000/acq_dump_G_1C_ch_28_2_sat_28.mat          | Bin [31m14597632[m -> [32m0[m bytes
+ work/log/acq/Authenticated sat/10-10 sate 28, doppler~3000/acq_dump_G_1C_ch_28_30_sat_28.mat         | Bin [31m14601009[m -> [32m0[m bytes
+ work/log/acq/Authenticated sat/10-10 sate 28, doppler~3000/acq_dump_G_1C_ch_28_3_sat_28.mat          | Bin [31m14603725[m -> [32m0[m bytes
+ work/log/acq/Authenticated sat/10-10 sate 28, doppler~3000/acq_dump_G_1C_ch_28_4_sat_28.mat          | Bin [31m14602099[m -> [32m0[m bytes
+ work/log/acq/Authenticated sat/10-10 sate 28, doppler~3000/acq_dump_G_1C_ch_28_5_sat_28.mat          | Bin [31m14602655[m -> [32m0[m bytes
+ work/log/acq/Authenticated sat/10-10 sate 28, doppler~3000/acq_dump_G_1C_ch_28_6_sat_28.mat          | Bin [31m14601373[m -> [32m0[m bytes
+ work/log/acq/Authenticated sat/10-10 sate 28, doppler~3000/acq_dump_G_1C_ch_28_7_sat_28.mat          | Bin [31m14602297[m -> [32m0[m bytes
+ work/log/acq/Authenticated sat/10-10 sate 28, doppler~3000/acq_dump_G_1C_ch_28_8_sat_28.mat          | Bin [31m14599558[m -> [32m0[m bytes
+ work/log/acq/Authenticated sat/10-10 sate 28, doppler~3000/acq_dump_G_1C_ch_28_9_sat_28.mat          | Bin [31m14601471[m -> [32m0[m bytes
+ "work/log/acq/Authenticated sat/10\354\233\22410-sat16, good grid/acq_dump_G_1C_ch_16_10_sat_16.mat" | Bin [31m14596919[m -> [32m0[m bytes
+ "work/log/acq/Authenticated sat/10\354\233\22410-sat16, good grid/acq_dump_G_1C_ch_16_11_sat_16.mat" | Bin [31m14600411[m -> [32m0[m bytes
+ "work/log/acq/Authenticated sat/10\354\233\22410-sat16, good grid/acq_dump_G_1C_ch_16_12_sat_16.mat" | Bin [31m14599995[m -> [32m0[m bytes
+ "work/log/acq/Authenticated sat/10\354\233\22410-sat16, good grid/acq_dump_G_1C_ch_16_13_sat_16.mat" | Bin [31m14602685[m -> [32m0[m bytes
+ "work/log/acq/Authenticated sat/10\354\233\22410-sat16, good grid/acq_dump_G_1C_ch_16_14_sat_16.mat" | Bin [31m14598506[m -> [32m0[m bytes
+ "work/log/acq/Authenticated sat/10\354\233\22410-sat16, good grid/acq_dump_G_1C_ch_16_15_sat_16.mat" | Bin [31m14599066[m -> [32m0[m bytes
+ "work/log/acq/Authenticated sat/10\354\233\22410-sat16, good grid/acq_dump_G_1C_ch_16_16_sat_16.mat" | Bin [31m14600794[m -> [32m0[m bytes
+ "work/log/acq/Authenticated sat/10\354\233\22410-sat16, good grid/acq_dump_G_1C_ch_16_17_sat_16.mat" | Bin [31m14601340[m -> [32m0[m bytes
+ "work/log/acq/Authenticated sat/10\354\233\22410-sat16, good grid/acq_dump_G_1C_ch_16_18_sat_16.mat" | Bin [31m14603349[m -> [32m0[m bytes
+ "work/log/acq/Authenticated sat/10\354\233\22410-sat16, good grid/acq_dump_G_1C_ch_16_19_sat_16.mat" | Bin [31m14603147[m -> [32m0[m bytes
+ "work/log/acq/Authenticated sat/10\354\233\22410-sat16, good grid/acq_dump_G_1C_ch_16_1_sat_16.mat"  | Bin [31m14600742[m -> [32m0[m bytes
+ "work/log/acq/Authenticated sat/10\354\233\22410-sat16, good grid/acq_dump_G_1C_ch_16_20_sat_16.mat" | Bin [31m14604780[m -> [32m0[m bytes
+ "work/log/acq/Authenticated sat/10\354\233\22410-sat16, good grid/acq_dump_G_1C_ch_16_21_sat_16.mat" | Bin [31m14602124[m -> [32m0[m bytes
+ "work/log/acq/Authenticated sat/10\354\233\22410-sat16, good grid/acq_dump_G_1C_ch_16_22_sat_16.mat" | Bin [31m14600432[m -> [32m0[m bytes
+ "work/log/acq/Authenticated sat/10\354\233\22410-sat16, good grid/acq_dump_G_1C_ch_16_23_sat_16.mat" | Bin [31m14600065[m -> [32m0[m bytes
+ "work/log/acq/Authenticated sat/10\354\233\22410-sat16, good grid/acq_dump_G_1C_ch_16_2_sat_16.mat"  | Bin [31m14601400[m -> [32m0[m bytes
+ "work/log/acq/Authenticated sat/10\354\233\22410-sat16, good grid/acq_dump_G_1C_ch_16_3_sat_16.mat"  | Bin [31m14598867[m -> [32m0[m bytes
+ "work/log/acq/Authenticated sat/10\354\233\22410-sat16, good grid/acq_dump_G_1C_ch_16_4_sat_16.mat"  | Bin [31m14596781[m -> [32m0[m bytes
+ "work/log/acq/Authenticated sat/10\354\233\22410-sat16, good grid/acq_dump_G_1C_ch_16_5_sat_16.mat"  | Bin [31m14599903[m -> [32m0[m bytes
+ "work/log/acq/Authenticated sat/10\354\233\22410-sat16, good grid/acq_dump_G_1C_ch_16_6_sat_16.mat"  | Bin [31m14601555[m -> [32m0[m bytes
+ "work/log/acq/Authenticated sat/10\354\233\22410-sat16, good grid/acq_dump_G_1C_ch_16_7_sat_16.mat"  | Bin [31m14601206[m -> [32m0[m bytes
+ "work/log/acq/Authenticated sat/10\354\233\22410-sat16, good grid/acq_dump_G_1C_ch_16_8_sat_16.mat"  | Bin [31m14591815[m -> [32m0[m bytes
+ "work/log/acq/Authenticated sat/10\354\233\22410-sat16, good grid/acq_dump_G_1C_ch_16_9_sat_16.mat"  | Bin [31m14599199[m -> [32m0[m bytes
+ "work/log/acq/Authenticated sat/10\354\233\22410-sat16, good grid/acq_dump_G_1C_ch_26_1_sat_26.mat"  | Bin [31m14601078[m -> [32m0[m bytes
+ work/log/acq/High_doppler/acq_dump_G_1C_ch_0_1_sat_31.mat                                            | Bin [31m29197527[m -> [32m0[m bytes
+ work/log/acq/Labsat acquisition/acq1.mat                                                             | Bin [31m29170210[m -> [32m0[m bytes
+ work/log/acq/Labsat acquisition/acq2.mat                                                             | Bin [31m29163274[m -> [32m0[m bytes
+ work/log/acq/Labsat acquisition/acq3.mat                                                             | Bin [31m29169727[m -> [32m0[m bytes
+ work/log/acq/Labsat acquisition/acq4.mat                                                             | Bin [31m29167909[m -> [32m0[m bytes
+ work/log/acq/Labsat acquisition/acq5.mat                                                             | Bin [31m29160988[m -> [32m0[m bytes
+ work/log/acq/Labsat acquisition/acq6.mat                                                             | Bin [31m29171979[m -> [32m0[m bytes
+ work/log/acq/Labsat acquisition/acq7.mat                                                             | Bin [31m29163734[m -> [32m0[m bytes
+ work/log/acq/Labsat acquisition/acq8.mat                                                             | Bin [31m29165762[m -> [32m0[m bytes
+ work/log/acq/Low_doppler/acq_dump_G_1C_ch_10_1_sat_10.mat                                            | Bin [31m29070066[m -> [32m0[m bytes
+ work/log/acq/Low_doppler/acq_dump_G_1C_ch_25_3_sat_25.mat                                            | Bin [31m28934964[m -> [32m0[m bytes
+ "work/log/acq/Satellite_one_only/9\354\233\224 30\354\235\274/acq_dump_G_1C_ch_25_10_sat_25.mat"     | Bin [31m29048831[m -> [32m0[m bytes
+ "work/log/acq/Satellite_one_only/9\354\233\224 30\354\235\274/acq_dump_G_1C_ch_25_11_sat_25.mat"     | Bin [31m29023050[m -> [32m0[m bytes
+ "work/log/acq/Satellite_one_only/9\354\233\224 30\354\235\274/acq_dump_G_1C_ch_25_12_sat_25.mat"     | Bin [31m29030647[m -> [32m0[m bytes
+ "work/log/acq/Satellite_one_only/9\354\233\224 30\354\235\274/acq_dump_G_1C_ch_25_13_sat_25.mat"     | Bin [31m29033270[m -> [32m0[m bytes
+ "work/log/acq/Satellite_one_only/9\354\233\224 30\354\235\274/acq_dump_G_1C_ch_25_14_sat_25.mat"     | Bin [31m29036927[m -> [32m0[m bytes
+ "work/log/acq/Satellite_one_only/9\354\233\224 30\354\235\274/acq_dump_G_1C_ch_25_15_sat_25.mat"     | Bin [31m29031020[m -> [32m0[m bytes
+ "work/log/acq/Satellite_one_only/9\354\233\224 30\354\235\274/acq_dump_G_1C_ch_25_16_sat_25.mat"     | Bin [31m29038487[m -> [32m0[m bytes
+ "work/log/acq/Satellite_one_only/9\354\233\224 30\354\235\274/acq_dump_G_1C_ch_25_17_sat_25.mat"     | Bin [31m29043655[m -> [32m0[m bytes
+ "work/log/acq/Satellite_one_only/9\354\233\224 30\354\235\274/acq_dump_G_1C_ch_25_18_sat_25.mat"     | Bin [31m29048103[m -> [32m0[m bytes
+ "work/log/acq/Satellite_one_only/9\354\233\224 30\354\235\274/acq_dump_G_1C_ch_25_1_sat_25.mat"      | Bin [31m29033206[m -> [32m0[m bytes
+ "work/log/acq/Satellite_one_only/9\354\233\224 30\354\235\274/acq_dump_G_1C_ch_25_2_sat_25.mat"      | Bin [31m29049632[m -> [32m0[m bytes
+ "work/log/acq/Satellite_one_only/9\354\233\224 30\354\235\274/acq_dump_G_1C_ch_25_3_sat_25.mat"      | Bin [31m29024508[m -> [32m0[m bytes
+ "work/log/acq/Satellite_one_only/9\354\233\224 30\354\235\274/acq_dump_G_1C_ch_25_4_sat_25.mat"      | Bin [31m29035907[m -> [32m0[m bytes
+ "work/log/acq/Satellite_one_only/9\354\233\224 30\354\235\274/acq_dump_G_1C_ch_25_5_sat_25.mat"      | Bin [31m29038732[m -> [32m0[m bytes
+ "work/log/acq/Satellite_one_only/9\354\233\224 30\354\235\274/acq_dump_G_1C_ch_25_6_sat_25.mat"      | Bin [31m28998772[m -> [32m0[m bytes
+ "work/log/acq/Satellite_one_only/9\354\233\224 30\354\235\274/acq_dump_G_1C_ch_25_7_sat_25.mat"      | Bin [31m29007698[m -> [32m0[m bytes
+ "work/log/acq/Satellite_one_only/9\354\233\224 30\354\235\274/acq_dump_G_1C_ch_25_8_sat_25.mat"      | Bin [31m29030457[m -> [32m0[m bytes
+ "work/log/acq/Satellite_one_only/9\354\233\224 30\354\235\274/acq_dump_G_1C_ch_25_9_sat_25.mat"      | Bin [31m29027674[m -> [32m0[m bytes
+ work/log/acq/Satellite_one_only/acq_dump_G_1C_ch_26_10_sat_26.mat                                    | Bin [31m14407024[m -> [32m0[m bytes
+ work/log/acq/Satellite_one_only/acq_dump_G_1C_ch_26_11_sat_26.mat                                    | Bin [31m14406868[m -> [32m0[m bytes
+ work/log/acq/Satellite_one_only/acq_dump_G_1C_ch_26_12_sat_26.mat                                    | Bin [31m14434332[m -> [32m0[m bytes
+ work/log/acq/Satellite_one_only/acq_dump_G_1C_ch_26_13_sat_26.mat                                    | Bin [31m14402047[m -> [32m0[m bytes
+ work/log/acq/Satellite_one_only/acq_dump_G_1C_ch_26_14_sat_26.mat                                    | Bin [31m14461972[m -> [32m0[m bytes
+ work/log/acq/Satellite_one_only/acq_dump_G_1C_ch_26_15_sat_26.mat                                    | Bin [31m14486214[m -> [32m0[m bytes
+ work/log/acq/Satellite_one_only/acq_dump_G_1C_ch_26_16_sat_26.mat                                    | Bin [31m14419694[m -> [32m0[m bytes
+ work/log/acq/Satellite_one_only/acq_dump_G_1C_ch_26_17_sat_26.mat                                    | Bin [31m14451505[m -> [32m0[m bytes
+ work/log/acq/Satellite_one_only/acq_dump_G_1C_ch_26_18_sat_26.mat                                    | Bin [31m14452893[m -> [32m0[m bytes
+ work/log/acq/Satellite_one_only/acq_dump_G_1C_ch_26_19_sat_26.mat                                    | Bin [31m14453635[m -> [32m0[m bytes
+ work/log/acq/Satellite_one_only/acq_dump_G_1C_ch_26_1_sat_26.mat                                     | Bin [31m14456350[m -> [32m0[m bytes
+ work/log/acq/Satellite_one_only/acq_dump_G_1C_ch_26_20_sat_26.mat                                    | Bin [31m14428626[m -> [32m0[m bytes
+ work/log/acq/Satellite_one_only/acq_dump_G_1C_ch_26_21_sat_26.mat                                    | Bin [31m14417020[m -> [32m0[m bytes
+ work/log/acq/Satellite_one_only/acq_dump_G_1C_ch_26_22_sat_26.mat                                    | Bin [31m14445063[m -> [32m0[m bytes
+ work/log/acq/Satellite_one_only/acq_dump_G_1C_ch_26_23_sat_26.mat                                    | Bin [31m14416743[m -> [32m0[m bytes
+ work/log/acq/Satellite_one_only/acq_dump_G_1C_ch_26_24_sat_26.mat                                    | Bin [31m14401975[m -> [32m0[m bytes
+ work/log/acq/Satellite_one_only/acq_dump_G_1C_ch_26_25_sat_26.mat                                    | Bin [31m14451066[m -> [32m0[m bytes
+ work/log/acq/Satellite_one_only/acq_dump_G_1C_ch_26_26_sat_26.mat                                    | Bin [31m14438504[m -> [32m0[m bytes
+ work/log/acq/Satellite_one_only/acq_dump_G_1C_ch_26_27_sat_26.mat                                    | Bin [31m14450639[m -> [32m0[m bytes
+ work/log/acq/Satellite_one_only/acq_dump_G_1C_ch_26_28_sat_26.mat                                    | Bin [31m14424495[m -> [32m0[m bytes
+ work/log/acq/Satellite_one_only/acq_dump_G_1C_ch_26_29_sat_26.mat                                    | Bin [31m14463253[m -> [32m0[m bytes
+ work/log/acq/Satellite_one_only/acq_dump_G_1C_ch_26_2_sat_26.mat                                     | Bin [31m14433008[m -> [32m0[m bytes
+ work/log/acq/Satellite_one_only/acq_dump_G_1C_ch_26_30_sat_26.mat                                    | Bin [31m14439957[m -> [32m0[m bytes
+ work/log/acq/Satellite_one_only/acq_dump_G_1C_ch_26_3_sat_26.mat                                     | Bin [31m14434779[m -> [32m0[m bytes
+ work/log/acq/Satellite_one_only/acq_dump_G_1C_ch_26_4_sat_26.mat                                     | Bin [31m14401766[m -> [32m0[m bytes
+ work/log/acq/Satellite_one_only/acq_dump_G_1C_ch_26_5_sat_26.mat                                     | Bin [31m14431759[m -> [32m0[m bytes
+ work/log/acq/Satellite_one_only/acq_dump_G_1C_ch_26_6_sat_26.mat                                     | Bin [31m14478065[m -> [32m0[m bytes
+ work/log/acq/Satellite_one_only/acq_dump_G_1C_ch_26_7_sat_26.mat                                     | Bin [31m14457044[m -> [32m0[m bytes
+ work/log/acq/Satellite_one_only/acq_dump_G_1C_ch_26_8_sat_26.mat                                     | Bin [31m14458681[m -> [32m0[m bytes
+ work/log/acq/Satellite_one_only/acq_dump_G_1C_ch_26_9_sat_26.mat                                     | Bin [31m14462979[m -> [32m0[m bytes
+ work/log/acq/Satellite_one_only/update_all_acq_max.m                                                 |  51 [31m---------------------------------------------------[m
+ "work/log/acq/Satellite_together/9\354\233\22430/acq_dump_G_1C_ch_25_10_sat_25.mat"                  | Bin [31m28956705[m -> [32m0[m bytes
+ "work/log/acq/Satellite_together/9\354\233\22430/acq_dump_G_1C_ch_25_11_sat_25.mat"                  | Bin [31m28946626[m -> [32m0[m bytes
+ "work/log/acq/Satellite_together/9\354\233\22430/acq_dump_G_1C_ch_25_12_sat_25.mat"                  | Bin [31m28960068[m -> [32m0[m bytes
+ "work/log/acq/Satellite_together/9\354\233\22430/acq_dump_G_1C_ch_25_13_sat_25.mat"                  | Bin [31m28956342[m -> [32m0[m bytes
+ "work/log/acq/Satellite_together/9\354\233\22430/acq_dump_G_1C_ch_25_14_sat_25.mat"                  | Bin [31m28978387[m -> [32m0[m bytes
+ "work/log/acq/Satellite_together/9\354\233\22430/acq_dump_G_1C_ch_25_15_sat_25.mat"                  | Bin [31m28955134[m -> [32m0[m bytes
+ "work/log/acq/Satellite_together/9\354\233\22430/acq_dump_G_1C_ch_25_16_sat_25.mat"                  | Bin [31m28968223[m -> [32m0[m bytes
+ "work/log/acq/Satellite_together/9\354\233\22430/acq_dump_G_1C_ch_25_17_sat_25.mat"                  | Bin [31m28969503[m -> [32m0[m bytes
+ "work/log/acq/Satellite_together/9\354\233\22430/acq_dump_G_1C_ch_25_18_sat_25.mat"                  | Bin [31m28962520[m -> [32m0[m bytes
+ "work/log/acq/Satellite_together/9\354\233\22430/acq_dump_G_1C_ch_25_19_sat_25.mat"                  | Bin [31m28957947[m -> [32m0[m bytes
+ "work/log/acq/Satellite_together/9\354\233\22430/acq_dump_G_1C_ch_25_1_sat_25.mat"                   | Bin [31m28936506[m -> [32m0[m bytes
+ "work/log/acq/Satellite_together/9\354\233\22430/acq_dump_G_1C_ch_25_20_sat_25.mat"                  | Bin [31m28954283[m -> [32m0[m bytes
+ "work/log/acq/Satellite_together/9\354\233\22430/acq_dump_G_1C_ch_25_21_sat_25.mat"                  | Bin [31m28945071[m -> [32m0[m bytes
+ "work/log/acq/Satellite_together/9\354\233\22430/acq_dump_G_1C_ch_25_2_sat_25.mat"                   | Bin [31m28970237[m -> [32m0[m bytes
+ "work/log/acq/Satellite_together/9\354\233\22430/acq_dump_G_1C_ch_25_3_sat_25.mat"                   | Bin [31m28950307[m -> [32m0[m bytes
+ "work/log/acq/Satellite_together/9\354\233\22430/acq_dump_G_1C_ch_25_4_sat_25.mat"                   | Bin [31m28942940[m -> [32m0[m bytes
+ "work/log/acq/Satellite_together/9\354\233\22430/acq_dump_G_1C_ch_25_5_sat_25.mat"                   | Bin [31m28956549[m -> [32m0[m bytes
+ "work/log/acq/Satellite_together/9\354\233\22430/acq_dump_G_1C_ch_25_6_sat_25.mat"                   | Bin [31m28934595[m -> [32m0[m bytes
+ "work/log/acq/Satellite_together/9\354\233\22430/acq_dump_G_1C_ch_25_7_sat_25.mat"                   | Bin [31m28937423[m -> [32m0[m bytes
+ "work/log/acq/Satellite_together/9\354\233\22430/acq_dump_G_1C_ch_25_8_sat_25.mat"                   | Bin [31m28952825[m -> [32m0[m bytes
+ "work/log/acq/Satellite_together/9\354\233\22430/acq_dump_G_1C_ch_25_9_sat_25.mat"                   | Bin [31m28967416[m -> [32m0[m bytes
+ "work/log/acq/Satellite_together/9\354\233\22430/update_all_acq_max.m"                               |  51 [31m---------------------------------------------------[m
+ work/log/acq/Satellite_together/update_all_acq_max.m                                                 |  51 [31m---------------------------------------------------[m
+ work/log/acq/acq_dump_G_1C_ch_29_10_sat_29.mat                                                       | Bin [31m14602789[m -> [32m0[m bytes
+ work/log/acq/acq_dump_G_1C_ch_29_11_sat_29.mat                                                       | Bin [31m14601446[m -> [32m0[m bytes
+ work/log/acq/acq_dump_G_1C_ch_29_12_sat_29.mat                                                       | Bin [31m14599974[m -> [32m0[m bytes
+ work/log/acq/acq_dump_G_1C_ch_29_13_sat_29.mat                                                       | Bin [31m14602500[m -> [32m0[m bytes
+ work/log/acq/acq_dump_G_1C_ch_29_14_sat_29.mat                                                       | Bin [31m14601705[m -> [32m0[m bytes
+ work/log/acq/acq_dump_G_1C_ch_29_15_sat_29.mat                                                       | Bin [31m14604958[m -> [32m0[m bytes
+ work/log/acq/acq_dump_G_1C_ch_29_16_sat_29.mat                                                       | Bin [31m14603056[m -> [32m0[m bytes
+ work/log/acq/acq_dump_G_1C_ch_29_17_sat_29.mat                                                       | Bin [31m14603175[m -> [32m0[m bytes
+ work/log/acq/acq_dump_G_1C_ch_29_18_sat_29.mat                                                       | Bin [31m14603726[m -> [32m0[m bytes
+ work/log/acq/acq_dump_G_1C_ch_29_19_sat_29.mat                                                       | Bin [31m14604232[m -> [32m0[m bytes
+ work/log/acq/acq_dump_G_1C_ch_29_1_sat_29.mat                                                        | Bin [31m14604174[m -> [32m0[m bytes
+ work/log/acq/acq_dump_G_1C_ch_29_20_sat_29.mat                                                       | Bin [31m14601111[m -> [32m0[m bytes
+ work/log/acq/acq_dump_G_1C_ch_29_21_sat_29.mat                                                       | Bin [31m14604873[m -> [32m0[m bytes
+ work/log/acq/acq_dump_G_1C_ch_29_22_sat_29.mat                                                       | Bin [31m14600922[m -> [32m0[m bytes
+ work/log/acq/acq_dump_G_1C_ch_29_23_sat_29.mat                                                       | Bin [31m14602574[m -> [32m0[m bytes
+ work/log/acq/acq_dump_G_1C_ch_29_24_sat_29.mat                                                       | Bin [31m14605286[m -> [32m0[m bytes
+ work/log/acq/acq_dump_G_1C_ch_29_25_sat_29.mat                                                       | Bin [31m14605909[m -> [32m0[m bytes
+ work/log/acq/acq_dump_G_1C_ch_29_26_sat_29.mat                                                       | Bin [31m14603889[m -> [32m0[m bytes
+ work/log/acq/acq_dump_G_1C_ch_29_27_sat_29.mat                                                       | Bin [31m14601044[m -> [32m0[m bytes
+ work/log/acq/acq_dump_G_1C_ch_29_28_sat_29.mat                                                       | Bin [31m14599533[m -> [32m0[m bytes
+ work/log/acq/acq_dump_G_1C_ch_29_29_sat_29.mat                                                       | Bin [31m14602399[m -> [32m0[m bytes
+ work/log/acq/acq_dump_G_1C_ch_29_2_sat_29.mat                                                        | Bin [31m14597830[m -> [32m0[m bytes
+ work/log/acq/acq_dump_G_1C_ch_29_30_sat_29.mat                                                       | Bin [31m14600661[m -> [32m0[m bytes
+ work/log/acq/acq_dump_G_1C_ch_29_31_sat_29.mat                                                       | Bin [31m14602093[m -> [32m0[m bytes
+ work/log/acq/acq_dump_G_1C_ch_29_32_sat_29.mat                                                       | Bin [31m14602912[m -> [32m0[m bytes
+ work/log/acq/acq_dump_G_1C_ch_29_33_sat_29.mat                                                       | Bin [31m14599727[m -> [32m0[m bytes
+ work/log/acq/acq_dump_G_1C_ch_29_34_sat_29.mat                                                       | Bin [31m14603117[m -> [32m0[m bytes
+ work/log/acq/acq_dump_G_1C_ch_29_35_sat_29.mat                                                       | Bin [31m14601205[m -> [32m0[m bytes
+ work/log/acq/acq_dump_G_1C_ch_29_36_sat_29.mat                                                       | Bin [31m14602569[m -> [32m0[m bytes
+ work/log/acq/acq_dump_G_1C_ch_29_37_sat_29.mat                                                       | Bin [31m14604857[m -> [32m0[m bytes
+ work/log/acq/acq_dump_G_1C_ch_29_38_sat_29.mat                                                       | Bin [31m14605345[m -> [32m0[m bytes
+ work/log/acq/acq_dump_G_1C_ch_29_39_sat_29.mat                                                       | Bin [31m14600947[m -> [32m0[m bytes
+ work/log/acq/acq_dump_G_1C_ch_29_3_sat_29.mat                                                        | Bin [31m14601071[m -> [32m0[m bytes
+ work/log/acq/acq_dump_G_1C_ch_29_40_sat_29.mat                                                       | Bin [31m14604680[m -> [32m0[m bytes
+ work/log/acq/acq_dump_G_1C_ch_29_41_sat_29.mat                                                       | Bin [31m14603502[m -> [32m0[m bytes
+ work/log/acq/acq_dump_G_1C_ch_29_42_sat_29.mat                                                       | Bin [31m14600650[m -> [32m0[m bytes
+ work/log/acq/acq_dump_G_1C_ch_29_43_sat_29.mat                                                       | Bin [31m14603539[m -> [32m0[m bytes
+ work/log/acq/acq_dump_G_1C_ch_29_44_sat_29.mat                                                       | Bin [31m14601309[m -> [32m0[m bytes
+ work/log/acq/acq_dump_G_1C_ch_29_45_sat_29.mat                                                       | Bin [31m14602412[m -> [32m0[m bytes
+ work/log/acq/acq_dump_G_1C_ch_29_46_sat_29.mat                                                       | Bin [31m14600039[m -> [32m0[m bytes
+ work/log/acq/acq_dump_G_1C_ch_29_47_sat_29.mat                                                       | Bin [31m14602761[m -> [32m0[m bytes
+ work/log/acq/acq_dump_G_1C_ch_29_48_sat_29.mat                                                       | Bin [31m14603258[m -> [32m0[m bytes
+ work/log/acq/acq_dump_G_1C_ch_29_49_sat_29.mat                                                       | Bin [31m14601424[m -> [32m0[m bytes
+ work/log/acq/acq_dump_G_1C_ch_29_4_sat_29.mat                                                        | Bin [31m14603407[m -> [32m0[m bytes
+ work/log/acq/acq_dump_G_1C_ch_29_50_sat_29.mat                                                       | Bin [31m14602763[m -> [32m0[m bytes
+ work/log/acq/acq_dump_G_1C_ch_29_5_sat_29.mat                                                        | Bin [31m14596961[m -> [32m0[m bytes
+ work/log/acq/acq_dump_G_1C_ch_29_6_sat_29.mat                                                        | Bin [31m14603535[m -> [32m0[m bytes
+ work/log/acq/acq_dump_G_1C_ch_29_7_sat_29.mat                                                        | Bin [31m14599032[m -> [32m0[m bytes
+ work/log/acq/acq_dump_G_1C_ch_29_8_sat_29.mat                                                        | Bin [31m14600841[m -> [32m0[m bytes
+ work/log/acq/acq_dump_G_1C_ch_29_9_sat_29.mat                                                        | Bin [31m14602571[m -> [32m0[m bytes
+ work/log/acq/low_gain/acq_dump_G_1C_ch_10_1_sat_10.mat                                               | Bin [31m29115322[m -> [32m0[m bytes
+ work/log/acq/update_all_acq_max.m                                                                    |  51 [31m---------------------------------------------------[m
+ work/log/tracking/.gitkeep                                                                           |   0
+ work/log/tracking/spoofer/Telemetry0.dat                                                             | Bin [31m1161472[m -> [32m0[m bytes
+ work/log/tracking/spoofer/Telemetry0.mat                                                             | Bin [31m415202[m -> [32m0[m bytes
+ work/log/tracking/spoofer/Telemetry1.mat                                                             | Bin [31m272419[m -> [32m0[m bytes
+ work/log/tracking/spoofer/Telemetry10.dat                                                            | Bin [31m508800[m -> [32m0[m bytes
+ work/log/tracking/spoofer/Telemetry10.mat                                                            | Bin [31m213327[m -> [32m0[m bytes
+ work/log/tracking/spoofer/Telemetry11.mat                                                            | Bin [31m2273806[m -> [32m0[m bytes
+ work/log/tracking/spoofer/Telemetry12.dat                                                            | Bin [31m969472[m -> [32m0[m bytes
+ work/log/tracking/spoofer/Telemetry12.mat                                                            | Bin [31m350730[m -> [32m0[m bytes
+ work/log/tracking/spoofer/Telemetry13.mat                                                            | Bin [31m3570071[m -> [32m0[m bytes
+ work/log/tracking/spoofer/Telemetry14.mat                                                            | Bin [31m189033[m -> [32m0[m bytes
+ work/log/tracking/spoofer/Telemetry15.mat                                                            | Bin [31m3560247[m -> [32m0[m bytes
+ work/log/tracking/spoofer/Telemetry16.mat                                                            | Bin [31m74829[m -> [32m0[m bytes
+ work/log/tracking/spoofer/Telemetry17.mat                                                            | Bin [31m462396[m -> [32m0[m bytes
+ work/log/tracking/spoofer/Telemetry18.mat                                                            | Bin [31m74815[m -> [32m0[m bytes
+ work/log/tracking/spoofer/Telemetry19.mat                                                            | Bin [31m467531[m -> [32m0[m bytes
+ work/log/tracking/spoofer/Telemetry2.mat                                                             | Bin [31m58064[m -> [32m0[m bytes
+ work/log/tracking/spoofer/Telemetry21.mat                                                            | Bin [31m74803[m -> [32m0[m bytes
+ work/log/tracking/spoofer/Telemetry22.mat                                                            | Bin [31m3606361[m -> [32m0[m bytes
+ work/log/tracking/spoofer/Telemetry23.dat                                                            | Bin [31m777472[m -> [32m0[m bytes
+ work/log/tracking/spoofer/Telemetry23.mat                                                            | Bin [31m296564[m -> [32m0[m bytes
+ work/log/tracking/spoofer/Telemetry24.mat                                                            | Bin [31m3561355[m -> [32m0[m bytes
+ work/log/tracking/spoofer/Telemetry25.dat                                                            | Bin [31m508800[m -> [32m0[m bytes
+ work/log/tracking/spoofer/Telemetry25.mat                                                            | Bin [31m211035[m -> [32m0[m bytes
+ work/log/tracking/spoofer/Telemetry26.mat                                                            | Bin [31m74825[m -> [32m0[m bytes
+ work/log/tracking/spoofer/Telemetry27.mat                                                            | Bin [31m74792[m -> [32m0[m bytes
+ work/log/tracking/spoofer/Telemetry28.dat                                                            | Bin [31m969472[m -> [32m0[m bytes
+ work/log/tracking/spoofer/Telemetry28.mat                                                            | Bin [31m353832[m -> [32m0[m bytes
+ work/log/tracking/spoofer/Telemetry29.mat                                                            | Bin [31m364064[m -> [32m0[m bytes
+ work/log/tracking/spoofer/Telemetry3.mat                                                             | Bin [31m523198[m -> [32m0[m bytes
+ work/log/tracking/spoofer/Telemetry30.mat                                                            | Bin [31m2811923[m -> [32m0[m bytes
+ work/log/tracking/spoofer/Telemetry4.mat                                                             | Bin [31m74812[m -> [32m0[m bytes
+ work/log/tracking/spoofer/Telemetry5.mat                                                             | Bin [31m2574158[m -> [32m0[m bytes
+ work/log/tracking/spoofer/Telemetry6.mat                                                             | Bin [31m458304[m -> [32m0[m bytes
+ work/log/tracking/spoofer/Telemetry7.mat                                                             | Bin [31m74804[m -> [32m0[m bytes
+ work/log/tracking/spoofer/Telemetry8.mat                                                             | Bin [31m74909[m -> [32m0[m bytes
+ work/log/tracking/spoofer/Telemetry9.mat                                                             | Bin [31m74806[m -> [32m0[m bytes
+ work/log/tracking/spoofer/tracking_ch0.dat                                                           | Bin [31m2183900[m -> [32m0[m bytes
+ work/log/tracking/spoofer/tracking_ch0.mat                                                           | Bin [31m1081946[m -> [32m0[m bytes
+ work/log/tracking/spoofer/tracking_ch1.dat                                                           | Bin [31m20259600[m -> [32m0[m bytes
+ work/log/tracking/spoofer/tracking_ch1.mat                                                           | Bin [31m9331968[m -> [32m0[m bytes
+ work/log/tracking/spoofer/tracking_ch10.dat                                                          | Bin [31m12097400[m -> [32m0[m bytes
+ work/log/tracking/spoofer/tracking_ch10.mat                                                          | Bin [31m5598009[m -> [32m0[m bytes
+ work/log/tracking/spoofer/tracking_ch11.dat                                                          | Bin [31m20236200[m -> [32m0[m bytes
+ work/log/tracking/spoofer/tracking_ch11.mat                                                          | Bin [31m9345521[m -> [32m0[m bytes
+ work/log/tracking/spoofer/tracking_ch12.dat                                                          | Bin [31m5321800[m -> [32m0[m bytes
+ work/log/tracking/spoofer/tracking_ch12.mat                                                          | Bin [31m2489490[m -> [32m0[m bytes
+ work/log/tracking/spoofer/tracking_ch13.dat                                                          | Bin [31m20235900[m -> [32m0[m bytes
+ work/log/tracking/spoofer/tracking_ch13.mat                                                          | Bin [31m9212762[m -> [32m0[m bytes
+ work/log/tracking/spoofer/tracking_ch14.dat                                                          | Bin [31m20228900[m -> [32m0[m bytes
+ work/log/tracking/spoofer/tracking_ch14.mat                                                          | Bin [31m9126211[m -> [32m0[m bytes
+ work/log/tracking/spoofer/tracking_ch15.dat                                                          | Bin [31m20232100[m -> [32m0[m bytes
+ work/log/tracking/spoofer/tracking_ch15.mat                                                          | Bin [31m9189464[m -> [32m0[m bytes
+ work/log/tracking/spoofer/tracking_ch16.dat                                                          | Bin [31m20225600[m -> [32m0[m bytes
+ work/log/tracking/spoofer/tracking_ch16.mat                                                          | Bin [31m9044668[m -> [32m0[m bytes
+ work/log/tracking/spoofer/tracking_ch17.dat                                                          | Bin [31m20228100[m -> [32m0[m bytes
+ work/log/tracking/spoofer/tracking_ch17.mat                                                          | Bin [31m9148009[m -> [32m0[m bytes
+ work/log/tracking/spoofer/tracking_ch18.dat                                                          | Bin [31m20231100[m -> [32m0[m bytes
+ work/log/tracking/spoofer/tracking_ch18.mat                                                          | Bin [31m9290417[m -> [32m0[m bytes
+ work/log/tracking/spoofer/tracking_ch19.dat                                                          | Bin [31m20220500[m -> [32m0[m bytes
+ work/log/tracking/spoofer/tracking_ch19.mat                                                          | Bin [31m9362225[m -> [32m0[m bytes
+ work/log/tracking/spoofer/tracking_ch2.dat                                                           | Bin [31m20250900[m -> [32m0[m bytes
+ work/log/tracking/spoofer/tracking_ch2.mat                                                           | Bin [31m9230188[m -> [32m0[m bytes
+ work/log/tracking/spoofer/tracking_ch20.dat                                                          | Bin [31m20215900[m -> [32m0[m bytes
+ work/log/tracking/spoofer/tracking_ch20.mat                                                          | Bin [31m9245742[m -> [32m0[m bytes
+ work/log/tracking/spoofer/tracking_ch21.dat                                                          | Bin [31m20220000[m -> [32m0[m bytes
+ work/log/tracking/spoofer/tracking_ch21.mat                                                          | Bin [31m9365416[m -> [32m0[m bytes
+ work/log/tracking/spoofer/tracking_ch22.dat                                                          | Bin [31m20209800[m -> [32m0[m bytes
+ work/log/tracking/spoofer/tracking_ch22.mat                                                          | Bin [31m9506575[m -> [32m0[m bytes
+ work/log/tracking/spoofer/tracking_ch23.dat                                                          | Bin [31m8055100[m -> [32m0[m bytes
+ work/log/tracking/spoofer/tracking_ch23.mat                                                          | Bin [31m3688888[m -> [32m0[m bytes
+ work/log/tracking/spoofer/tracking_ch24.dat                                                          | Bin [31m20207500[m -> [32m0[m bytes
+ work/log/tracking/spoofer/tracking_ch24.mat                                                          | Bin [31m8979384[m -> [32m0[m bytes
+ work/log/tracking/spoofer/tracking_ch25.dat                                                          | Bin [31m12119200[m -> [32m0[m bytes
+ work/log/tracking/spoofer/tracking_ch25.mat                                                          | Bin [31m5699676[m -> [32m0[m bytes
+ work/log/tracking/spoofer/tracking_ch26.dat                                                          | Bin [31m20205100[m -> [32m0[m bytes
+ work/log/tracking/spoofer/tracking_ch26.mat                                                          | Bin [31m9204309[m -> [32m0[m bytes
+ work/log/tracking/spoofer/tracking_ch27.dat                                                          | Bin [31m20198100[m -> [32m0[m bytes
+ work/log/tracking/spoofer/tracking_ch27.mat                                                          | Bin [31m9311794[m -> [32m0[m bytes
+ work/log/tracking/spoofer/tracking_ch28.dat                                                          | Bin [31m5292000[m -> [32m0[m bytes
+ work/log/tracking/spoofer/tracking_ch28.mat                                                          | Bin [31m2462473[m -> [32m0[m bytes
+ work/log/tracking/spoofer/tracking_ch29.dat                                                          | Bin [31m20196500[m -> [32m0[m bytes
+ work/log/tracking/spoofer/tracking_ch29.mat                                                          | Bin [31m9113772[m -> [32m0[m bytes
+ work/log/tracking/spoofer/tracking_ch3.dat                                                           | Bin [31m20249500[m -> [32m0[m bytes
+ work/log/tracking/spoofer/tracking_ch3.mat                                                           | Bin [31m9415876[m -> [32m0[m bytes
+ work/log/tracking/spoofer/tracking_ch30.dat                                                          | Bin [31m20194400[m -> [32m0[m bytes
+ work/log/tracking/spoofer/tracking_ch30.mat                                                          | Bin [31m9371425[m -> [32m0[m bytes
+ work/log/tracking/spoofer/tracking_ch4.dat                                                           | Bin [31m20247500[m -> [32m0[m bytes
+ work/log/tracking/spoofer/tracking_ch4.mat                                                           | Bin [31m9433920[m -> [32m0[m bytes
+ work/log/tracking/spoofer/tracking_ch5.dat                                                           | Bin [31m20249300[m -> [32m0[m bytes
+ work/log/tracking/spoofer/tracking_ch5.mat                                                           | Bin [31m9096289[m -> [32m0[m bytes
+ work/log/tracking/spoofer/tracking_ch6.dat                                                           | Bin [31m20242400[m -> [32m0[m bytes
+ work/log/tracking/spoofer/tracking_ch6.mat                                                           | Bin [31m9204583[m -> [32m0[m bytes
+ work/log/tracking/spoofer/tracking_ch7.dat                                                           | Bin [31m20247900[m -> [32m0[m bytes
+ work/log/tracking/spoofer/tracking_ch7.mat                                                           | Bin [31m9155637[m -> [32m0[m bytes
+ work/log/tracking/spoofer/tracking_ch8.dat                                                           | Bin [31m20239000[m -> [32m0[m bytes
+ work/log/tracking/spoofer/tracking_ch8.mat                                                           | Bin [31m9183577[m -> [32m0[m bytes
+ work/log/tracking/spoofer/tracking_ch9.dat                                                           | Bin [31m20235000[m -> [32m0[m bytes
+ work/log/tracking/spoofer/tracking_ch9.mat                                                           | Bin [31m9251386[m -> [32m0[m bytes
+ work/log/tracking/tracking_ch0.dat                                                                   |   0
+ work/log/tracking/tracking_ch0.mat                                                                   | Bin [31m1507541[m -> [32m0[m bytes
+ work/log/tracking/tracking_ch1.dat                                                                   |   0
+ work/log/tracking/tracking_ch1.mat                                                                   | Bin [31m1484362[m -> [32m0[m bytes
+ work/log/tracking/tracking_ch10.dat                                                                  |   0
+ work/log/tracking/tracking_ch10.mat                                                                  | Bin [31m1500008[m -> [32m0[m bytes
+ work/log/tracking/tracking_ch11.dat                                                                  |   0
+ work/log/tracking/tracking_ch11.mat                                                                  | Bin [31m1510521[m -> [32m0[m bytes
+ work/log/tracking/tracking_ch12.dat                                                                  |   0
+ work/log/tracking/tracking_ch12.mat                                                                  | Bin [31m1462302[m -> [32m0[m bytes
+ work/log/tracking/tracking_ch13.dat                                                                  |   0
+ work/log/tracking/tracking_ch13.mat                                                                  | Bin [31m1476687[m -> [32m0[m bytes
+ work/log/tracking/tracking_ch14.dat                                                                  |   0
+ work/log/tracking/tracking_ch14.mat                                                                  | Bin [31m1447653[m -> [32m0[m bytes
+ work/log/tracking/tracking_ch15.dat                                                                  |   0
+ work/log/tracking/tracking_ch15.mat                                                                  | Bin [31m1461881[m -> [32m0[m bytes
+ work/log/tracking/tracking_ch16.dat                                                                  |   0
+ work/log/tracking/tracking_ch16.mat                                                                  | Bin [31m1439254[m -> [32m0[m bytes
+ work/log/tracking/tracking_ch17.dat                                                                  |   0
+ work/log/tracking/tracking_ch17.mat                                                                  | Bin [31m1475029[m -> [32m0[m bytes
+ work/log/tracking/tracking_ch18.dat                                                                  |   0
+ work/log/tracking/tracking_ch18.mat                                                                  | Bin [31m1504011[m -> [32m0[m bytes
+ work/log/tracking/tracking_ch19.dat                                                                  |   0
+ work/log/tracking/tracking_ch19.mat                                                                  | Bin [31m1503416[m -> [32m0[m bytes
+ work/log/tracking/tracking_ch2.dat                                                                   |   0
+ work/log/tracking/tracking_ch2.mat                                                                   | Bin [31m1479793[m -> [32m0[m bytes
+ work/log/tracking/tracking_ch20.dat                                                                  |   0
+ work/log/tracking/tracking_ch20.mat                                                                  | Bin [31m1479338[m -> [32m0[m bytes
+ work/log/tracking/tracking_ch21.dat                                                                  |   0
+ work/log/tracking/tracking_ch21.mat                                                                  | Bin [31m1494307[m -> [32m0[m bytes
+ work/log/tracking/tracking_ch22.dat                                                                  |   0
+ work/log/tracking/tracking_ch22.mat                                                                  | Bin [31m1540902[m -> [32m0[m bytes
+ work/log/tracking/tracking_ch23.dat                                                                  |   0
+ work/log/tracking/tracking_ch23.mat                                                                  | Bin [31m1466301[m -> [32m0[m bytes
+ work/log/tracking/tracking_ch24.dat                                                                  |   0
+ work/log/tracking/tracking_ch24.mat                                                                  | Bin [31m1421608[m -> [32m0[m bytes
+ work/log/tracking/tracking_ch25.dat                                                                  |   0
+ work/log/tracking/tracking_ch25.mat                                                                  | Bin [31m708957[m -> [32m0[m bytes
+ work/log/tracking/tracking_ch26.dat                                                                  |   0
+ work/log/tracking/tracking_ch26.mat                                                                  | Bin [31m1462416[m -> [32m0[m bytes
+ work/log/tracking/tracking_ch27.dat                                                                  |   0
+ work/log/tracking/tracking_ch27.mat                                                                  | Bin [31m1495595[m -> [32m0[m bytes
+ work/log/tracking/tracking_ch28.dat                                                                  |   0
+ work/log/tracking/tracking_ch28.mat                                                                  | Bin [31m1444133[m -> [32m0[m bytes
+ work/log/tracking/tracking_ch29.dat                                                                  |   0
+ work/log/tracking/tracking_ch29.mat                                                                  | Bin [31m1433843[m -> [32m0[m bytes
+ work/log/tracking/tracking_ch3.dat                                                                   |   0
+ work/log/tracking/tracking_ch3.mat                                                                   | Bin [31m1538782[m -> [32m0[m bytes
+ work/log/tracking/tracking_ch30.dat                                                                  |   0
+ work/log/tracking/tracking_ch30.mat                                                                  | Bin [31m1485104[m -> [32m0[m bytes
+ work/log/tracking/tracking_ch4.dat                                                                   |   0
+ work/log/tracking/tracking_ch4.mat                                                                   | Bin [31m1523093[m -> [32m0[m bytes
+ work/log/tracking/tracking_ch5.dat                                                                   |   0
+ work/log/tracking/tracking_ch5.mat                                                                   | Bin [31m1461695[m -> [32m0[m bytes
+ work/log/tracking/tracking_ch6.dat                                                                   |   0
+ work/log/tracking/tracking_ch6.mat                                                                   | Bin [31m1491283[m -> [32m0[m bytes
+ work/log/tracking/tracking_ch7.dat                                                                   |   0
+ work/log/tracking/tracking_ch7.mat                                                                   | Bin [31m1456078[m -> [32m0[m bytes
+ work/log/tracking/tracking_ch8.dat                                                                   |   0
+ work/log/tracking/tracking_ch8.mat                                                                   | Bin [31m1482803[m -> [32m0[m bytes
+ work/log/tracking/tracking_ch9.dat                                                                   |   0
+ work/log/tracking/tracking_ch9.mat                                                                   | Bin [31m1471605[m -> [32m0[m bytes
+ 417 files changed, 2 insertions(+), 204 deletions(-)
