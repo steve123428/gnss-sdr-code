@@ -30,12 +30,14 @@
 .vscode/
 *.kml
 work/pvt.dat_*.kml
-work/pvt.dat_*.gpx
+work/pvt.dat_*.gps
 work/log/Observables/*.dat
 work/log/tracking/Telemetry*.dat
 work/log/Observables/Observables.dat
 work/log/acq
 work/log/tracking*
+work/log/Tele*
+src/utils/matlab
 
 ### additional
 monitoring-client/build/
