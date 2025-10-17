@@ -447,7 +447,15 @@ bool hybrid_observables_gs::interp_trk_obs(Gnss_Synchro &interpolated_obs, uint3
                             const double time_factor = (T_rx_s - d_gnss_synchro_history->get(ch, t1_idx).RX_time) /
                                                        (d_gnss_synchro_history->get(ch, t2_idx).RX_time -
                                                            d_gnss_synchro_history->get(ch, t1_idx).RX_time);
-
+                            std::cout << std::fixed << std::setprecision(9)
+                                      << "[CH " << ch << "] "
+                                      << "T_rx_s=" << T_rx_s
+                                      << " t1.RX_time=" << d_gnss_synchro_history->get(ch, t1_idx).RX_time
+                                      << " t2.RX_time=" << d_gnss_synchro_history->get(ch, t2_idx).RX_time
+                                      << " (t2-t1)=" << (d_gnss_synchro_history->get(ch, t2_idx).RX_time -
+                                                          d_gnss_synchro_history->get(ch, t1_idx).RX_time)
+                                      << " time_factor=" << time_factor
+                                      << std::endl;
                             // CARRIER PHASE INTERPOLATION
                             interpolated_obs.Carrier_phase_rads = d_gnss_synchro_history->get(ch, t1_idx).Carrier_phase_rads + (d_gnss_synchro_history->get(ch, t2_idx).Carrier_phase_rads - d_gnss_synchro_history->get(ch, t1_idx).Carrier_phase_rads) * time_factor;
                             // CARRIER DOPPLER INTERPOLATION
@@ -550,11 +558,11 @@ void hybrid_observables_gs::compute_pranges(std::vector<Gnss_Synchro> &data) con
             if (it->Flag_valid_word)
                 {
                     double traveltime_ms = current_T_rx_TOW_ms - it->interp_TOW_ms;
-                    std::cout << "[ROLL] Channel " << it->Channel_ID
-                    << " interp_TOW_ms: " << std::fixed << std::setprecision(3) << it->interp_TOW_ms
-                    << " , current_T_rx_TOW_ms: " << current_T_rx_TOW_ms
-                    << " , diff(before): " << (current_T_rx_TOW_ms - it->interp_TOW_ms)
-                    << std::endl;
+                    //std::cout << "[ROLL] Channel " << it->Channel_ID
+                    //<< " interp_TOW_ms: " << std::fixed << std::setprecision(3) << it->interp_TOW_ms
+                    //<< " , current_T_rx_TOW_ms: " << current_T_rx_TOW_ms
+                    //<< " , diff(before): " << (current_T_rx_TOW_ms - it->interp_TOW_ms)
+                    //<< std::endl;
                     if (fabs(traveltime_ms) > 302400)  // check TOW roll over
                         {
                             traveltime_ms = 604800000.0 + current_T_rx_TOW_ms - it->interp_TOW_ms;

@@ -37,6 +37,8 @@ work/log/Observables/Observables.dat
 work/log/acq
 work/log/tracking*
 work/log/Tele*
+work/GSDR*
+work/pvt*
 src/utils/matlab
 
 ### additional
