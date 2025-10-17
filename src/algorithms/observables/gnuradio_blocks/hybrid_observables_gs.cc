@@ -550,6 +550,11 @@ void hybrid_observables_gs::compute_pranges(std::vector<Gnss_Synchro> &data) con
             if (it->Flag_valid_word)
                 {
                     double traveltime_ms = current_T_rx_TOW_ms - it->interp_TOW_ms;
+                    std::cout << "[ROLL] Channel " << it->Channel_ID
+                    << " interp_TOW_ms: " << std::fixed << std::setprecision(3) << it->interp_TOW_ms
+                    << " , current_T_rx_TOW_ms: " << current_T_rx_TOW_ms
+                    << " , diff(before): " << (current_T_rx_TOW_ms - it->interp_TOW_ms)
+                    << std::endl;
                     if (fabs(traveltime_ms) > 302400)  // check TOW roll over
                         {
                             traveltime_ms = 604800000.0 + current_T_rx_TOW_ms - it->interp_TOW_ms;
