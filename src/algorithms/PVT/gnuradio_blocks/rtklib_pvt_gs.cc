@@ -568,6 +568,7 @@ rtklib_pvt_gs::rtklib_pvt_gs(uint32_t nchannels,
 
     if (d_enable_rx_clock_correction == true)
         {
+            std::cout << "fuck why not working!!!!!!!!!!!!!!\n";
             // setup two PVT solvers: internal solver for rx clock and user solver
             // user PVT solver
             d_user_pvt_solver = std::make_shared<Rtklib_Solver>(rtk, conf_, dump_ls_pvt_filename, d_type_of_rx, d_dump, d_dump_mat);
@@ -2244,7 +2245,12 @@ int rtklib_pvt_gs::work(int noutput_items, gr_vector_const_void_star& input_item
                                             d_gnss_observables_map_t0 = d_gnss_observables_map_t1;
                                             apply_rx_clock_offset(d_gnss_observables_map, Rx_clock_offset_s);
                                             d_gnss_observables_map_t1 = d_gnss_observables_map;
-
+                                            for (const auto& entry : d_gnss_observables_map)
+                                            {
+                                                std::cout << "Post-Clock Offset PRN: " << entry.second.PRN
+                                                          << ", Pseudorange: " << entry.second.Pseudorange_m
+                                                          << std::endl;
+                                            }
                                             // ### select the rx_time and interpolate observables at that time
                                             if (!d_gnss_observables_map_t0.empty() && !d_gnss_observables_map_t1.empty())
                                                 {

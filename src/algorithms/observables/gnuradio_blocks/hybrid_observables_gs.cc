@@ -447,7 +447,7 @@ bool hybrid_observables_gs::interp_trk_obs(Gnss_Synchro &interpolated_obs, uint3
                             const double time_factor = (T_rx_s - d_gnss_synchro_history->get(ch, t1_idx).RX_time) /
                                                        (d_gnss_synchro_history->get(ch, t2_idx).RX_time -
                                                            d_gnss_synchro_history->get(ch, t1_idx).RX_time);
-                            std::cout << std::fixed << std::setprecision(9)
+                            /*std::cout << std::fixed << std::setprecision(9)
                                       << "[CH " << ch << "] "
                                       << "T_rx_s=" << T_rx_s
                                       << " t1.RX_time=" << d_gnss_synchro_history->get(ch, t1_idx).RX_time
@@ -455,7 +455,7 @@ bool hybrid_observables_gs::interp_trk_obs(Gnss_Synchro &interpolated_obs, uint3
                                       << " (t2-t1)=" << (d_gnss_synchro_history->get(ch, t2_idx).RX_time -
                                                           d_gnss_synchro_history->get(ch, t1_idx).RX_time)
                                       << " time_factor=" << time_factor
-                                      << std::endl;
+                                      << std::endl;*/
                             // CARRIER PHASE INTERPOLATION
                             interpolated_obs.Carrier_phase_rads = d_gnss_synchro_history->get(ch, t1_idx).Carrier_phase_rads + (d_gnss_synchro_history->get(ch, t2_idx).Carrier_phase_rads - d_gnss_synchro_history->get(ch, t1_idx).Carrier_phase_rads) * time_factor;
                             // CARRIER DOPPLER INTERPOLATION
