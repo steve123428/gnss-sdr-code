@@ -202,8 +202,10 @@ void hybrid_observables_gs::msg_handler_pvt_to_observables(const pmt::pmt_t &msg
             if (pmt::any_ref(msg).type().hash_code() == d_double_type_hash_code)
                 {
                     const auto new_rx_clock_offset_s = wht::any_cast<double>(pmt::any_ref(msg));
+                    //std::cout<<"d_T_rx_TOW_ms_before " << d_T_rx_TOW_ms << std::endl;
                     double old_tow_corrected = static_cast<double>(d_T_rx_TOW_ms) - new_rx_clock_offset_s * 1000.0;
                     d_T_rx_TOW_ms = d_T_rx_TOW_ms - static_cast<int>(round(new_rx_clock_offset_s * 1000.0));
+                    std::cout<<"d_T_rx_TOW_ms_after " << d_T_rx_TOW_ms << std::endl;
                     // align the receiver clock to integer multiple of d_T_rx_step_ms
                     if (d_T_rx_TOW_ms % d_T_rx_step_ms)
                         {
@@ -558,11 +560,14 @@ void hybrid_observables_gs::compute_pranges(std::vector<Gnss_Synchro> &data) con
             if (it->Flag_valid_word)
                 {
                     double traveltime_ms = current_T_rx_TOW_ms - it->interp_TOW_ms;
-                    //std::cout << "[ROLL] Channel " << it->Channel_ID
-                    //<< " interp_TOW_ms: " << std::fixed << std::setprecision(3) << it->interp_TOW_ms
-                    //<< " , current_T_rx_TOW_ms: " << current_T_rx_TOW_ms
-                    //<< " , diff(before): " << (current_T_rx_TOW_ms - it->interp_TOW_ms)
-                    //<< std::endl;
+                    /*
+                    if (it->Channel_ID == 22){
+                    std::cout << "[ROLL] Channel " << it->Channel_ID
+                    << " interp_TOW_ms: " << std::fixed << std::setprecision(3) << it->interp_TOW_ms
+                    << " , current_T_rx_TOW_ms: " << current_T_rx_TOW_ms
+                    << " , diff(before): " << (current_T_rx_TOW_ms - it->interp_TOW_ms)
+                    << std::endl;}
+                    */
                     if (fabs(traveltime_ms) > 302400)  // check TOW roll over
                         {
                             traveltime_ms = 604800000.0 + current_T_rx_TOW_ms - it->interp_TOW_ms;
