@@ -31,6 +31,7 @@
 *.kml
 work/pvt.dat_*.kml
 work/pvt.dat_*.gps
+work/log
 work/log/Observables/*.dat
 work/log/tracking/Telemetry*.dat
 work/log/Observables/Observables.dat
