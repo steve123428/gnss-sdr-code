@@ -568,7 +568,6 @@ rtklib_pvt_gs::rtklib_pvt_gs(uint32_t nchannels,
 
     if (d_enable_rx_clock_correction == true)
         {
-            std::cout << "fuck why not working!!!!!!!!!!!!!!\n";
             // setup two PVT solvers: internal solver for rx clock and user solver
             // user PVT solver
             d_user_pvt_solver = std::make_shared<Rtklib_Solver>(rtk, conf_, dump_ls_pvt_filename, d_type_of_rx, d_dump, d_dump_mat);
@@ -2218,10 +2217,10 @@ int rtklib_pvt_gs::work(int noutput_items, gr_vector_const_void_star& input_item
                                                             double TAG_time_ns = (static_cast<double>(current_tag.tow_ms) + current_tag.tow_ms_fraction + delta_rxtime_to_tag_ms) * 1e6;
                                                             log_source_timetag_info(current_corrected_RX_clock_ns, TAG_time_ns);
                                                             double tow_error_ns = current_corrected_RX_clock_ns - TAG_time_ns;
-                                                            std::cout << "[Time ch] RX TimeTag Week: " << current_tag.week
-                                                                      << ", TOW: " << current_tag.tow_ms
-                                                                      << " [ms], TOW fraction: " << current_tag.tow_ms_fraction
-                                                                      << " [ms], GNSS-SDR OBS CORRECTED TOW - EXTERNAL TIMETAG TOW: " << tow_error_ns << " [ns] \n";
+                                                            //std::cout << "[Time ch] RX TimeTag Week: " << current_tag.week
+                                                            //          << ", TOW: " << current_tag.tow_ms
+                                                            //          << " [ms], TOW fraction: " << current_tag.tow_ms_fraction
+                                                            //          << " [ms], GNSS-SDR OBS CORRECTED TOW - EXTERNAL TIMETAG TOW: " << tow_error_ns << " [ns] \n";
                                                         }
                                                 }
                                         }
@@ -2230,10 +2229,12 @@ int rtklib_pvt_gs::work(int noutput_items, gr_vector_const_void_star& input_item
 
                             if (fabs(Rx_clock_offset_s) * 1000.0 > d_max_obs_block_rx_clock_offset_ms)
                                 {
+                                    std::cout << "d_max_obs_block_rx_clock_offset_ms = " << d_max_obs_block_rx_clock_offset_ms << std::endl;
                                     // check if the message was just sent to not duplicate it while it is being applied
                                     if ((d_local_counter_ms - d_timestamp_rx_clock_offset_correction_msg_ms) > 1000)
                                         {
                                             this->message_port_pub(pmt::mp("pvt_to_observables"), pmt::make_any(Rx_clock_offset_s));
+                                            std::cout << "PVT: Sent clock offset correction to observables: " << Rx_clock_offset_s << "[s]\n";
                                             d_timestamp_rx_clock_offset_correction_msg_ms = d_local_counter_ms;
                                             LOG(INFO) << "PVT: Sent clock offset correction to observables: " << Rx_clock_offset_s << "[s]";
                                         }
@@ -2244,12 +2245,18 @@ int rtklib_pvt_gs::work(int noutput_items, gr_vector_const_void_star& input_item
                                         {
                                             d_gnss_observables_map_t0 = d_gnss_observables_map_t1;
                                             apply_rx_clock_offset(d_gnss_observables_map, Rx_clock_offset_s);
+                                            if ((d_local_counter_ms - d_timestamp_rx_clock_offset_correction_msg_ms) > 300)
+                                                {
+                                                    this->message_port_pub(pmt::mp("pvt_to_observables"), pmt::make_any(Rx_clock_offset_s));
+                                                    std::cout << "PVT: Sent clock offset correction to observables: " << Rx_clock_offset_s << "[s]\n";
+                                                    d_timestamp_rx_clock_offset_correction_msg_ms = d_local_counter_ms;
+                                                }
                                             d_gnss_observables_map_t1 = d_gnss_observables_map;
                                             for (const auto& entry : d_gnss_observables_map)
                                             {
-                                                std::cout << "Post-Clock Offset PRN: " << entry.second.PRN
-                                                          << ", Pseudorange: " << entry.second.Pseudorange_m
-                                                          << std::endl;
+                                                //std::cout << "Post-Clock Offset PRN: " << entry.second.PRN
+                                                //          << ", Pseudorange: " << entry.second.Pseudorange_m
+                                                //          << std::endl;
                                             }
                                             // ### select the rx_time and interpolate observables at that time
                                             if (!d_gnss_observables_map_t0.empty() && !d_gnss_observables_map_t1.empty())

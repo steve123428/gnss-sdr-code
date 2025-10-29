@@ -85,12 +85,17 @@ public:
     double RX_time{};        //!< Set by Observables processing block
     double interp_TOW_ms{};  //!< Set by Observables processing block
 
+    //PVT
+    double Final_Pseudorange_m{};
+
     // Flags
     bool Flag_valid_acquisition{};         //!< Set by Acquisition processing block
     bool Flag_valid_symbol_output{};       //!< Set by Tracking processing block
     bool Flag_valid_word{};                //!< Set by Telemetry Decoder processing block
     bool Flag_valid_pseudorange{};         //!< Set by Observables processing block
     bool Flag_PLL_180_deg_phase_locked{};  //!< Set by Telemetry Decoder processing block
+
+
 
     /// Copy constructor
     Gnss_Synchro(const Gnss_Synchro& other) noexcept = default;
@@ -122,6 +127,7 @@ public:
                 this->correlation_length_ms = rhs.correlation_length_ms;
                 this->TOW_at_current_symbol_ms = rhs.TOW_at_current_symbol_ms;
                 this->Pseudorange_m = rhs.Pseudorange_m;
+                this->Final_Pseudorange_m = rhs.Final_Pseudorange_m;
                 this->RX_time = rhs.RX_time;
                 this->interp_TOW_ms = rhs.interp_TOW_ms;
                 this->Flag_valid_acquisition = rhs.Flag_valid_acquisition;
@@ -174,6 +180,7 @@ public:
                 this->correlation_length_ms = other.correlation_length_ms;
                 this->TOW_at_current_symbol_ms = other.TOW_at_current_symbol_ms;
                 this->Pseudorange_m = other.Pseudorange_m;
+                this->Final_Pseudorange_m = other.Final_Pseudorange_m;
                 this->RX_time = other.RX_time;
                 this->interp_TOW_ms = other.interp_TOW_ms;
                 this->Flag_valid_acquisition = other.Flag_valid_acquisition;
@@ -222,6 +229,7 @@ public:
                 other.Flag_valid_symbol_output = false;
                 other.Flag_valid_word = false;
                 other.Flag_valid_pseudorange = false;
+                other.Final_Pseudorange_m = 0.0;
                 other.Flag_PLL_180_deg_phase_locked = false;
                 other.carrier_lock_test = 0.0;
                 other.acc_carrier_phase_rad = 0.0;
@@ -277,6 +285,8 @@ public:
         ar& BOOST_SERIALIZATION_NVP(Pseudorange_m);
         ar& BOOST_SERIALIZATION_NVP(RX_time);
         ar& BOOST_SERIALIZATION_NVP(interp_TOW_ms);
+        // PVT
+        ar & BOOST_SERIALIZATION_NVP(Final_Pseudorange_m);
         // Flags
         ar& BOOST_SERIALIZATION_NVP(Flag_valid_acquisition);
         ar& BOOST_SERIALIZATION_NVP(Flag_valid_symbol_output);
