@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<!DOCTYPE boost_serialization>
+<boost_serialization signature="serialization::archive" version="18">
+<GNSS-SDR_gps_almanac_map class_id="0" tracking_level="0" version="0">
+	<count>4</count>
+	<item_version>0</item_version>
+	<item class_id="1" tracking_level="0" version="0">
+		<first>1</first>
+		<second class_id="2" tracking_level="0" version="0">
+			<PRN>1</PRN>
+			<delta_i>5.16319274902343750e-03</delta_i>
+			<toa>503808</toa>
+			<WNa>86</WNa>
+			<M_0>-6.38342022895811656e-01</M_0>
+			<ecc>9.49382781982421875e-04</ecc>
+			<sqrtA>5.15360156250000000e+03</sqrtA>
+			<OMEGA_0>-2.83847451210021362e-01</OMEGA_0>
+			<omega>-2.96173095703124375e-02</omega>
+			<OMEGAdot>-2.51020537689328194e-09</OMEGAdot>
+			<af0>3.53813171386718750e-04</af0>
+			<af1>0.00000000000000000e+00</af1>
+			<SV_health>0</SV_health>
+			<AS_status>0</AS_status>
+		</second>
+	</item>
+	<item>
+		<first>2</first>
+		<second>
+			<PRN>2</PRN>
+			<delta_i>6.93702697753906250e-03</delta_i>
+			<toa>503808</toa>
+			<WNa>86</WNa>
+			<M_0>-2.03669667243957103e-01</M_0>
+			<ecc>1.67417526245117188e-02</ecc>
+			<sqrtA>5.15359667968750000e+03</sqrtA>
+			<OMEGA_0>-3.35781335830687755e-01</OMEGA_0>
+			<omega>-2.89186954498290405e-01</omega>
+			<OMEGAdot>-2.49565346166491508e-09</OMEGAdot>
+			<af0>-3.81469726562500000e-05</af0>
+			<af1>7.27595761418342590e-12</af1>
+			<SV_health>0</SV_health>
+			<AS_status>0</AS_status>
+		</second>
+	</item>
+	<item>
+		<first>24</first>
+		<second>
+			<PRN>24</PRN>
+			<delta_i>-2.57110595703125000e-03</delta_i>
+			<toa>503808</toa>
+			<WNa>86</WNa>
+			<M_0>-9.06352281570432683e-01</M_0>
+			<ecc>1.76486968994140625e-02</ecc>
+			<sqrtA>5.15360742187500000e+03</sqrtA>
+			<OMEGA_0>6.57853484153746226e-01</OMEGA_0>
+			<omega>3.53747129440306896e-01</omega>
+			<OMEGAdot>-2.56113708019256592e-09</OMEGAdot>
+			<af0>-2.52723693847656250e-04</af0>
+			<af1>1.45519152283668518e-11</af1>
+			<SV_health>0</SV_health>
+			<AS_status>0</AS_status>
+		</second>
+	</item>
+	<item>
+		<first>25</first>
+		<second>
+			<PRN>25</PRN>
+			<delta_i>1.85585021972656250e-03</delta_i>
+			<toa>503808</toa>
+			<WNa>86</WNa>
+			<M_0>5.55840134620665283e-01</M_0>
+			<ecc>1.26099586486816406e-02</ecc>
+			<sqrtA>5.15372363281250000e+03</sqrtA>
+			<OMEGA_0>-9.82174515724180019e-01</OMEGA_0>
+			<omega>3.61519455909728227e-01</omega>
+			<OMEGAdot>-2.56477505899965763e-09</OMEGAdot>
+			<af0>4.64439392089843750e-04</af0>
+			<af1>-3.63797880709171295e-12</af1>
+			<SV_health>0</SV_health>
+			<AS_status>0</AS_status>
+		</second>
+	</item>
+</GNSS-SDR_gps_almanac_map>
+</boost_serialization>
+
