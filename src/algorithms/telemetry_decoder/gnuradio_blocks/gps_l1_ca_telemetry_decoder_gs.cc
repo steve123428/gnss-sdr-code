@@ -678,7 +678,7 @@ int gps_l1_ca_telemetry_decoder_gs::general_work(int noutput_items __attribute__
                             uint64_t tmp_ulong_int;
                             int32_t tmp_int;
                             tmp_double = static_cast<double>(d_TOW_at_current_symbol_ms) / 1000.0;
-                            //std::cout << "d_TOW_at_current_symbol_ms: " << d_TOW_at_current_symbol_ms << std::endl;
+                            std::cout << "d_TOW_at_current_symbol_ms: " << d_TOW_at_current_symbol_ms << std::endl;
                             d_dump_file.write(reinterpret_cast<char *>(&tmp_double), sizeof(double));
                             tmp_ulong_int = current_symbol.Tracking_sample_counter;
                             d_dump_file.write(reinterpret_cast<char *>(&tmp_ulong_int), sizeof(uint64_t));
