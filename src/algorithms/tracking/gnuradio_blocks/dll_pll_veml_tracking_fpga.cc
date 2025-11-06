@@ -1553,7 +1553,7 @@ int dll_pll_veml_tracking_fpga::general_work(int noutput_items __attribute__((un
     while ((!current_synchro_data.Flag_valid_symbol_output) && (!d_stop_tracking))
         {
             d_current_integration_length_samples = d_next_integration_length_samples;
-
+            std::cout << d_state << std::endl;
             if (d_pull_in_transitory == true)
                 {
                     if (d_sample_counter > 0)  // do not execute this condition until the sample counter has ben read for the first time after start_tracking
@@ -1865,6 +1865,10 @@ int dll_pll_veml_tracking_fpga::general_work(int noutput_items __attribute__((un
                     {
                         d_sample_counter = d_sample_counter_next;
                         d_sample_counter_next = d_sample_counter + static_cast<uint64_t>(d_current_integration_length_samples);
+
+                        std::cout << "d_sample_counter: " << d_sample_counter << std::endl;
+                        std::cout << "d_sample_counter_next: " << d_sample_counter_next << std::endl;
+                        std::cout << "d_current_integration_length_samples: " << d_current_integration_length_samples << std::endl;
 
                         // perform a correlation step
                         do_correlation_step();

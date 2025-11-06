@@ -2,22 +2,22 @@
 <!DOCTYPE boost_serialization>
 <boost_serialization signature="serialization::archive" version="18">
 <GNSS-SDR_gps_almanac_map class_id="0" tracking_level="0" version="0">
-	<count>4</count>
+	<count>8</count>
 	<item_version>0</item_version>
 	<item class_id="1" tracking_level="0" version="0">
 		<first>1</first>
 		<second class_id="2" tracking_level="0" version="0">
 			<PRN>1</PRN>
-			<delta_i>5.16319274902343750e-03</delta_i>
+			<delta_i>5.11741638183593750e-03</delta_i>
 			<toa>503808</toa>
-			<WNa>86</WNa>
-			<M_0>-6.38342022895811656e-01</M_0>
-			<ecc>9.49382781982421875e-04</ecc>
-			<sqrtA>5.15360156250000000e+03</sqrtA>
-			<OMEGA_0>-2.83847451210021362e-01</OMEGA_0>
-			<omega>-2.96173095703124375e-02</omega>
-			<OMEGAdot>-2.51020537689328194e-09</OMEGAdot>
-			<af0>3.53813171386718750e-04</af0>
+			<WNa>87</WNa>
+			<M_0>-5.54314613342283935e-01</M_0>
+			<ecc>9.87529754638671875e-04</ecc>
+			<sqrtA>5.15359375000000000e+03</sqrtA>
+			<OMEGA_0>-3.23772907257079412e-01</OMEGA_0>
+			<omega>-3.34613323211669228e-02</omega>
+			<OMEGAdot>-2.65572452917695045e-09</OMEGAdot>
+			<af0>3.54766845703125000e-04</af0>
 			<af1>0.00000000000000000e+00</af1>
 			<SV_health>0</SV_health>
 			<AS_status>0</AS_status>
@@ -27,17 +27,55 @@
 		<first>2</first>
 		<second>
 			<PRN>2</PRN>
-			<delta_i>6.93702697753906250e-03</delta_i>
+			<delta_i>6.88743591308593750e-03</delta_i>
 			<toa>503808</toa>
-			<WNa>86</WNa>
-			<M_0>-2.03669667243957103e-01</M_0>
-			<ecc>1.67417526245117188e-02</ecc>
-			<sqrtA>5.15359667968750000e+03</sqrtA>
-			<OMEGA_0>-3.35781335830687755e-01</OMEGA_0>
-			<omega>-2.89186954498290405e-01</omega>
-			<OMEGAdot>-2.49565346166491508e-09</OMEGAdot>
-			<af0>-3.81469726562500000e-05</af0>
+			<WNa>87</WNa>
+			<M_0>-1.24521374702453350e-01</M_0>
+			<ecc>1.67803764343261719e-02</ecc>
+			<sqrtA>5.15358886718750000e+03</sqrtA>
+			<OMEGA_0>-3.75710248947142778e-01</OMEGA_0>
+			<omega>-2.88041591644286499e-01</omega>
+			<OMEGAdot>-2.62662069872021675e-09</OMEGAdot>
+			<af0>-3.24249267578125000e-05</af0>
 			<af1>7.27595761418342590e-12</af1>
+			<SV_health>0</SV_health>
+			<AS_status>0</AS_status>
+		</second>
+	</item>
+	<item>
+		<first>3</first>
+		<second>
+			<PRN>3</PRN>
+			<delta_i>1.58405303955078125e-02</delta_i>
+			<toa>503808</toa>
+			<WNa>87</WNa>
+			<M_0>7.05996632575987326e-01</M_0>
+			<ecc>6.32286071777343750e-03</ecc>
+			<sqrtA>5.15365136718750000e+03</sqrtA>
+			<OMEGA_0>-1.08186006546020282e-02</OMEGA_0>
+			<omega>3.90968799591063620e-01</omega>
+			<OMEGAdot>-2.39379005506634712e-09</OMEGAdot>
+			<af0>6.48498535156250000e-04</af0>
+			<af1>-7.27595761418342590e-12</af1>
+			<SV_health>0</SV_health>
+			<AS_status>0</AS_status>
+		</second>
+	</item>
+	<item>
+		<first>4</first>
+		<second>
+			<PRN>4</PRN>
+			<delta_i>8.51058959960937500e-03</delta_i>
+			<toa>503808</toa>
+			<WNa>87</WNa>
+			<M_0>-2.84415006637572632e-01</M_0>
+			<ecc>3.61156463623046875e-03</ecc>
+			<sqrtA>5.15371728515625000e+03</sqrtA>
+			<OMEGA_0>3.30319046974181407e-01</OMEGA_0>
+			<omega>-9.44325685501096634e-01</omega>
+			<OMEGAdot>-2.42653186433017254e-09</OMEGAdot>
+			<af0>2.28881835937500000e-05</af0>
+			<af1>3.63797880709171295e-12</af1>
 			<SV_health>0</SV_health>
 			<AS_status>0</AS_status>
 		</second>
@@ -46,16 +84,16 @@
 		<first>24</first>
 		<second>
 			<PRN>24</PRN>
-			<delta_i>-2.57110595703125000e-03</delta_i>
+			<delta_i>-2.62832641601562500e-03</delta_i>
 			<toa>503808</toa>
-			<WNa>86</WNa>
-			<M_0>-9.06352281570432683e-01</M_0>
-			<ecc>1.76486968994140625e-02</ecc>
-			<sqrtA>5.15360742187500000e+03</sqrtA>
-			<OMEGA_0>6.57853484153746226e-01</OMEGA_0>
-			<omega>3.53747129440306896e-01</omega>
-			<OMEGAdot>-2.56113708019256592e-09</OMEGAdot>
-			<af0>-2.52723693847656250e-04</af0>
+			<WNa>87</WNa>
+			<M_0>-8.26755762100217950e-01</M_0>
+			<ecc>1.76796913146972656e-02</ecc>
+			<sqrtA>5.15358691406250000e+03</sqrtA>
+			<OMEGA_0>6.17902040481566051e-01</OMEGA_0>
+			<omega>3.54375958442687267e-01</omega>
+			<OMEGAdot>-2.60479282587766647e-09</OMEGAdot>
+			<af0>-2.45094299316406250e-04</af0>
 			<af1>1.45519152283668518e-11</af1>
 			<SV_health>0</SV_health>
 			<AS_status>0</AS_status>
@@ -65,16 +103,54 @@
 		<first>25</first>
 		<second>
 			<PRN>25</PRN>
-			<delta_i>1.85585021972656250e-03</delta_i>
+			<delta_i>1.84249877929687500e-03</delta_i>
 			<toa>503808</toa>
-			<WNa>86</WNa>
-			<M_0>5.55840134620665283e-01</M_0>
-			<ecc>1.26099586486816406e-02</ecc>
-			<sqrtA>5.15372363281250000e+03</sqrtA>
-			<OMEGA_0>-9.82174515724180019e-01</OMEGA_0>
-			<omega>3.61519455909728227e-01</omega>
-			<OMEGAdot>-2.56477505899965763e-09</OMEGAdot>
-			<af0>4.64439392089843750e-04</af0>
+			<WNa>87</WNa>
+			<M_0>6.33595466613768199e-01</M_0>
+			<ecc>1.26485824584960938e-02</ecc>
+			<sqrtA>5.15372314453125000e+03</sqrtA>
+			<OMEGA_0>9.77949500083921230e-01</OMEGA_0>
+			<omega>3.61793875694274125e-01</omega>
+			<OMEGAdot>-2.45927367359399796e-09</OMEGAdot>
+			<af0>4.62532043457031250e-04</af0>
+			<af1>-3.63797880709171295e-12</af1>
+			<SV_health>0</SV_health>
+			<AS_status>0</AS_status>
+		</second>
+	</item>
+	<item>
+		<first>26</first>
+		<second>
+			<PRN>26</PRN>
+			<delta_i>-4.29534912109375000e-03</delta_i>
+			<toa>503808</toa>
+			<WNa>87</WNa>
+			<M_0>3.59666466712950883e-01</M_0>
+			<ecc>1.06816291809082031e-02</ecc>
+			<sqrtA>5.15360009765625000e+03</sqrtA>
+			<OMEGA_0>9.54931020736692338e-01</OMEGA_0>
+			<omega>2.14052200317382368e-01</omega>
+			<OMEGAdot>-2.54294718615710735e-09</OMEGAdot>
+			<af0>-2.77519226074218750e-04</af0>
+			<af1>-3.63797880709171295e-12</af1>
+			<SV_health>0</SV_health>
+			<AS_status>0</AS_status>
+		</second>
+	</item>
+	<item>
+		<first>27</first>
+		<second>
+			<PRN>27</PRN>
+			<delta_i>3.78799438476562500e-03</delta_i>
+			<toa>503808</toa>
+			<WNa>87</WNa>
+			<M_0>-2.01476812362670482e-01</M_0>
+			<ecc>1.37343406677246094e-02</ecc>
+			<sqrtA>5.15361328125000000e+03</sqrtA>
+			<OMEGA_0>-6.86006426811216818e-01</OMEGA_0>
+			<omega>2.72390604019164484e-01</omega>
+			<OMEGAdot>-2.52839527092874050e-09</OMEGAdot>
+			<af0>-3.52859497070312500e-05</af0>
 			<af1>-3.63797880709171295e-12</af1>
 			<SV_health>0</SV_health>
 			<AS_status>0</AS_status>
