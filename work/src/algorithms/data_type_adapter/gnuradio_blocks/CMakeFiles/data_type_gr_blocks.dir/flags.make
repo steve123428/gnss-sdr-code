@@ -6,5 +6,5 @@ CXX_DEFINES = -DBOOST_ALL_NO_LIB -DFMT_LOCALE -DFMT_SHARED -DGNURADIO_USES_STD_P
 
 CXX_INCLUDES = -I/home/suhjw/gnss-sdr/src/core/interfaces -isystem /usr/include/orc-0.4 -isystem /home/suhjw/gnss-sdr/work/volk_gnsssdr_module/build/include -isystem /home/suhjw/gnss-sdr/src/algorithms/libs/volk_gnsssdr_module/volk_gnsssdr/include
 
-CXX_FLAGS = -O3 -DNDEBUG -fvisibility=hidden -fvisibility-inlines-hidden -Wall -Wextra -Wno-psabi -std=c++17
+CXX_FLAGS = -O3 -DNDEBUG -fvisibility=hidden -fvisibility-inlines-hidden -Wall -Wextra -Wno-psabi -std=c++20
 

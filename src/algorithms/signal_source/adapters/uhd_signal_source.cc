@@ -217,8 +217,9 @@ UhdSignalSource::UhdSignalSource(const ConfigurationInterface* configuration,
     // Set the clock source for the usrp device.
     // Options: internal, external, or MIMO
     uhd_source_->set_clock_source(clock_source_);
+    uhd_source_->set_time_source("external");
     uhd_source_->set_time_next_pps(uhd::time_spec_t(0.0));
-
+    
     // 2.2 set the sample rate for the usrp device
     uhd_source_->set_samp_rate(sample_rate_);
     // the actual sample rate may differ from the rate set

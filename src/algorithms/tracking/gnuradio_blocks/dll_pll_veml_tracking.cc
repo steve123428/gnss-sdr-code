@@ -19,7 +19,6 @@
  *
  * -----------------------------------------------------------------------------
  */
-
 #include "dll_pll_veml_tracking.h"
 #include "Beidou_B1I.h"
 #include "Beidou_B3I.h"

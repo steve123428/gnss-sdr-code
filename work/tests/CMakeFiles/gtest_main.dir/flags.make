@@ -6,5 +6,5 @@ CXX_DEFINES = -DARMADILLO_HAVE_MVNRND=1 -DCOMPILER_HAS_STD_PLUS_VOID=1 -DGR_GREA
 
 CXX_INCLUDES = -I/home/suhjw/gnss-sdr/src/core/receiver -I/usr/src/googletest/googletest
 
-CXX_FLAGS = -O3 -DNDEBUG -fvisibility=hidden -fvisibility-inlines-hidden -Wall -Wextra -Wno-psabi -std=c++17
+CXX_FLAGS = -O3 -DNDEBUG -fvisibility=hidden -fvisibility-inlines-hidden -Wall -Wextra -Wno-psabi -std=c++20
 

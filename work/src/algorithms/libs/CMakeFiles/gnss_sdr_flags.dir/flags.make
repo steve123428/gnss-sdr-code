@@ -6,5 +6,5 @@ CXX_DEFINES = -DGFLAGS_GREATER_2_0=1 -DGNSSSDR_INSTALL_DIR=\"/usr/local\" -DHAS_
 
 CXX_INCLUDES = 
 
-CXX_FLAGS = -O3 -DNDEBUG -fvisibility=hidden -fvisibility-inlines-hidden -Wall -Wextra -Wno-psabi -std=c++17
+CXX_FLAGS = -O3 -DNDEBUG -fvisibility=hidden -fvisibility-inlines-hidden -Wall -Wextra -Wno-psabi -std=c++20
 

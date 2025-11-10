@@ -20,6 +20,12 @@
  */
 
 #include "gnss_flowgraph.h"
+
+//for timing synch
+#include <uhd/usrp/multi_usrp.hpp>
+#include <uhd/types/time_spec.hpp>
+#include "../../algorithms/signal_source/adapters/uhd_signal_source.h"
+
 #include "GPS_L1_CA.h"
 #include "GPS_L2C.h"
 #include "GPS_L5.h"
@@ -156,6 +162,7 @@ void GNSSFlowgraph::init()
 
     for (int i = 0; i < sources_count_; i++)
         {
+            std::cout << i << '\n';
             DLOG(INFO) << "Creating source " << i;
             auto check_not_nullptr = block_factory->GetSignalSource(configuration_.get(), queue_.get(), i);
             if (!check_not_nullptr)
@@ -334,7 +341,28 @@ void GNSSFlowgraph::start()
 
     try
         {
-            top_block_->start();
+            auto uhd_src = std::dynamic_pointer_cast<UhdSignalSource>(sig_source_.at(0));
+            if (uhd_src)
+            {
+                auto usrp_src = uhd_src->get_uhd_source();  // getter you added earlier
+                usrp_src->set_time_next_pps(uhd::time_spec_t(0.0));
+                std::this_thread::sleep_for(std::chrono::seconds(1));
+                uhd::time_spec_t start_time = usrp_src->get_time_last_pps() + uhd::time_spec_t(1.0);
+                std::cout << "[INFO] Scheduled start at USRP time " << start_time.get_real_secs() << " s\n";
+                
+                /*while (usrp_src->get_time_now().get_real_secs() < start_time.get_real_secs())
+                {   
+                    std::cout<<usrp_src->get_time_now().get_real_secs()<<"\n";
+                    std::this_thread::sleep_for(std::chrono::milliseconds(1));
+                }*/
+
+                top_block_->start();
+                uhd::stream_cmd_t cmd(uhd::stream_cmd_t::STREAM_MODE_START_CONTINUOUS);
+                cmd.stream_now = false;
+                cmd.time_spec = start_time;
+                usrp_src->issue_stream_cmd(cmd);
+            }
+            //top_block_->start();
         }
     catch (const std::exception& e)
         {

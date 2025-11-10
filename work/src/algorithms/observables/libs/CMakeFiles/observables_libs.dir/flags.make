@@ -6,5 +6,5 @@ CXX_DEFINES = -DUSE_GLOG_AND_GFLAGS=1 -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE
 
 CXX_INCLUDES = -I/home/suhjw/gnss-sdr/src/algorithms/libs
 
-CXX_FLAGS = -O3 -DNDEBUG -fvisibility=hidden -fvisibility-inlines-hidden -Wall -Wextra -Wno-psabi -std=c++17
+CXX_FLAGS = -O3 -DNDEBUG -fvisibility=hidden -fvisibility-inlines-hidden -Wall -Wextra -Wno-psabi -std=c++20
 

@@ -123,18 +123,18 @@ utils/front-end-cal/front-end-cal: /usr/lib/x86_64-linux-gnu/libboost_thread.so.
 utils/front-end-cal/front-end-cal: /usr/lib/x86_64-linux-gnu/libboost_atomic.so.1.74.0
 utils/front-end-cal/front-end-cal: /usr/lib/x86_64-linux-gnu/libpcap.so
 utils/front-end-cal/front-end-cal: /usr/lib/x86_64-linux-gnu/libpcap.so
-utils/front-end-cal/front-end-cal: /usr/lib/x86_64-linux-gnu/libgnuradio-uhd.so
-utils/front-end-cal/front-end-cal: /usr/lib/x86_64-linux-gnu/libgnuradio-uhd.so
+utils/front-end-cal/front-end-cal: /usr/local/lib/libgnuradio-uhd.so
+utils/front-end-cal/front-end-cal: /usr/local/lib/libgnuradio-uhd.so
 utils/front-end-cal/front-end-cal: /usr/local/lib/libuhd.so
 utils/front-end-cal/front-end-cal: /usr/local/lib/libuhd.so
-utils/front-end-cal/front-end-cal: /usr/lib/x86_64-linux-gnu/libgnuradio-zeromq.so
-utils/front-end-cal/front-end-cal: /usr/lib/x86_64-linux-gnu/libgnuradio-zeromq.so
+utils/front-end-cal/front-end-cal: /usr/local/lib/libgnuradio-zeromq.so
+utils/front-end-cal/front-end-cal: /usr/local/lib/libgnuradio-zeromq.so
 utils/front-end-cal/front-end-cal: src/algorithms/data_type_adapter/adapters/libdata_type_adapters.a
 utils/front-end-cal/front-end-cal: src/algorithms/data_type_adapter/gnuradio_blocks/libdata_type_gr_blocks.a
 utils/front-end-cal/front-end-cal: src/algorithms/input_filter/adapters/libinput_filter_adapters.a
 utils/front-end-cal/front-end-cal: src/algorithms/input_filter/gnuradio_blocks/libinput_filter_gr_blocks.a
-utils/front-end-cal/front-end-cal: /usr/lib/x86_64-linux-gnu/libgnuradio-filter.so
-utils/front-end-cal/front-end-cal: /usr/lib/x86_64-linux-gnu/libgnuradio-filter.so
+utils/front-end-cal/front-end-cal: /usr/local/lib/libgnuradio-filter.so
+utils/front-end-cal/front-end-cal: /usr/local/lib/libgnuradio-filter.so
 utils/front-end-cal/front-end-cal: src/algorithms/conditioner/adapters/libconditioner_adapters.a
 utils/front-end-cal/front-end-cal: src/algorithms/resampler/adapters/libresampler_adapters.a
 utils/front-end-cal/front-end-cal: src/algorithms/resampler/gnuradio_blocks/libresampler_gr_blocks.a
@@ -162,10 +162,10 @@ utils/front-end-cal/front-end-cal: src/algorithms/libs/libgnss_sdr_flags.a
 utils/front-end-cal/front-end-cal: /usr/lib/x86_64-linux-gnu/libprotobuf.so
 utils/front-end-cal/front-end-cal: src/algorithms/libs/rtklib/libalgorithms_libs_rtklib.a
 utils/front-end-cal/front-end-cal: src/algorithms/libs/libalgorithms_libs.a
-utils/front-end-cal/front-end-cal: /usr/lib/x86_64-linux-gnu/libgnuradio-blocks.so
-utils/front-end-cal/front-end-cal: /usr/lib/x86_64-linux-gnu/libgnuradio-blocks.so
-utils/front-end-cal/front-end-cal: /usr/lib/x86_64-linux-gnu/libgnuradio-fft.so
-utils/front-end-cal/front-end-cal: /usr/lib/x86_64-linux-gnu/libgnuradio-fft.so
+utils/front-end-cal/front-end-cal: /usr/local/lib/libgnuradio-blocks.so
+utils/front-end-cal/front-end-cal: /usr/local/lib/libgnuradio-blocks.so
+utils/front-end-cal/front-end-cal: /usr/local/lib/libgnuradio-fft.so
+utils/front-end-cal/front-end-cal: /usr/local/lib/libgnuradio-fft.so
 utils/front-end-cal/front-end-cal: /usr/lib/x86_64-linux-gnu/libvolk.so
 utils/front-end-cal/front-end-cal: /usr/lib/x86_64-linux-gnu/libvolk.so
 utils/front-end-cal/front-end-cal: volk_gnsssdr_module/install/lib/libvolk_gnsssdr.a
@@ -180,7 +180,7 @@ utils/front-end-cal/front-end-cal: /usr/lib/x86_64-linux-gnu/libmatio.so
 utils/front-end-cal/front-end-cal: /usr/lib/x86_64-linux-gnu/libboost_system.so.1.74.0
 utils/front-end-cal/front-end-cal: /usr/lib/x86_64-linux-gnu/libssl.so
 utils/front-end-cal/front-end-cal: /usr/lib/x86_64-linux-gnu/libcrypto.so
-utils/front-end-cal/front-end-cal: /usr/lib/x86_64-linux-gnu/libgnuradio-runtime.so
+utils/front-end-cal/front-end-cal: /usr/local/lib/libgnuradio-runtime.so
 utils/front-end-cal/front-end-cal: /usr/lib/x86_64-linux-gnu/libspdlog.so.1.9.2
 utils/front-end-cal/front-end-cal: /usr/lib/x86_64-linux-gnu/libfmt.so.8.1.1
 utils/front-end-cal/front-end-cal: src/core/system_parameters/libcore_system_parameters.a
@@ -192,9 +192,9 @@ utils/front-end-cal/front-end-cal: /usr/lib/x86_64-linux-gnu/libboost_serializat
 utils/front-end-cal/front-end-cal: /usr/lib/x86_64-linux-gnu/libpugixml.so
 utils/front-end-cal/front-end-cal: /usr/lib/x86_64-linux-gnu/libpugixml.so
 utils/front-end-cal/front-end-cal: /usr/lib/x86_64-linux-gnu/libboost_date_time.so.1.74.0
-utils/front-end-cal/front-end-cal: /usr/lib/x86_64-linux-gnu/libgnuradio-runtime.so
-utils/front-end-cal/front-end-cal: /usr/lib/x86_64-linux-gnu/libgnuradio-runtime.so
-utils/front-end-cal/front-end-cal: /usr/lib/x86_64-linux-gnu/libgnuradio-pmt.so
+utils/front-end-cal/front-end-cal: /usr/local/lib/libgnuradio-runtime.so
+utils/front-end-cal/front-end-cal: /usr/local/lib/libgnuradio-runtime.so
+utils/front-end-cal/front-end-cal: /usr/local/lib/libgnuradio-pmt.so
 utils/front-end-cal/front-end-cal: utils/front-end-cal/CMakeFiles/front-end-cal.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/suhjw/gnss-sdr/work/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable front-end-cal"
 	cd /home/suhjw/gnss-sdr/work/utils/front-end-cal && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/front-end-cal.dir/link.txt --verbose=$(VERBOSE)

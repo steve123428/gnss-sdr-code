@@ -6,5 +6,5 @@ CXX_DEFINES = -DBOOST_ALL_NO_LIB -DBOOST_DATE_TIME_DYN_LINK -DBOOST_SERIALIZATIO
 
 CXX_INCLUDES = -I/home/suhjw/gnss-sdr/src/core/interfaces -I/home/suhjw/gnss-sdr/src/algorithms/libs -I/home/suhjw/gnss-sdr/src/core/system_parameters -isystem /home/suhjw/gnss-sdr/work/src/core/monitor
 
-CXX_FLAGS = -O3 -DNDEBUG -fvisibility=hidden -fvisibility-inlines-hidden -Wall -Wextra -Wno-psabi -std=c++17
+CXX_FLAGS = -O3 -DNDEBUG -fvisibility=hidden -fvisibility-inlines-hidden -Wall -Wextra -Wno-psabi -std=c++20
 

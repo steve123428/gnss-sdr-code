@@ -57,6 +57,7 @@ public:
     gr::basic_block_sptr get_left_block() override;
     gr::basic_block_sptr get_right_block() override;
     gr::basic_block_sptr get_right_block(int RF_channel) override;
+    gr::uhd::usrp_source::sptr get_uhd_source() const { return uhd_source_; }
 
 private:
     gr::uhd::usrp_source::sptr uhd_source_;

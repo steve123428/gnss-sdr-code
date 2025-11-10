@@ -234,6 +234,7 @@ int main(int argc, char** argv)
             auto control_thread = std::make_unique<ControlThread>();
             // record startup time
             start = std::chrono::system_clock::now();
+            //std::cout<<"Program !!!!!!!!!!!!!!!!!!!!!! start at "<<std::chrono::system_clock::to_time_t(start)<<"\n";
             return_code = control_thread->run();
         }
     catch (const boost::thread_resource_error& e)
