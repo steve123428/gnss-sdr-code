@@ -1,3 +1,0 @@
-/home/suhjw/gnss-sdr/work/volk_gnsssdr_module/build/CMakeFiles/CMakeTmp/CMakeFiles/cmTC_eec44.dir
-/home/suhjw/gnss-sdr/work/volk_gnsssdr_module/build/CMakeFiles/CMakeTmp/CMakeFiles/edit_cache.dir
-/home/suhjw/gnss-sdr/work/volk_gnsssdr_module/build/CMakeFiles/CMakeTmp/CMakeFiles/rebuild_cache.dir

@@ -357,10 +357,10 @@ void GNSSFlowgraph::start()
                 }*/
 
                 top_block_->start();
-                uhd::stream_cmd_t cmd(uhd::stream_cmd_t::STREAM_MODE_START_CONTINUOUS);
-                cmd.stream_now = false;
-                cmd.time_spec = start_time;
-                usrp_src->issue_stream_cmd(cmd);
+                //uhd::stream_cmd_t cmd(uhd::stream_cmd_t::STREAM_MODE_START_CONTINUOUS);
+                //cmd.stream_now = false;
+                //cmd.time_spec = start_time;
+                //usrp_src->issue_stream_cmd(cmd);
             }
             //top_block_->start();
         }
