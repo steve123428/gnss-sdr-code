@@ -2034,7 +2034,7 @@ int dll_pll_veml_tracking::general_work(int noutput_items __attribute__((unused)
                                         current_synchro_data.Prompt_Q = static_cast<double>(d_P_data_accu.imag());
                                     }
                                 current_synchro_data.Code_phase_samples = d_rem_code_phase_samples;
-                                std::cout<<"Code phase samples: "<<d_rem_code_phase_samples<<std::endl;
+                                //std::cout<<"Code phase samples: "<<d_rem_code_phase_samples<<std::endl;
                                 current_synchro_data.Carrier_phase_rads = d_acc_carrier_phase_rad;
                                 current_synchro_data.Carrier_Doppler_hz = d_carrier_doppler_hz;
                                 current_synchro_data.CN0_dB_hz = d_CN0_SNV_dB_Hz;

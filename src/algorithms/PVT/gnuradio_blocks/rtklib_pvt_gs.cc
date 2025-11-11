@@ -2254,9 +2254,9 @@ int rtklib_pvt_gs::work(int noutput_items, gr_vector_const_void_star& input_item
                                             d_gnss_observables_map_t1 = d_gnss_observables_map;
                                             for (const auto& entry : d_gnss_observables_map)
                                             {
-                                                //std::cout << "Post-Clock Offset PRN: " << entry.second.PRN
-                                                //          << ", Pseudorange: " << entry.second.Pseudorange_m
-                                                //          << std::endl;
+                                                std::cout << "Post-Clock Offset PRN: " << entry.second.PRN
+                                                          << ", Pseudorange: " << entry.second.Pseudorange_m
+                                                          << std::endl;
                                             }
                                             // ### select the rx_time and interpolate observables at that time
                                             if (!d_gnss_observables_map_t0.empty() && !d_gnss_observables_map_t1.empty())
