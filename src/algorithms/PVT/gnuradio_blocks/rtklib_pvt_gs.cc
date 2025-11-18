@@ -775,7 +775,7 @@ rtklib_pvt_gs::~rtklib_pvt_gs()
             boost::interprocess::message_queue::remove(d_queue_name.c_str());
         }
     
-    save_pvt_matfile();
+    //save_pvt_matfile();
 
     try
         {
@@ -2061,6 +2061,23 @@ void rtklib_pvt_gs::apply_rx_clock_offset(std::map<int, Gnss_Synchro>& observabl
                 {
                     observables_iter->second.Carrier_phase_rads -= rx_clock_offset_s * it_freq_map->second * TWO_PI;
                 }
+            double tmp_double;
+            for (const auto& entry : d_gnss_observables_map)
+                {
+                    tmp_double = entry.second.Pseudorange_m;
+                    d_pvt_dump_file.write(reinterpret_cast<char *>(&tmp_double), sizeof(double));
+                    tmp_double = static_cast<double>(entry.second.PRN);
+                    d_pvt_dump_file.write(reinterpret_cast<char *>(&tmp_double), sizeof(double));
+                    tmp_double = entry.second.Carrier_phase_rads;
+                    d_pvt_dump_file.write(reinterpret_cast<char *>(&tmp_double), sizeof(double));
+                    tmp_double = entry.second.TOW_at_current_symbol_ms;
+                    d_pvt_dump_file.write(reinterpret_cast<char *>(&tmp_double), sizeof(double));
+                    std::cout << "Post-Clock Offset PRN: " << entry.second.PRN
+                              << ", Pseudorange: " << entry.second.Pseudorange_m
+                              << ", Carrier phase: " << entry.second.Carrier_phase_rads
+                              << ", TOW_at_current_symbol_ms: " << entry.second.TOW_at_current_symbol_ms
+                              << std::endl;
+                }
             //std::cout << "[DEBUG] AFTER   PRN " << syn.PRN
             //          << "  PR: " << syn.Pseudorange_m << " m\n\n";
         }
@@ -2445,21 +2462,6 @@ int rtklib_pvt_gs::work(int noutput_items, gr_vector_const_void_star& input_item
                                                     d_timestamp_rx_clock_offset_correction_msg_ms = d_local_counter_ms;
                                                 }
                                             d_gnss_observables_map_t1 = d_gnss_observables_map;
-                                            for (const auto& entry : d_gnss_observables_map)
-                                            {
-                                                std::cout << "Post-Clock Offset PRN: " << entry.second.PRN
-                                                          << ", Pseudorange: " << entry.second.Pseudorange_m
-                                                          << " TOW_at_current_symbol_ms: " << entry.second.TOW_at_current_symbol_ms
-                                                          << std::endl;
-                                            }
-                                            double tmp_double;
-                                            for (const auto& entry : d_gnss_observables_map)
-                                                {
-                                                    tmp_double = entry.second.Pseudorange_m;
-                                                    d_pvt_dump_file.write(reinterpret_cast<char *>(&tmp_double), sizeof(double));
-                                                    tmp_double = static_cast<double>(entry.second.PRN);
-                                                    d_pvt_dump_file.write(reinterpret_cast<char *>(&tmp_double), sizeof(double));
-                                                }
                                             // ### select the rx_time and interpolate observables at that time
                                             if (!d_gnss_observables_map_t0.empty() && !d_gnss_observables_map_t1.empty())
                                                 {
