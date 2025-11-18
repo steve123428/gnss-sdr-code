@@ -2293,11 +2293,11 @@ int rtklib_pvt_gs::work(int noutput_items, gr_vector_const_void_star& input_item
                             for (const auto& entry : d_gnss_observables_map)
                                 {
                                     const auto& syn = entry.second;
-                                    std::cout << "CH " << entry.first
+                                    /*std::cout << "CH " << entry.first
                                               << "  PRN " << syn.PRN
                                               << "  PR(m): " << syn.Pseudorange_m
                                               << " TOW_at_current_symbol_ms: " << syn.TOW_at_current_symbol_ms
-                                              << "\n";
+                                              << "\n";*/
                                 }
                             if (d_rtcm_enabled)
                                 {
@@ -2445,12 +2445,13 @@ int rtklib_pvt_gs::work(int noutput_items, gr_vector_const_void_star& input_item
                                                     d_timestamp_rx_clock_offset_correction_msg_ms = d_local_counter_ms;
                                                 }
                                             d_gnss_observables_map_t1 = d_gnss_observables_map;
-                                            /*for (const auto& entry : d_gnss_observables_map)
+                                            for (const auto& entry : d_gnss_observables_map)
                                             {
                                                 std::cout << "Post-Clock Offset PRN: " << entry.second.PRN
                                                           << ", Pseudorange: " << entry.second.Pseudorange_m
+                                                          << " TOW_at_current_symbol_ms: " << entry.second.TOW_at_current_symbol_ms
                                                           << std::endl;
-                                            }*/
+                                            }
                                             double tmp_double;
                                             for (const auto& entry : d_gnss_observables_map)
                                                 {

@@ -473,17 +473,19 @@ bool hybrid_observables_gs::interp_trk_obs(Gnss_Synchro &interpolated_obs, uint3
                                     // TOW rollover situation
                                     interpolated_obs.interp_TOW_ms = static_cast<double>(d_gnss_synchro_history->get(ch, t1_idx).TOW_at_current_symbol_ms) + (static_cast<double>(d_gnss_synchro_history->get(ch, t2_idx).TOW_at_current_symbol_ms + 604800000) - static_cast<double>(d_gnss_synchro_history->get(ch, t1_idx).TOW_at_current_symbol_ms)) * time_factor;
                                 }
-
-                            // LOG(INFO) << "Channel " << ch << " int idx: " << t1_idx << " TOW Int: " << interpolated_obs.interp_TOW_ms
-                            //           << " TOW p1 : " << d_gnss_synchro_history->get(ch, t1_idx).TOW_at_current_symbol_ms
-                            //           << " TOW p2: "
-                            //           << d_gnss_synchro_history->get(ch, t2_idx).TOW_at_current_symbol_ms
-                            //           << " t2-t1: "
-                            //           << d_gnss_synchro_history->get(ch, t2_idx).RX_time - d_gnss_synchro_history->get(ch, t1_idx).RX_time
-                            //           << " trx - t1: "
-                            //           << T_rx_s - d_gnss_synchro_history->get(ch, t1_idx).RX_time;
-                            // std::cout << "Rx samplestamp: " << T_rx_s << " Channel " << ch << " interp buff idx " << nearest_element
-                            //           << " ,diff: " << old_abs_diff << " samples (" << static_cast<double>(old_abs_diff) / static_cast<double>(d_gnss_synchro_history->get(ch, nearest_element).fs) << " s)\n";
+                            /*
+                            LOG(INFO) << "Channel " << ch << " int idx: " << t1_idx << " TOW Int: " << interpolated_obs.interp_TOW_ms
+                                       << " TOW p1 : " << d_gnss_synchro_history->get(ch, t1_idx).TOW_at_current_symbol_ms
+                                       << " TOW p2: "
+                                       << d_gnss_synchro_history->get(ch, t2_idx).TOW_at_current_symbol_ms
+                                       << " t2-t1: "
+                                       << d_gnss_synchro_history->get(ch, t2_idx).RX_time - d_gnss_synchro_history->get(ch, t1_idx).RX_time
+                                       << " trx - t1: "
+                                       << T_rx_s - d_gnss_synchro_history->get(ch, t1_idx).RX_time;
+                             std::cout << "Rx samplestamp: " << T_rx_s << " Channel " << ch << " interp buff idx " << nearest_element
+                                       << " ,diff: " << old_abs_diff << " samples (" << static_cast<double>(old_abs_diff) / static_cast<double>(d_gnss_synchro_history->get(ch, nearest_element).fs) << " s)\n";
+                            
+                            */
                             return true;
                         }
                     return false;
