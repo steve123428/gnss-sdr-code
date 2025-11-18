@@ -124,7 +124,7 @@ rtklib_pvt_gs_sptr rtklib_make_pvt_gs(uint32_t nchannels,
         conf_,
         rtk));
 }
-
+/*
 int32_t rtklib_pvt_gs::save_pvt_matfile() const
 {
     const std::string dump_filename = d_pvt_dump_filename;
@@ -251,6 +251,144 @@ int32_t rtklib_pvt_gs::save_pvt_matfile() const
 
     std::cout << "Saved PVT MAT file: " << mat_filename
               << " (rows = " << n_prn << " PRNs, cols = " << max_epochs << " epochs)\n";
+
+    return 0;
+}*/
+
+int32_t rtklib_pvt_gs::save_pvt_matfile() const
+{
+    const std::string dump_filename = d_pvt_dump_filename;
+    std::ifstream dump_file(dump_filename, std::ios::binary | std::ios::ate);
+
+    if (!dump_file.is_open())
+    {
+        std::cerr << "Cannot open PVT dump file: " << dump_filename << "\n";
+        return 1;
+    }
+
+    const std::ifstream::pos_type file_size = dump_file.tellg();
+    dump_file.seekg(0, std::ios::beg);
+
+    // One record = [PRN, Pseudorange, Carrier_phase_rads, TOW_at_current_symbol]
+    const std::size_t record_size_bytes = 4 * sizeof(double);
+    if (file_size % record_size_bytes != 0)
+    {
+        std::cerr << "PVT dump size is not a multiple of 4*sizeof(double)\n";
+        return 1;
+    }
+
+    const int64_t total_records = static_cast<int64_t>(file_size) / record_size_bytes;
+    if (total_records <= 0)
+    {
+        std::cerr << "PVT dump file is empty\n";
+        return 1;
+    }
+
+    struct PrnSeries
+    {
+        std::vector<double> tow_ms;
+        std::vector<double> pseudorange_m;
+        std::vector<double> carrier_phase_rads;
+    };
+
+    std::map<int, PrnSeries> prn_data;
+
+    for (int64_t i = 0; i < total_records; ++i)
+    {
+        double prn_d = 0.0;
+        double pr = 0.0;
+        double carrier = 0.0;
+        double tow = 0.0;
+
+        // ORDER: [PRN, Pseudorange, Carrier_phase_rads, TOW_at_current_symbol]
+        dump_file.read(reinterpret_cast<char*>(&prn_d), sizeof(double));
+        dump_file.read(reinterpret_cast<char*>(&pr),    sizeof(double));
+        dump_file.read(reinterpret_cast<char*>(&carrier), sizeof(double));
+        dump_file.read(reinterpret_cast<char*>(&tow),   sizeof(double));
+
+        if (!dump_file.good())
+        {
+            std::cerr << "Error while reading PVT dump file\n";
+            return 1;
+        }
+
+        int prn = static_cast<int>(std::lround(prn_d));
+
+        auto& series = prn_data[prn];
+        // If TOW is in seconds, convert to ms here:
+        double tow_ms = tow * 1000.0;
+        series.tow_ms.push_back(tow_ms);
+        series.pseudorange_m.push_back(pr);
+        series.carrier_phase_rads.push_back(carrier);
+    }
+
+    dump_file.close();
+
+    if (prn_data.empty())
+    {
+        std::cerr << "No PRN data parsed from PVT dump\n";
+        return 1;
+    }
+
+    // ---- One MAT file per PRN ----
+    for (const auto& kv : prn_data)
+    {
+        int prn = kv.first;
+        const auto& series = kv.second;
+
+        const std::size_t N = series.tow_ms.size();
+        if (N == 0) continue;
+
+        // Row vectors: 1 x N
+        std::array<size_t, 2> dims{1, N};
+
+        // MAT file name: PVT_solution_PRN<PRN>.mat
+        std::ostringstream oss;
+        oss << "PVT_solution_PRN" << prn << ".mat";
+        const std::string mat_filename = oss.str();
+
+        mat_t* matfp = Mat_CreateVer(mat_filename.c_str(), nullptr, MAT_FT_MAT73);
+        if (!matfp)
+        {
+            std::cerr << "Could not create MAT file: " << mat_filename << "\n";
+            continue;
+        }
+
+        matvar_t* matvar = nullptr;
+
+        // TOW_at_current_symbol_ms
+        matvar = Mat_VarCreate("TOW_at_current_symbol_ms",
+                               MAT_C_DOUBLE, MAT_T_DOUBLE,
+                               2, dims.data(),
+                               const_cast<double*>(series.tow_ms.data()),
+                               MAT_F_DONT_COPY_DATA);
+        Mat_VarWrite(matfp, matvar, MAT_COMPRESSION_ZLIB);
+        Mat_VarFree(matvar);
+
+        // Pseudorange_m
+        matvar = Mat_VarCreate("Pseudorange_m",
+                               MAT_C_DOUBLE, MAT_T_DOUBLE,
+                               2, dims.data(),
+                               const_cast<double*>(series.pseudorange_m.data()),
+                               MAT_F_DONT_COPY_DATA);
+        Mat_VarWrite(matfp, matvar, MAT_COMPRESSION_ZLIB);
+        Mat_VarFree(matvar);
+
+        // Carrier_phase_rads
+        matvar = Mat_VarCreate("Carrier_phase_rads",
+                               MAT_C_DOUBLE, MAT_T_DOUBLE,
+                               2, dims.data(),
+                               const_cast<double*>(series.carrier_phase_rads.data()),
+                               MAT_F_DONT_COPY_DATA);
+        Mat_VarWrite(matfp, matvar, MAT_COMPRESSION_ZLIB);
+        Mat_VarFree(matvar);
+
+        Mat_Close(matfp);
+
+        std::cout << "Saved PVT MAT file for PRN " << prn
+                  << ": " << mat_filename
+                  << " (N = " << N << " samples)\n";
+    }
 
     return 0;
 }
@@ -775,7 +913,7 @@ rtklib_pvt_gs::~rtklib_pvt_gs()
             boost::interprocess::message_queue::remove(d_queue_name.c_str());
         }
     
-    //save_pvt_matfile();
+    save_pvt_matfile();
 
     try
         {
@@ -2057,16 +2195,16 @@ void rtklib_pvt_gs::apply_rx_clock_offset(std::map<int, Gnss_Synchro>& observabl
             observables_iter->second.Pseudorange_m -= rx_clock_offset_s * SPEED_OF_LIGHT_M_S;
             //std::cout << "[DEBUG] PR    " << observables_iter->second.Pseudorange_m << " m\n";
             const auto it_freq_map = SIGNAL_FREQ_MAP.find(std::string(observables_iter->second.Signal, 2));
-            if (it_freq_map != SIGNAL_FREQ_MAP.cend())
-                {
+            //if (it_freq_map != SIGNAL_FREQ_MAP.cend())
+            //    {
                     observables_iter->second.Carrier_phase_rads -= rx_clock_offset_s * it_freq_map->second * TWO_PI;
-                }
+            //    }
             double tmp_double;
             for (const auto& entry : d_gnss_observables_map)
                 {
-                    tmp_double = entry.second.Pseudorange_m;
-                    d_pvt_dump_file.write(reinterpret_cast<char *>(&tmp_double), sizeof(double));
                     tmp_double = static_cast<double>(entry.second.PRN);
+                    d_pvt_dump_file.write(reinterpret_cast<char *>(&tmp_double), sizeof(double));
+                    tmp_double = entry.second.Pseudorange_m;
                     d_pvt_dump_file.write(reinterpret_cast<char *>(&tmp_double), sizeof(double));
                     tmp_double = entry.second.Carrier_phase_rads;
                     d_pvt_dump_file.write(reinterpret_cast<char *>(&tmp_double), sizeof(double));
