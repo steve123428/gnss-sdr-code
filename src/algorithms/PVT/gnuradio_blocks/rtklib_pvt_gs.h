@@ -40,13 +40,13 @@
 #include <set>                    // for std::set
 #include <string>                 // for string
 #include <vector>                 // for vector
+#include <matio.h>
 
 /** \addtogroup PVT
  * \{ */
 /** \addtogroup PVT_gnuradio_blocks pvt_gr_blocks
  * GNU Radio blocks for the computation of PVT solutions.
  * \{ */
-
 
 class Beidou_Dnav_Almanac;
 class Beidou_Dnav_Ephemeris;
@@ -140,7 +140,8 @@ private:
     rtklib_pvt_gs(uint32_t nchannels,
         const Pvt_Conf& conf_,
         const rtk_t& rtk);
-
+    
+    int32_t save_pvt_matfile() const;
     void log_source_timetag_info(double RX_time_ns, double TAG_time_ns);
 
     void msg_handler_telemetry(const pmt::pmt_t& msg);
@@ -279,6 +280,9 @@ private:
     bool d_use_has_corrections;
     bool d_use_unhealthy_sats;
     bool d_osnma_strict;
+    bool d_pvt_dump = true;   // always dump
+    std::string d_pvt_dump_filename;
+    std::ofstream d_pvt_dump_file;
 };
 
 
