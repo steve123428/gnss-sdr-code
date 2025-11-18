@@ -2049,20 +2049,20 @@ void rtklib_pvt_gs::apply_rx_clock_offset(std::map<int, Gnss_Synchro>& observabl
     for (observables_iter = observables_map.begin(); observables_iter != observables_map.end(); observables_iter++)
         {
             auto& syn = observables_iter->second;
-            std::cout << "[DEBUG] BEFORE  PRN " << syn.PRN
-                      << "  PR: " << syn.Pseudorange_m << " m\n";
+            //std::cout << "[DEBUG] BEFORE  PRN " << syn.PRN
+            //          << "  PR: " << syn.Pseudorange_m << " m\n";
             // all observables in the map are valid
             observables_iter->second.RX_time -= rx_clock_offset_s;
-            std::cout << "[DEBUG] RX_TIME " << observables_iter->second.RX_time << " s\n";
+            //std::cout << "[DEBUG] RX_TIME " << observables_iter->second.RX_time << " s\n";
             observables_iter->second.Pseudorange_m -= rx_clock_offset_s * SPEED_OF_LIGHT_M_S;
-            std::cout << "[DEBUG] PR    " << observables_iter->second.Pseudorange_m << " m\n";
+            //std::cout << "[DEBUG] PR    " << observables_iter->second.Pseudorange_m << " m\n";
             const auto it_freq_map = SIGNAL_FREQ_MAP.find(std::string(observables_iter->second.Signal, 2));
             if (it_freq_map != SIGNAL_FREQ_MAP.cend())
                 {
                     observables_iter->second.Carrier_phase_rads -= rx_clock_offset_s * it_freq_map->second * TWO_PI;
                 }
-            std::cout << "[DEBUG] AFTER   PRN " << syn.PRN
-                      << "  PR: " << syn.Pseudorange_m << " m\n\n";
+            //std::cout << "[DEBUG] AFTER   PRN " << syn.PRN
+            //          << "  PR: " << syn.Pseudorange_m << " m\n\n";
         }
 }
 
@@ -2290,14 +2290,15 @@ int rtklib_pvt_gs::work(int noutput_items, gr_vector_const_void_star& input_item
                                     d_gnss_observables_map.insert(std::pair<int, Gnss_Synchro>(i, in[i][epoch]));
                                 }
                             //디버깅 용으로 잠깐 보기
-                            /*for (const auto& entry : d_gnss_observables_map)
+                            for (const auto& entry : d_gnss_observables_map)
                                 {
                                     const auto& syn = entry.second;
                                     std::cout << "CH " << entry.first
                                               << "  PRN " << syn.PRN
                                               << "  PR(m): " << syn.Pseudorange_m
+                                              << " TOW_at_current_symbol_ms: " << syn.TOW_at_current_symbol_ms
                                               << "\n";
-                                }*/
+                                }
                             if (d_rtcm_enabled)
                                 {
                                     try
@@ -2429,12 +2430,12 @@ int rtklib_pvt_gs::work(int noutput_items, gr_vector_const_void_star& input_item
                                 {
                                     if (d_enable_rx_clock_correction == true)
                                         {
-                                            for (const auto& entry : d_gnss_observables_map)
+                                            /*for (const auto& entry : d_gnss_observables_map)
                                             {
                                                 std::cout << "d_gnss_observables_map PRN: " << entry.second.PRN
                                                           << ", Pseudorange: " << entry.second.Pseudorange_m
                                                           << std::endl;
-                                            }
+                                            }*/
                                             d_gnss_observables_map_t0 = d_gnss_observables_map_t1;
                                             apply_rx_clock_offset(d_gnss_observables_map, Rx_clock_offset_s);
                                             if ((d_local_counter_ms - d_timestamp_rx_clock_offset_correction_msg_ms) > 300)
@@ -2444,12 +2445,12 @@ int rtklib_pvt_gs::work(int noutput_items, gr_vector_const_void_star& input_item
                                                     d_timestamp_rx_clock_offset_correction_msg_ms = d_local_counter_ms;
                                                 }
                                             d_gnss_observables_map_t1 = d_gnss_observables_map;
-                                            for (const auto& entry : d_gnss_observables_map)
+                                            /*for (const auto& entry : d_gnss_observables_map)
                                             {
                                                 std::cout << "Post-Clock Offset PRN: " << entry.second.PRN
                                                           << ", Pseudorange: " << entry.second.Pseudorange_m
                                                           << std::endl;
-                                            }
+                                            }*/
                                             double tmp_double;
                                             for (const auto& entry : d_gnss_observables_map)
                                                 {
