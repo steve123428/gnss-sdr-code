@@ -124,7 +124,7 @@ rtklib_pvt_gs_sptr rtklib_make_pvt_gs(uint32_t nchannels,
         conf_,
         rtk));
 }
-/*
+
 int32_t rtklib_pvt_gs::save_pvt_matfile() const
 {
     const std::string dump_filename = d_pvt_dump_filename;
@@ -139,155 +139,40 @@ int32_t rtklib_pvt_gs::save_pvt_matfile() const
     const std::ifstream::pos_type file_size = dump_file.tellg();
     dump_file.seekg(0, std::ios::beg);
 
-    const int64_t pair_size_bytes = 2 * sizeof(double);  // [Pseudorange, PRN]
-    if (file_size % pair_size_bytes != 0)
-    {
-        std::cerr << "PVT dump file size is not a multiple of 2*sizeof(double)\n";
-        return 1;
-    }
+    std::cout << "PVT dump size: " << file_size << " bytes\n";
 
-    const int64_t total_pairs = static_cast<int64_t>(file_size) / pair_size_bytes;
-    if (total_pairs <= 0)
+    // One record = [PRN, raw_Pseudorange, corrected_Pseudorange, Carrier_phase_rads, TOW]
+    const int vars_per_record = 5;
+
+    // Total doubles in file
+    const int64_t num_doubles = static_cast<int64_t>(file_size) / sizeof(double);
+    if (num_doubles <= 0)
     {
         std::cerr << "PVT dump file is empty\n";
         return 1;
     }
 
-    // Group pseudoranges by PRN
-    std::map<int, std::vector<double>> prn_to_pseudorange;
+    // Full records we can safely read
+    const int64_t total_records = num_doubles / vars_per_record;
+    const int64_t leftover_doubles = num_doubles % vars_per_record;
 
-    for (int64_t i = 0; i < total_pairs; ++i)
+    if (leftover_doubles != 0)
     {
-        double pr = 0.0;
-        double prn_d = 0.0;
-
-        // IMPORTANT: order is [Pseudorange, PRN]
-        dump_file.read(reinterpret_cast<char*>(&pr),    sizeof(double));
-        dump_file.read(reinterpret_cast<char*>(&prn_d), sizeof(double));
-
-        if (!dump_file.good())
-        {
-            std::cerr << "Error while reading PVT dump file\n";
-            return 1;
-        }
-
-        int prn = static_cast<int>(std::lround(prn_d));
-        prn_to_pseudorange[prn].push_back(pr);
+        std::cerr << "Warning: PVT dump has " << leftover_doubles
+                  << " leftover double(s); ignoring partial last record.\n";
     }
 
-    dump_file.close();
-
-    if (prn_to_pseudorange.empty())
-    {
-        std::cerr << "No PRN data parsed from PVT dump\n";
-        return 1;
-    }
-
-    // Rows = PRNs, columns = epochs
-    const size_t n_prn = prn_to_pseudorange.size();
-    size_t max_epochs = 0;
-    for (const auto& kv : prn_to_pseudorange)
-    {
-        max_epochs = std::max(max_epochs, kv.second.size());
-    }
-
-    // Use NAN for missing epochs if some PRNs have fewer samples
-    std::vector<double> pseudorange_out(n_prn * max_epochs, std::numeric_limits<double>::quiet_NaN());
-    std::vector<double> prn_out(n_prn * max_epochs, std::numeric_limits<double>::quiet_NaN());
-
-    // Stable PRN ordering: sorted by PRN (map already sorted)
-    std::vector<int> prn_list;
-    prn_list.reserve(n_prn);
-    for (const auto& kv : prn_to_pseudorange)
-    {
-        prn_list.push_back(kv.first);
-    }
-
-    // Fill matrices: row = PRN index, col = epoch index
-    // MATLAB column-major: idx = row + col * n_rows
-    for (size_t row = 0; row < n_prn; ++row)
-    {
-        int prn = prn_list[row];
-        const auto& series = prn_to_pseudorange.at(prn);
-
-        for (size_t col = 0; col < series.size(); ++col)
-        {
-            const size_t k = row + col * n_prn;
-            pseudorange_out[k] = series[col];
-            prn_out[k]         = static_cast<double>(prn);
-        }
-    }
-
-    // Create MAT file name
-    std::string mat_filename = dump_filename;
-    if (mat_filename.size() > 4)
-    {
-        mat_filename.erase(mat_filename.end() - 4, mat_filename.end());
-    }
-    mat_filename.append(".mat");
-
-    mat_t* matfp = Mat_CreateVer(mat_filename.c_str(), nullptr, MAT_FT_MAT73);
-    if (!matfp)
-    {
-        std::cerr << "Could not create MAT file: " << mat_filename << "\n";
-        return 1;
-    }
-
-    size_t dims[2] = { n_prn, max_epochs };  // rows = PRN, cols = epochs
-
-    matvar_t* matvar = nullptr;
-
-    matvar = Mat_VarCreate("Pseudorange_m", MAT_C_DOUBLE, MAT_T_DOUBLE,
-                           2, dims, pseudorange_out.data(), MAT_F_DONT_COPY_DATA);
-    Mat_VarWrite(matfp, matvar, MAT_COMPRESSION_ZLIB);
-    Mat_VarFree(matvar);
-
-    matvar = Mat_VarCreate("PRN", MAT_C_DOUBLE, MAT_T_DOUBLE,
-                           2, dims, prn_out.data(), MAT_F_DONT_COPY_DATA);
-    Mat_VarWrite(matfp, matvar, MAT_COMPRESSION_ZLIB);
-    Mat_VarFree(matvar);
-
-    Mat_Close(matfp);
-
-    std::cout << "Saved PVT MAT file: " << mat_filename
-              << " (rows = " << n_prn << " PRNs, cols = " << max_epochs << " epochs)\n";
-
-    return 0;
-}*/
-
-int32_t rtklib_pvt_gs::save_pvt_matfile() const
-{
-    const std::string dump_filename = d_pvt_dump_filename;
-    std::ifstream dump_file(dump_filename, std::ios::binary | std::ios::ate);
-
-    if (!dump_file.is_open())
-    {
-        std::cerr << "Cannot open PVT dump file: " << dump_filename << "\n";
-        return 1;
-    }
-
-    const std::ifstream::pos_type file_size = dump_file.tellg();
-    dump_file.seekg(0, std::ios::beg);
-
-    // One record = [PRN, Pseudorange, Carrier_phase_rads, TOW_at_current_symbol]
-    const std::size_t record_size_bytes = 4 * sizeof(double);
-    if (file_size % record_size_bytes != 0)
-    {
-        std::cerr << "PVT dump size is not a multiple of 4*sizeof(double)\n";
-        return 1;
-    }
-
-    const int64_t total_records = static_cast<int64_t>(file_size) / record_size_bytes;
     if (total_records <= 0)
     {
-        std::cerr << "PVT dump file is empty\n";
+        std::cerr << "No full records in PVT dump\n";
         return 1;
     }
 
     struct PrnSeries
     {
         std::vector<double> tow_ms;
-        std::vector<double> pseudorange_m;
+        std::vector<double> raw_pseudorange_m;
+        std::vector<double> pseudorange_m;         // corrected
         std::vector<double> carrier_phase_rads;
     };
 
@@ -296,15 +181,17 @@ int32_t rtklib_pvt_gs::save_pvt_matfile() const
     for (int64_t i = 0; i < total_records; ++i)
     {
         double prn_d = 0.0;
-        double pr = 0.0;
+        double raw_pr = 0.0;
+        double corr_pr = 0.0;
         double carrier = 0.0;
         double tow = 0.0;
 
-        // ORDER: [PRN, Pseudorange, Carrier_phase_rads, TOW_at_current_symbol]
-        dump_file.read(reinterpret_cast<char*>(&prn_d), sizeof(double));
-        dump_file.read(reinterpret_cast<char*>(&pr),    sizeof(double));
+        // ORDER: [PRN, raw_Pseudorange, corrected_Pseudorange, Carrier_phase_rads, TOW]
+        dump_file.read(reinterpret_cast<char*>(&prn_d),   sizeof(double));
+        dump_file.read(reinterpret_cast<char*>(&raw_pr),  sizeof(double));
+        dump_file.read(reinterpret_cast<char*>(&corr_pr), sizeof(double));
         dump_file.read(reinterpret_cast<char*>(&carrier), sizeof(double));
-        dump_file.read(reinterpret_cast<char*>(&tow),   sizeof(double));
+        dump_file.read(reinterpret_cast<char*>(&tow),     sizeof(double));
 
         if (!dump_file.good())
         {
@@ -315,10 +202,13 @@ int32_t rtklib_pvt_gs::save_pvt_matfile() const
         int prn = static_cast<int>(std::lround(prn_d));
 
         auto& series = prn_data[prn];
-        // If TOW is in seconds, convert to ms here:
-        double tow_ms = tow * 1000.0;
+
+        // IMPORTANT: you stored TOW in *ms* already (TOW_at_current_symbol_ms),
+        // so here tow is in ms → do NOT multiply by 1000.
+        double tow_ms = tow;
         series.tow_ms.push_back(tow_ms);
-        series.pseudorange_m.push_back(pr);
+        series.raw_pseudorange_m.push_back(raw_pr);
+        series.pseudorange_m.push_back(corr_pr);
         series.carrier_phase_rads.push_back(carrier);
     }
 
@@ -342,7 +232,6 @@ int32_t rtklib_pvt_gs::save_pvt_matfile() const
         // Row vectors: 1 x N
         std::array<size_t, 2> dims{1, N};
 
-        // MAT file name: PVT_solution_PRN<PRN>.mat
         std::ostringstream oss;
         oss << "PVT_solution_PRN" << prn << ".mat";
         const std::string mat_filename = oss.str();
@@ -365,7 +254,16 @@ int32_t rtklib_pvt_gs::save_pvt_matfile() const
         Mat_VarWrite(matfp, matvar, MAT_COMPRESSION_ZLIB);
         Mat_VarFree(matvar);
 
-        // Pseudorange_m
+        // Raw_Pseudorange_m
+        matvar = Mat_VarCreate("Raw_Pseudorange_m",
+                               MAT_C_DOUBLE, MAT_T_DOUBLE,
+                               2, dims.data(),
+                               const_cast<double*>(series.raw_pseudorange_m.data()),
+                               MAT_F_DONT_COPY_DATA);
+        Mat_VarWrite(matfp, matvar, MAT_COMPRESSION_ZLIB);
+        Mat_VarFree(matvar);
+
+        // Corrected Pseudorange_m
         matvar = Mat_VarCreate("Pseudorange_m",
                                MAT_C_DOUBLE, MAT_T_DOUBLE,
                                2, dims.data(),
@@ -392,6 +290,8 @@ int32_t rtklib_pvt_gs::save_pvt_matfile() const
 
     return 0;
 }
+
+
 
 rtklib_pvt_gs::rtklib_pvt_gs(uint32_t nchannels,
     const Pvt_Conf& conf_,
@@ -2189,33 +2089,48 @@ void rtklib_pvt_gs::apply_rx_clock_offset(std::map<int, Gnss_Synchro>& observabl
             auto& syn = observables_iter->second;
             //std::cout << "[DEBUG] BEFORE  PRN " << syn.PRN
             //          << "  PR: " << syn.Pseudorange_m << " m\n";
+            const double prn_d   = static_cast<double>(syn.PRN);
+            const double raw_pr  = syn.Pseudorange_m;
+            const double tow_ms  = syn.TOW_at_current_symbol_ms;
             // all observables in the map are valid
             observables_iter->second.RX_time -= rx_clock_offset_s;
             //std::cout << "[DEBUG] RX_TIME " << observables_iter->second.RX_time << " s\n";
             observables_iter->second.Pseudorange_m -= rx_clock_offset_s * SPEED_OF_LIGHT_M_S;
-            //std::cout << "[DEBUG] PR    " << observables_iter->second.Pseudorange_m << " m\n";
+            //std::cout << "[DEBUG] AFTER PR    " << observables_iter->second.Pseudorange_m << " m\n";
             const auto it_freq_map = SIGNAL_FREQ_MAP.find(std::string(observables_iter->second.Signal, 2));
-            //if (it_freq_map != SIGNAL_FREQ_MAP.cend())
-            //    {
-                    observables_iter->second.Carrier_phase_rads -= rx_clock_offset_s * it_freq_map->second * TWO_PI;
-            //    }
-            double tmp_double;
-            for (const auto& entry : d_gnss_observables_map)
+            if (it_freq_map != SIGNAL_FREQ_MAP.cend())
                 {
-                    tmp_double = static_cast<double>(entry.second.PRN);
-                    d_pvt_dump_file.write(reinterpret_cast<char *>(&tmp_double), sizeof(double));
-                    tmp_double = entry.second.Pseudorange_m;
-                    d_pvt_dump_file.write(reinterpret_cast<char *>(&tmp_double), sizeof(double));
-                    tmp_double = entry.second.Carrier_phase_rads;
-                    d_pvt_dump_file.write(reinterpret_cast<char *>(&tmp_double), sizeof(double));
-                    tmp_double = entry.second.TOW_at_current_symbol_ms;
-                    d_pvt_dump_file.write(reinterpret_cast<char *>(&tmp_double), sizeof(double));
-                    std::cout << "Post-Clock Offset PRN: " << entry.second.PRN
+                    observables_iter->second.Carrier_phase_rads -= rx_clock_offset_s * it_freq_map->second * TWO_PI;
+                }
+            double tmp;
+            const double corr_pr = syn.Pseudorange_m;       // corrected pseudorange
+            const double carrier = syn.Carrier_phase_rads;  // corrected carrier phase
+            tmp = prn_d;
+            std::cout << "Post-Clock Offset PRN: " << prn_d << "\n";
+            d_pvt_dump_file.write(reinterpret_cast<char*>(&tmp), sizeof(double));
+    
+            tmp = raw_pr;
+            std::cout << "Post-Clock Offset PR: " << raw_pr << " m\n";
+            d_pvt_dump_file.write(reinterpret_cast<char*>(&tmp), sizeof(double));
+    
+            tmp = corr_pr;
+            std::cout << "Post-Clock Offset PR: " << corr_pr << " m\n";
+            d_pvt_dump_file.write(reinterpret_cast<char*>(&tmp), sizeof(double));
+    
+            tmp = carrier;
+            std::cout << "Post-Clock Offset Carrier: " << carrier << " rad\n";
+            d_pvt_dump_file.write(reinterpret_cast<char*>(&tmp), sizeof(double));
+    
+            tmp = tow_ms;   // if TOW is in seconds, store tow * 1000.0 instead
+            std::cout << "Post-Clock Offset TOW: " << tow_ms << " ms\n";
+            d_pvt_dump_file.write(reinterpret_cast<char*>(&tmp), sizeof(double));
+            /*std::cout << "Post-Clock Offset PRN: " << entry.second.PRN
                               << ", Pseudorange: " << entry.second.Pseudorange_m
                               << ", Carrier phase: " << entry.second.Carrier_phase_rads
                               << ", TOW_at_current_symbol_ms: " << entry.second.TOW_at_current_symbol_ms
-                              << std::endl;
-                }
+                              << ", Code_phase" << entry.second.Code_phase_samples
+                              << ", doppler" << entry.second.Carrier_Doppler_hz
+                              << std::endl;*/
             //std::cout << "[DEBUG] AFTER   PRN " << syn.PRN
             //          << "  PR: " << syn.Pseudorange_m << " m\n\n";
         }
@@ -2445,15 +2360,15 @@ int rtklib_pvt_gs::work(int noutput_items, gr_vector_const_void_star& input_item
                                     d_gnss_observables_map.insert(std::pair<int, Gnss_Synchro>(i, in[i][epoch]));
                                 }
                             //디버깅 용으로 잠깐 보기
-                            for (const auto& entry : d_gnss_observables_map)
+                            /*for (const auto& entry : d_gnss_observables_map)
                                 {
-                                    const auto& syn = entry.second;
-                                    /*std::cout << "CH " << entry.first
+                                    //const auto& syn = entry.second;
+                                    std::cout << "CH " << entry.first
                                               << "  PRN " << syn.PRN
                                               << "  PR(m): " << syn.Pseudorange_m
                                               << " TOW_at_current_symbol_ms: " << syn.TOW_at_current_symbol_ms
-                                              << "\n";*/
-                                }
+                                              << "\n";
+                                }*/
                             if (d_rtcm_enabled)
                                 {
                                     try
