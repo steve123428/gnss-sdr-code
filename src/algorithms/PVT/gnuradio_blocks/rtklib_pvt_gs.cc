@@ -141,8 +141,8 @@ int32_t rtklib_pvt_gs::save_pvt_matfile() const
 
     std::cout << "PVT dump size: " << file_size << " bytes\n";
 
-    // One record = [PRN, raw_Pseudorange, corrected_Pseudorange, Carrier_phase_rads, TOW]
-    const int vars_per_record = 5;
+    // One record = [PRN, raw_PR, corr_PR, Carrier_phase_rads, TOW_ms, Doppler_hz, Code_phase_samples]
+    const int vars_per_record = 7;
 
     // Total doubles in file
     const int64_t num_doubles = static_cast<int64_t>(file_size) / sizeof(double);
@@ -153,7 +153,7 @@ int32_t rtklib_pvt_gs::save_pvt_matfile() const
     }
 
     // Full records we can safely read
-    const int64_t total_records = num_doubles / vars_per_record;
+    const int64_t total_records    = num_doubles / vars_per_record;
     const int64_t leftover_doubles = num_doubles % vars_per_record;
 
     if (leftover_doubles != 0)
@@ -174,24 +174,30 @@ int32_t rtklib_pvt_gs::save_pvt_matfile() const
         std::vector<double> raw_pseudorange_m;
         std::vector<double> pseudorange_m;         // corrected
         std::vector<double> carrier_phase_rads;
+        std::vector<double> doppler_hz;
+        std::vector<double> code_phase_samples;
     };
 
     std::map<int, PrnSeries> prn_data;
 
     for (int64_t i = 0; i < total_records; ++i)
     {
-        double prn_d = 0.0;
-        double raw_pr = 0.0;
+        double prn_d   = 0.0;
+        double raw_pr  = 0.0;
         double corr_pr = 0.0;
         double carrier = 0.0;
-        double tow = 0.0;
+        double tow     = 0.0;
+        double doppler = 0.0;
+        double code_ph = 0.0;
 
-        // ORDER: [PRN, raw_Pseudorange, corrected_Pseudorange, Carrier_phase_rads, TOW]
+        // ORDER: [PRN, raw_PR, corr_PR, Carrier_phase_rads, TOW_ms, Doppler_hz, Code_phase_samples]
         dump_file.read(reinterpret_cast<char*>(&prn_d),   sizeof(double));
         dump_file.read(reinterpret_cast<char*>(&raw_pr),  sizeof(double));
         dump_file.read(reinterpret_cast<char*>(&corr_pr), sizeof(double));
         dump_file.read(reinterpret_cast<char*>(&carrier), sizeof(double));
         dump_file.read(reinterpret_cast<char*>(&tow),     sizeof(double));
+        dump_file.read(reinterpret_cast<char*>(&doppler), sizeof(double));
+        dump_file.read(reinterpret_cast<char*>(&code_ph), sizeof(double));
 
         if (!dump_file.good())
         {
@@ -199,17 +205,18 @@ int32_t rtklib_pvt_gs::save_pvt_matfile() const
             return 1;
         }
 
-        int prn = static_cast<int>(std::lround(prn_d));
+        const int prn = static_cast<int>(std::lround(prn_d));
+        auto& series  = prn_data[prn];
 
-        auto& series = prn_data[prn];
+        // tow is already in ms (you wrote TOW_at_current_symbol_ms)
+        const double tow_ms = tow;
 
-        // IMPORTANT: you stored TOW in *ms* already (TOW_at_current_symbol_ms),
-        // so here tow is in ms → do NOT multiply by 1000.
-        double tow_ms = tow;
         series.tow_ms.push_back(tow_ms);
         series.raw_pseudorange_m.push_back(raw_pr);
         series.pseudorange_m.push_back(corr_pr);
         series.carrier_phase_rads.push_back(carrier);
+        series.doppler_hz.push_back(doppler);
+        series.code_phase_samples.push_back(code_ph);
     }
 
     dump_file.close();
@@ -223,10 +230,9 @@ int32_t rtklib_pvt_gs::save_pvt_matfile() const
     // ---- One MAT file per PRN ----
     for (const auto& kv : prn_data)
     {
-        int prn = kv.first;
-        const auto& series = kv.second;
-
-        const std::size_t N = series.tow_ms.size();
+        const int prn          = kv.first;
+        const auto& series     = kv.second;
+        const std::size_t N    = series.tow_ms.size();
         if (N == 0) continue;
 
         // Row vectors: 1 x N
@@ -281,6 +287,24 @@ int32_t rtklib_pvt_gs::save_pvt_matfile() const
         Mat_VarWrite(matfp, matvar, MAT_COMPRESSION_ZLIB);
         Mat_VarFree(matvar);
 
+        // Carrier_Doppler_hz
+        matvar = Mat_VarCreate("Carrier_Doppler_hz",
+                               MAT_C_DOUBLE, MAT_T_DOUBLE,
+                               2, dims.data(),
+                               const_cast<double*>(series.doppler_hz.data()),
+                               MAT_F_DONT_COPY_DATA);
+        Mat_VarWrite(matfp, matvar, MAT_COMPRESSION_ZLIB);
+        Mat_VarFree(matvar);
+
+        // Code_phase_samples
+        matvar = Mat_VarCreate("Code_phase_samples",
+                               MAT_C_DOUBLE, MAT_T_DOUBLE,
+                               2, dims.data(),
+                               const_cast<double*>(series.code_phase_samples.data()),
+                               MAT_F_DONT_COPY_DATA);
+        Mat_VarWrite(matfp, matvar, MAT_COMPRESSION_ZLIB);
+        Mat_VarFree(matvar);
+
         Mat_Close(matfp);
 
         std::cout << "Saved PVT MAT file for PRN " << prn
@@ -290,8 +314,6 @@ int32_t rtklib_pvt_gs::save_pvt_matfile() const
 
     return 0;
 }
-
-
 
 rtklib_pvt_gs::rtklib_pvt_gs(uint32_t nchannels,
     const Pvt_Conf& conf_,
@@ -2105,6 +2127,8 @@ void rtklib_pvt_gs::apply_rx_clock_offset(std::map<int, Gnss_Synchro>& observabl
             double tmp;
             const double corr_pr = syn.Pseudorange_m;       // corrected pseudorange
             const double carrier = syn.Carrier_phase_rads;  // corrected carrier phase
+            const double doppler = syn.Carrier_Doppler_hz;  // corrected carrier doppler
+            const double code_phase = syn.Code_phase_samples;  // corrected code phase
             tmp = prn_d;
             std::cout << "Post-Clock Offset PRN: " << prn_d << "\n";
             d_pvt_dump_file.write(reinterpret_cast<char*>(&tmp), sizeof(double));
@@ -2124,6 +2148,15 @@ void rtklib_pvt_gs::apply_rx_clock_offset(std::map<int, Gnss_Synchro>& observabl
             tmp = tow_ms;   // if TOW is in seconds, store tow * 1000.0 instead
             std::cout << "Post-Clock Offset TOW: " << tow_ms << " ms\n";
             d_pvt_dump_file.write(reinterpret_cast<char*>(&tmp), sizeof(double));
+
+            tmp = doppler;
+            std::cout << "Doppler: " << doppler << " Hz\n";
+            d_pvt_dump_file.write(reinterpret_cast<char*>(&tmp), sizeof(double));
+
+            tmp = code_phase;
+            std::cout << "Code Phase: " << code_phase << " samples\n";
+            d_pvt_dump_file.write(reinterpret_cast<char*>(&tmp), sizeof(double));
+            
             /*std::cout << "Post-Clock Offset PRN: " << entry.second.PRN
                               << ", Pseudorange: " << entry.second.Pseudorange_m
                               << ", Carrier phase: " << entry.second.Carrier_phase_rads
