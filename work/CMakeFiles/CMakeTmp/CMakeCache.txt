@@ -152,7 +152,7 @@ CMAKE_TRY_COMPILE_SOURCE_DIR:STATIC=/home/suhjw/gnss-sdr/work/CMakeFiles/CMakeTm
 CMAKE_VERBOSE_MAKEFILE:BOOL=FALSE
 
 //No help, variable specified on the command line.
-COMPILE_DEFINITIONS:STRING=
+COMPILE_DEFINITIONS:STRING=-std=c++17
 
 
 ########################

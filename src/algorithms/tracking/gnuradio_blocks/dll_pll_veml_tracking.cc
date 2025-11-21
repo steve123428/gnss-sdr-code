@@ -1054,7 +1054,6 @@ void dll_pll_veml_tracking::do_correlation_step(const gr_complex *input_samples)
         static_cast<float>(d_code_phase_step_chips) * static_cast<float>(d_code_samples_per_chip),
         static_cast<float>(d_code_phase_rate_step_chips) * static_cast<float>(d_code_samples_per_chip),
         d_trk_parameters.vector_length);
-
     // DATA CORRELATOR (if tracking tracks the pilot signal)
     if (d_trk_parameters.track_pilot)
         {
@@ -1068,7 +1067,6 @@ void dll_pll_veml_tracking::do_correlation_step(const gr_complex *input_samples)
                 d_trk_parameters.vector_length);
         }
 }
-
 
 void dll_pll_veml_tracking::run_dll_pll()
 {
@@ -1458,7 +1456,7 @@ void dll_pll_veml_tracking::log_data(int tracking_state)
                     tmp_float = static_cast<float>(d_carr_error_filt_hz);
                     d_dump_file.write(reinterpret_cast<char *>(&tmp_float), sizeof(float));
                     // DLL commands
-                    tmp_float = static_cast<float>(d_code_error_chips);
+                    tmp_float = static_cast<float>(d_code_phase_step_chips);
                     d_dump_file.write(reinterpret_cast<char *>(&tmp_float), sizeof(float));
                     tmp_float = static_cast<float>(d_code_error_filt_chips);
                     d_dump_file.write(reinterpret_cast<char *>(&tmp_float), sizeof(float));
@@ -1541,7 +1539,7 @@ int32_t dll_pll_veml_tracking::save_matfile() const
     auto code_freq_rate_chips = std::vector<float>(num_epoch);
     auto carr_error_hz = std::vector<float>(num_epoch);
     auto carr_error_filt_hz = std::vector<float>(num_epoch);
-    auto code_error_chips = std::vector<float>(num_epoch);
+    auto code_phase_step_chips = std::vector<float>(num_epoch);
     auto code_error_filt_chips = std::vector<float>(num_epoch);
     auto CN0_SNV_dB_Hz = std::vector<float>(num_epoch);
     auto carrier_lock_test = std::vector<float>(num_epoch);
@@ -1571,7 +1569,7 @@ int32_t dll_pll_veml_tracking::save_matfile() const
                             dump_file.read(reinterpret_cast<char *>(&code_freq_rate_chips[i]), sizeof(float));
                             dump_file.read(reinterpret_cast<char *>(&carr_error_hz[i]), sizeof(float));
                             dump_file.read(reinterpret_cast<char *>(&carr_error_filt_hz[i]), sizeof(float));
-                            dump_file.read(reinterpret_cast<char *>(&code_error_chips[i]), sizeof(float));
+                            dump_file.read(reinterpret_cast<char *>(&code_phase_step_chips[i]), sizeof(float));
                             dump_file.read(reinterpret_cast<char *>(&code_error_filt_chips[i]), sizeof(float));
                             dump_file.read(reinterpret_cast<char *>(&CN0_SNV_dB_Hz[i]), sizeof(float));
                             dump_file.read(reinterpret_cast<char *>(&carrier_lock_test[i]), sizeof(float));
@@ -1660,7 +1658,7 @@ int32_t dll_pll_veml_tracking::save_matfile() const
             Mat_VarWrite(matfp, matvar, MAT_COMPRESSION_ZLIB);  // or MAT_COMPRESSION_NONE
             Mat_VarFree(matvar);
 
-            matvar = Mat_VarCreate("code_error_chips", MAT_C_SINGLE, MAT_T_SINGLE, 2, dims.data(), code_error_chips.data(), 0);
+            matvar = Mat_VarCreate("code_phase_step_chips", MAT_C_SINGLE, MAT_T_SINGLE, 2, dims.data(), code_phase_step_chips.data(), 0);
             Mat_VarWrite(matfp, matvar, MAT_COMPRESSION_ZLIB);  // or MAT_COMPRESSION_NONE
             Mat_VarFree(matvar);
 

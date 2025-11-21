@@ -227,6 +227,35 @@ int32_t rtklib_pvt_gs::save_pvt_matfile() const
         return 1;
     }
 
+    // ======= NEW: make ./MM-DD directory and timestamp string =======
+    namespace fs = std::filesystem;
+
+    std::time_t now = std::time(nullptr);
+    std::tm tm_now{};
+#ifndef _WIN32
+    tm_now = *std::localtime(&now);
+#else
+    localtime_s(&tm_now, &now);
+#endif
+
+    char date_buf[16];
+    std::strftime(date_buf, sizeof(date_buf), "%m-%d", &tm_now);   // e.g. "12-08"
+    std::string date_dir = std::string("./") + date_buf;
+
+    std::error_code ec;
+    fs::create_directories(date_dir, ec);
+    if (ec)
+    {
+        std::cerr << "Could not create directory " << date_dir
+                  << " : " << ec.message() << "\n";
+        // we still continue, and will try to write in current dir if we build paths manually
+    }
+
+    char time_buf[16];
+    std::strftime(time_buf, sizeof(time_buf), "%H-%M-%S", &tm_now);  // e.g. "14-37-05"
+    std::string time_str = time_buf;
+    // ================================================================
+
     // ---- One MAT file per PRN ----
     for (const auto& kv : prn_data)
     {
@@ -238,9 +267,11 @@ int32_t rtklib_pvt_gs::save_pvt_matfile() const
         // Row vectors: 1 x N
         std::array<size_t, 2> dims{1, N};
 
+        // File name: ./MM-DD/PVT_solution_PRN<PRN>_<HH-MM-SS>.mat
         std::ostringstream oss;
-        oss << "PVT_solution_PRN" << prn << ".mat";
-        const std::string mat_filename = oss.str();
+        oss << "PVT_solution_PRN" << prn << "_" << time_str << ".mat";
+        const fs::path mat_path = fs::path(date_dir) / oss.str();
+        const std::string mat_filename = mat_path.string();
 
         mat_t* matfp = Mat_CreateVer(mat_filename.c_str(), nullptr, MAT_FT_MAT73);
         if (!matfp)
@@ -2130,31 +2161,31 @@ void rtklib_pvt_gs::apply_rx_clock_offset(std::map<int, Gnss_Synchro>& observabl
             const double doppler = syn.Carrier_Doppler_hz;  // corrected carrier doppler
             const double code_phase = syn.Code_phase_samples;  // corrected code phase
             tmp = prn_d;
-            std::cout << "Post-Clock Offset PRN: " << prn_d << "\n";
+            //std::cout << "Post-Clock Offset PRN: " << prn_d << "\n";
             d_pvt_dump_file.write(reinterpret_cast<char*>(&tmp), sizeof(double));
     
             tmp = raw_pr;
-            std::cout << "Post-Clock Offset PR: " << raw_pr << " m\n";
+            //std::cout << "Post-Clock Offset PR: " << raw_pr << " m\n";
             d_pvt_dump_file.write(reinterpret_cast<char*>(&tmp), sizeof(double));
     
             tmp = corr_pr;
-            std::cout << "Post-Clock Offset PR: " << corr_pr << " m\n";
+            //std::cout << "Post-Clock Offset PR: " << corr_pr << " m\n";
             d_pvt_dump_file.write(reinterpret_cast<char*>(&tmp), sizeof(double));
     
             tmp = carrier;
-            std::cout << "Post-Clock Offset Carrier: " << carrier << " rad\n";
+            //std::cout << "Post-Clock Offset Carrier: " << carrier << " rad\n";
             d_pvt_dump_file.write(reinterpret_cast<char*>(&tmp), sizeof(double));
     
             tmp = tow_ms;   // if TOW is in seconds, store tow * 1000.0 instead
-            std::cout << "Post-Clock Offset TOW: " << tow_ms << " ms\n";
+            //std::cout << "Post-Clock Offset TOW: " << tow_ms << " ms\n";
             d_pvt_dump_file.write(reinterpret_cast<char*>(&tmp), sizeof(double));
 
             tmp = doppler;
-            std::cout << "Doppler: " << doppler << " Hz\n";
+            //std::cout << "Doppler: " << doppler << " Hz\n";
             d_pvt_dump_file.write(reinterpret_cast<char*>(&tmp), sizeof(double));
 
             tmp = code_phase;
-            std::cout << "Code Phase: " << code_phase << " samples\n";
+            //std::cout << "Code Phase: " << code_phase << " samples\n";
             d_pvt_dump_file.write(reinterpret_cast<char*>(&tmp), sizeof(double));
             
             /*std::cout << "Post-Clock Offset PRN: " << entry.second.PRN
@@ -2471,7 +2502,7 @@ int rtklib_pvt_gs::work(int noutput_items, gr_vector_const_void_star& input_item
                         {
                             d_pvt_errors_counter = 0;  // Reset consecutive PVT error counter
                             const double Rx_clock_offset_s = d_internal_pvt_solver->get_time_offset_s();
-                            std::cout << "Rx clock offset: " << Rx_clock_offset_s << " s\n";
+                            //std::cout << "Rx clock offset: " << Rx_clock_offset_s << " s\n";
                             // **************** time tags ****************
                             if (d_enable_rx_clock_correction == false)  // todo: currently only works if clock correction is disabled (computed clock offset is applied here)
                                 {
