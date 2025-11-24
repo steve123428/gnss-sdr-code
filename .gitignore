@@ -31,7 +31,7 @@
 *.kml
 work/pvt.dat_*.kml
 work/pvt.dat_*.gps
-work/log
+work/
 work/PVT*
 work/log/PVT
 work/log/Observables/*.dat

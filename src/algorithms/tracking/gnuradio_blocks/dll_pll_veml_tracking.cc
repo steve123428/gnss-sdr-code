@@ -1127,13 +1127,13 @@ void dll_pll_veml_tracking::run_dll_pll()
         }
     // Code discriminator filter
     d_code_error_filt_chips = d_code_loop_filter.apply(static_cast<float>(d_code_error_chips));  // [chips/second]
+
     // New code Doppler frequency estimation
     d_code_freq_chips = d_code_chip_rate - d_code_error_filt_chips;
     if (d_trk_parameters.carrier_aiding)
         {
             d_code_freq_chips += d_carrier_doppler_hz * d_code_chip_rate / d_signal_carrier_freq;
         }
-
     // Experimental: detect Carrier Doppler vs. Code Doppler incoherence and correct the Carrier Doppler
     if (d_trk_parameters.enable_doppler_correction == true)
         {
@@ -2032,7 +2032,11 @@ int dll_pll_veml_tracking::general_work(int noutput_items __attribute__((unused)
                                         current_synchro_data.Prompt_Q = static_cast<double>(d_P_data_accu.imag());
                                     }
                                 current_synchro_data.Code_phase_samples = d_rem_code_phase_samples;
-                                //std::cout<<"Code phase samples: "<<d_rem_code_phase_samples<<std::endl;
+                                
+                                //추가한 변수
+                                current_synchro_data.code_phase_step_chips = d_code_phase_step_chips;
+                                current_synchro_data.code_phase_rate_step_chips = d_code_phase_rate_step_chips;
+                                current_synchro_data.rem_code_phase_samples = d_rem_code_phase_samples;
                                 current_synchro_data.Carrier_phase_rads = d_acc_carrier_phase_rad;
                                 current_synchro_data.Carrier_Doppler_hz = d_carrier_doppler_hz;
                                 current_synchro_data.CN0_dB_hz = d_CN0_SNV_dB_Hz;
@@ -2126,7 +2130,6 @@ int dll_pll_veml_tracking::general_work(int noutput_items __attribute__((unused)
                     // std::cout << "[" << this->nitems_written(0) + 1 << "][diff_time: " << 1000.0 * static_cast<double>(diff_samplecount) / d_trk_parameters.fs_in << "] Sent TimeTag Week: " << d_last_timetag.week << ", TOW: " << d_last_timetag.tow_ms << " [ms], TOW fraction: " << d_last_timetag.tow_ms_fraction << " [ms] \n";
                     d_timetag_waiting = false;
                 }
-
             *out[0] = std::move(current_synchro_data);
             return 1;
         }
