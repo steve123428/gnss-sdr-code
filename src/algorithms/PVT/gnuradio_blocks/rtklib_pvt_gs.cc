@@ -151,8 +151,17 @@ int32_t rtklib_pvt_gs::save_pvt_matfile() const
     //               Code_phase_samples,
     //               Code_phase_step_chips,
     //               Code_phase_rate_step_chips,
-    //               Rem_code_phase_samples]
-    const int vars_per_record = 11;
+    //               Rem_code_phase_samples,
+    //               carrier_lock_test,
+    //               CN0_SNV_dB_Hz,
+    //               abs_E,
+    //               abs_P,
+    //               abs_L,
+    //               code_error_filt_chips,
+    //               Prompt_I,
+    //               Prompt_Q,
+    //               Tracking_sample_counter]
+    const int vars_per_record = 20;
 
     // Total doubles in file
     const int64_t num_doubles = static_cast<int64_t>(file_size) / sizeof(double);
@@ -190,36 +199,65 @@ int32_t rtklib_pvt_gs::save_pvt_matfile() const
         std::vector<double> code_phase_step_chips;
         std::vector<double> code_phase_rate_step_chips;
         std::vector<double> rem_code_phase_samples;
+
+        // extras
+        std::vector<double> carrier_lock_test;
+        std::vector<double> CN0_SNV_dB_Hz;
+        std::vector<double> abs_E;
+        std::vector<double> abs_P;
+        std::vector<double> abs_L;
+        std::vector<double> code_error_filt_chips;
+        std::vector<double> Prompt_I;
+        std::vector<double> Prompt_Q;
+        std::vector<double> Tracking_sample_counter;
     };
 
     std::map<int, PrnSeries> prn_data;
 
     for (int64_t i = 0; i < total_records; ++i)
     {
-        double prn_d              = 0.0;
-        double raw_pr             = 0.0;
-        double corr_pr            = 0.0;
-        double raw_carrier        = 0.0;
-        double corrected_carrier  = 0.0;
-        double tow                = 0.0;
-        double doppler            = 0.0;
-        double code_ph_samples    = 0.0;
-        double code_step_chips    = 0.0;
-        double code_rate_step_chips = 0.0;
-        double rem_code_samples   = 0.0;
+        double prn_d                    = 0.0;
+        double raw_pr                   = 0.0;
+        double corr_pr                  = 0.0;
+        double raw_carrier              = 0.0;
+        double corrected_carrier        = 0.0;
+        double tow                      = 0.0;
+        double doppler                  = 0.0;
+        double code_ph_samples          = 0.0;
+        double code_step_chips          = 0.0;
+        double code_rate_step_chips     = 0.0;
+        double rem_code_samples         = 0.0;
+        double carrier_lock_test        = 0.0;
+        double CN0_SNV_dB_Hz            = 0.0;
+        double abs_E                    = 0.0;
+        double abs_P                    = 0.0;
+        double abs_L                    = 0.0;
+        double code_error_filt_chips    = 0.0;
+        double Prompt_I                 = 0.0;
+        double Prompt_Q                 = 0.0;
+        double Tracking_sample_counter  = 0.0;
 
         // ORDER MUST MATCH apply_rx_clock_offset()
-        dump_file.read(reinterpret_cast<char*>(&prn_d),             sizeof(double));
-        dump_file.read(reinterpret_cast<char*>(&raw_pr),            sizeof(double));
-        dump_file.read(reinterpret_cast<char*>(&corr_pr),           sizeof(double));
-        dump_file.read(reinterpret_cast<char*>(&raw_carrier),       sizeof(double));
-        dump_file.read(reinterpret_cast<char*>(&corrected_carrier), sizeof(double));
-        dump_file.read(reinterpret_cast<char*>(&tow),               sizeof(double));
-        dump_file.read(reinterpret_cast<char*>(&doppler),           sizeof(double));
-        dump_file.read(reinterpret_cast<char*>(&code_ph_samples),   sizeof(double));
-        dump_file.read(reinterpret_cast<char*>(&code_step_chips),   sizeof(double));
-        dump_file.read(reinterpret_cast<char*>(&code_rate_step_chips), sizeof(double));
-        dump_file.read(reinterpret_cast<char*>(&rem_code_samples),  sizeof(double));
+        dump_file.read(reinterpret_cast<char*>(&prn_d),                  sizeof(double));
+        dump_file.read(reinterpret_cast<char*>(&raw_pr),                 sizeof(double));
+        dump_file.read(reinterpret_cast<char*>(&corr_pr),                sizeof(double));
+        dump_file.read(reinterpret_cast<char*>(&raw_carrier),            sizeof(double));
+        dump_file.read(reinterpret_cast<char*>(&corrected_carrier),      sizeof(double));
+        dump_file.read(reinterpret_cast<char*>(&tow),                    sizeof(double));
+        dump_file.read(reinterpret_cast<char*>(&doppler),                sizeof(double));
+        dump_file.read(reinterpret_cast<char*>(&code_ph_samples),        sizeof(double));
+        dump_file.read(reinterpret_cast<char*>(&code_step_chips),        sizeof(double));
+        dump_file.read(reinterpret_cast<char*>(&code_rate_step_chips),   sizeof(double));
+        dump_file.read(reinterpret_cast<char*>(&rem_code_samples),       sizeof(double));
+        dump_file.read(reinterpret_cast<char*>(&carrier_lock_test),      sizeof(double));
+        dump_file.read(reinterpret_cast<char*>(&CN0_SNV_dB_Hz),          sizeof(double));
+        dump_file.read(reinterpret_cast<char*>(&abs_E),                  sizeof(double));
+        dump_file.read(reinterpret_cast<char*>(&abs_P),                  sizeof(double));
+        dump_file.read(reinterpret_cast<char*>(&abs_L),                  sizeof(double));
+        dump_file.read(reinterpret_cast<char*>(&code_error_filt_chips),  sizeof(double));
+        dump_file.read(reinterpret_cast<char*>(&Prompt_I),               sizeof(double));
+        dump_file.read(reinterpret_cast<char*>(&Prompt_Q),               sizeof(double));
+        dump_file.read(reinterpret_cast<char*>(&Tracking_sample_counter),sizeof(double));
 
         if (!dump_file.good())
         {
@@ -242,6 +280,16 @@ int32_t rtklib_pvt_gs::save_pvt_matfile() const
         series.code_phase_step_chips.push_back(code_step_chips);
         series.code_phase_rate_step_chips.push_back(code_rate_step_chips);
         series.rem_code_phase_samples.push_back(rem_code_samples);
+
+        series.carrier_lock_test.push_back(carrier_lock_test);
+        series.CN0_SNV_dB_Hz.push_back(CN0_SNV_dB_Hz);
+        series.abs_E.push_back(abs_E);
+        series.abs_P.push_back(abs_P);
+        series.abs_L.push_back(abs_L);
+        series.code_error_filt_chips.push_back(code_error_filt_chips);
+        series.Prompt_I.push_back(Prompt_I);
+        series.Prompt_Q.push_back(Prompt_Q);
+        series.Tracking_sample_counter.push_back(Tracking_sample_counter);
     }
 
     dump_file.close();
@@ -304,95 +352,37 @@ int32_t rtklib_pvt_gs::save_pvt_matfile() const
 
         matvar_t* matvar = nullptr;
 
-        // TOW_at_current_symbol_ms
-        matvar = Mat_VarCreate("TOW_at_current_symbol_ms",
-                               MAT_C_DOUBLE, MAT_T_DOUBLE,
-                               2, dims.data(),
-                               const_cast<double*>(series.tow_ms.data()),
-                               MAT_F_DONT_COPY_DATA);
-        Mat_VarWrite(matfp, matvar, MAT_COMPRESSION_ZLIB);
-        Mat_VarFree(matvar);
+        auto write_vec = [&](const char* name, const std::vector<double>& v)
+        {
+            matvar_t* mv = Mat_VarCreate(name,
+                                         MAT_C_DOUBLE, MAT_T_DOUBLE,
+                                         2, dims.data(),
+                                         const_cast<double*>(v.data()),
+                                         MAT_F_DONT_COPY_DATA);
+            Mat_VarWrite(matfp, mv, MAT_COMPRESSION_ZLIB);
+            Mat_VarFree(mv);
+        };
 
-        // Raw_Pseudorange_m
-        matvar = Mat_VarCreate("Raw_Pseudorange_m",
-                               MAT_C_DOUBLE, MAT_T_DOUBLE,
-                               2, dims.data(),
-                               const_cast<double*>(series.raw_pseudorange_m.data()),
-                               MAT_F_DONT_COPY_DATA);
-        Mat_VarWrite(matfp, matvar, MAT_COMPRESSION_ZLIB);
-        Mat_VarFree(matvar);
+        write_vec("TOW_at_current_symbol_ms", series.tow_ms);
+        write_vec("Raw_Pseudorange_m",        series.raw_pseudorange_m);
+        write_vec("Pseudorange_m",            series.pseudorange_m);
+        write_vec("Raw_Carrier_phase_rads",   series.carrier_phase_raw_rads);
+        write_vec("Corrected_Carrier_phase_rads", series.carrier_phase_corr_rads);
+        write_vec("Carrier_Doppler_hz",       series.doppler_hz);
+        write_vec("Code_phase_samples",       series.code_phase_samples);
+        write_vec("Code_phase_step_chips",    series.code_phase_step_chips);
+        write_vec("Code_phase_rate_step_chips", series.code_phase_rate_step_chips);
+        write_vec("Rem_code_phase_samples",   series.rem_code_phase_samples);
 
-        // Corrected Pseudorange_m
-        matvar = Mat_VarCreate("Pseudorange_m",
-                               MAT_C_DOUBLE, MAT_T_DOUBLE,
-                               2, dims.data(),
-                               const_cast<double*>(series.pseudorange_m.data()),
-                               MAT_F_DONT_COPY_DATA);
-        Mat_VarWrite(matfp, matvar, MAT_COMPRESSION_ZLIB);
-        Mat_VarFree(matvar);
-
-        // Raw Carrier_phase_rads
-        matvar = Mat_VarCreate("Raw_Carrier_phase_rads",
-                               MAT_C_DOUBLE, MAT_T_DOUBLE,
-                               2, dims.data(),
-                               const_cast<double*>(series.carrier_phase_raw_rads.data()),
-                               MAT_F_DONT_COPY_DATA);
-        Mat_VarWrite(matfp, matvar, MAT_COMPRESSION_ZLIB);
-        Mat_VarFree(matvar);
-
-        // Corrected Carrier_phase_rads
-        matvar = Mat_VarCreate("Corrected_Carrier_phase_rads",
-                               MAT_C_DOUBLE, MAT_T_DOUBLE,
-                               2, dims.data(),
-                               const_cast<double*>(series.carrier_phase_corr_rads.data()),
-                               MAT_F_DONT_COPY_DATA);
-        Mat_VarWrite(matfp, matvar, MAT_COMPRESSION_ZLIB);
-        Mat_VarFree(matvar);
-
-        // Carrier_Doppler_hz
-        matvar = Mat_VarCreate("Carrier_Doppler_hz",
-                               MAT_C_DOUBLE, MAT_T_DOUBLE,
-                               2, dims.data(),
-                               const_cast<double*>(series.doppler_hz.data()),
-                               MAT_F_DONT_COPY_DATA);
-        Mat_VarWrite(matfp, matvar, MAT_COMPRESSION_ZLIB);
-        Mat_VarFree(matvar);
-
-        // Code_phase_samples
-        matvar = Mat_VarCreate("Code_phase_samples",
-                               MAT_C_DOUBLE, MAT_T_DOUBLE,
-                               2, dims.data(),
-                               const_cast<double*>(series.code_phase_samples.data()),
-                               MAT_F_DONT_COPY_DATA);
-        Mat_VarWrite(matfp, matvar, MAT_COMPRESSION_ZLIB);
-        Mat_VarFree(matvar);
-
-        // Code_phase_step_chips
-        matvar = Mat_VarCreate("Code_phase_step_chips",
-                               MAT_C_DOUBLE, MAT_T_DOUBLE,
-                               2, dims.data(),
-                               const_cast<double*>(series.code_phase_step_chips.data()),
-                               MAT_F_DONT_COPY_DATA);
-        Mat_VarWrite(matfp, matvar, MAT_COMPRESSION_ZLIB);
-        Mat_VarFree(matvar);
-
-        // Code_phase_rate_step_chips
-        matvar = Mat_VarCreate("Code_phase_rate_step_chips",
-                               MAT_C_DOUBLE, MAT_T_DOUBLE,
-                               2, dims.data(),
-                               const_cast<double*>(series.code_phase_rate_step_chips.data()),
-                               MAT_F_DONT_COPY_DATA);
-        Mat_VarWrite(matfp, matvar, MAT_COMPRESSION_ZLIB);
-        Mat_VarFree(matvar);
-
-        // Rem_code_phase_samples
-        matvar = Mat_VarCreate("Rem_code_phase_samples",
-                               MAT_C_DOUBLE, MAT_T_DOUBLE,
-                               2, dims.data(),
-                               const_cast<double*>(series.rem_code_phase_samples.data()),
-                               MAT_F_DONT_COPY_DATA);
-        Mat_VarWrite(matfp, matvar, MAT_COMPRESSION_ZLIB);
-        Mat_VarFree(matvar);
+        write_vec("carrier_lock_test",        series.carrier_lock_test);
+        write_vec("CN0_SNV_dB_Hz",            series.CN0_SNV_dB_Hz);
+        write_vec("abs_E",                    series.abs_E);
+        write_vec("abs_P",                    series.abs_P);
+        write_vec("abs_L",                    series.abs_L);
+        write_vec("code_error_filt_chips",    series.code_error_filt_chips);
+        write_vec("Prompt_I",                 series.Prompt_I);
+        write_vec("Prompt_Q",                 series.Prompt_Q);
+        write_vec("Tracking_sample_counter",  series.Tracking_sample_counter);
 
         Mat_Close(matfp);
 
@@ -2263,6 +2253,34 @@ void rtklib_pvt_gs::apply_rx_clock_offset(std::map<int, Gnss_Synchro>& observabl
 
             tmp = rem_code_phase_samples;
             //std::cout << "rem_code_phase_samples: " << rem_code_phase_samples << " samples\n";
+            d_pvt_dump_file.write(reinterpret_cast<char*>(&tmp), sizeof(double));
+
+            //lock test
+            tmp = syn.carrier_lock_test;
+            d_pvt_dump_file.write(reinterpret_cast<char*>(&tmp), sizeof(double));
+
+            tmp = syn.CN0_SNV_dB_Hz;
+            d_pvt_dump_file.write(reinterpret_cast<char*>(&tmp), sizeof(double));
+
+            tmp = syn.abs_E;
+            d_pvt_dump_file.write(reinterpret_cast<char*>(&tmp), sizeof(double));
+
+            tmp = syn.abs_P;
+            d_pvt_dump_file.write(reinterpret_cast<char*>(&tmp), sizeof(double));
+
+            tmp = syn.abs_L;
+            d_pvt_dump_file.write(reinterpret_cast<char*>(&tmp), sizeof(double));
+
+            tmp = syn.code_error_filt_chips;
+            d_pvt_dump_file.write(reinterpret_cast<char*>(&tmp), sizeof(double));
+
+            tmp = syn.Prompt_I;
+            d_pvt_dump_file.write(reinterpret_cast<char*>(&tmp), sizeof(double));
+
+            tmp = syn.Prompt_Q;
+            d_pvt_dump_file.write(reinterpret_cast<char*>(&tmp), sizeof(double));
+
+            tmp = syn.Tracking_sample_counter;
             d_pvt_dump_file.write(reinterpret_cast<char*>(&tmp), sizeof(double));
         }
 }

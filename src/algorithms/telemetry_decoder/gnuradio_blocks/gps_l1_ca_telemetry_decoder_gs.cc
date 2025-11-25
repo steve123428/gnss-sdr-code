@@ -567,12 +567,6 @@ int gps_l1_ca_telemetry_decoder_gs::general_work(int noutput_items __attribute__
     Gnss_Synchro current_symbol{};
     // 1. Copy the current tracking output
     current_symbol = in[0][0];
-    std::cout << "[TLM IN] ch=" << current_symbol.Channel_ID
-          << " PRN=" << current_symbol.PRN
-          << " rem_code_phase_samples=" << current_symbol.rem_code_phase_samples
-          << " code_phase_step_chips=" << current_symbol.code_phase_step_chips
-          << " code_phase_rate_step_chips=" << current_symbol.code_phase_rate_step_chips
-          << std::endl;
     if (d_symbol_history.empty())
         {
             // Tracking synchronizes the tlm bit boundaries by acquiring the preamble

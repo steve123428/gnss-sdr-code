@@ -2035,7 +2035,6 @@ int dll_pll_veml_tracking::general_work(int noutput_items __attribute__((unused)
                                 
                                 //추가한 변수
                                 current_synchro_data.code_phase_step_chips = d_code_phase_step_chips;
-                                current_synchro_data.code_phase_rate_step_chips = d_code_phase_rate_step_chips;
                                 current_synchro_data.rem_code_phase_samples = d_rem_code_phase_samples;
                                 current_synchro_data.Carrier_phase_rads = d_acc_carrier_phase_rad;
                                 current_synchro_data.Carrier_Doppler_hz = d_carrier_doppler_hz;
