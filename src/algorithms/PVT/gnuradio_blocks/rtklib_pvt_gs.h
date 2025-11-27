@@ -142,6 +142,7 @@ private:
         const rtk_t& rtk);
     
     int32_t save_pvt_matfile() const;
+    int32_t save_pvt_extra_matfile() const;
     void log_source_timetag_info(double RX_time_ns, double TAG_time_ns);
 
     void msg_handler_telemetry(const pmt::pmt_t& msg);
@@ -282,7 +283,9 @@ private:
     bool d_osnma_strict;
     bool d_pvt_dump = true;   // always dump
     std::string d_pvt_dump_filename;
+    std::string d_pvt_dump_extra_filename;
     std::ofstream d_pvt_dump_file;
+    std::ofstream d_pvt_dump_extra_file;
 };
 
 

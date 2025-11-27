@@ -125,9 +125,153 @@ rtklib_pvt_gs_sptr rtklib_make_pvt_gs(uint32_t nchannels,
         rtk));
 }
 
+int32_t rtklib_pvt_gs::save_pvt_extra_matfile() const
+{
+    const std::string dump_filename = d_pvt_dump_extra_filename;
+    std::cout << dump_filename << "\n";
+
+    std::ifstream dump_file(dump_filename, std::ios::binary | std::ios::ate);
+    if (!dump_file.is_open())
+    {
+        std::cerr << "Cannot open extra PVT dump file: " << dump_filename << "\n";
+        return 1;
+    }
+
+    const std::ifstream::pos_type file_size = dump_file.tellg();
+    dump_file.seekg(0, std::ios::beg);
+
+    std::cout << "Extra PVT dump size: " << file_size << " bytes\n";
+
+    const std::size_t record_size = sizeof(int) + sizeof(double);
+    if (file_size <= 0 || file_size < static_cast<std::ifstream::pos_type>(record_size))
+    {
+        std::cerr << "Extra PVT dump file is too small\n";
+        return 1;
+    }
+
+    const std::int64_t num_bytes = static_cast<std::int64_t>(file_size);
+    const std::int64_t total_records    = num_bytes / static_cast<std::int64_t>(record_size);
+    const std::int64_t leftover_bytes   = num_bytes % static_cast<std::int64_t>(record_size);
+
+    if (leftover_bytes != 0)
+    {
+        std::cerr << "Warning: extra PVT dump has " << leftover_bytes
+                  << " leftover byte(s); ignoring partial last record.\n";
+    }
+
+    if (total_records <= 0)
+    {
+        std::cerr << "No full records in extra PVT dump\n";
+        return 1;
+    }
+
+    // PRN -> phase series
+    std::map<int, std::vector<double>> prn_phase_map;
+
+    for (std::int64_t i = 0; i < total_records; ++i)
+    {
+        int prn_raw = 0;
+        double phase = 0.0;
+
+        dump_file.read(reinterpret_cast<char*>(&prn_raw), sizeof(int));
+        dump_file.read(reinterpret_cast<char*>(&phase),   sizeof(double));
+
+        if (!dump_file.good())
+        {
+            std::cerr << "Error while reading extra PVT dump file\n";
+            return 1;
+        }
+
+        const int prn = prn_raw;
+        prn_phase_map[prn].push_back(phase);
+    }
+
+    dump_file.close();
+
+    if (prn_phase_map.empty())
+    {
+        std::cerr << "No PRN data parsed from extra PVT dump\n";
+        return 1;
+    }
+
+    // ======= date/time dir logic (same style as save_pvt_matfile) =======
+    namespace fs = std::filesystem;
+
+    std::time_t now = std::time(nullptr);
+    std::tm tm_now{};
+#ifndef _WIN32
+    tm_now = *std::localtime(&now);
+#else
+    localtime_s(&tm_now, &now);
+#endif
+
+    char date_buf[16];
+    std::strftime(date_buf, sizeof(date_buf), "%m-%d", &tm_now);
+    std::string date_dir = std::string("./") + date_buf;
+
+    std::error_code ec;
+    fs::create_directories(date_dir, ec);
+    if (ec)
+    {
+        std::cerr << "Could not create directory " << date_dir
+                  << " : " << ec.message() << "\n";
+    }
+
+    char time_buf[16];
+    std::strftime(time_buf, sizeof(time_buf), "%H-%M-%S", &tm_now);
+    std::string time_str = time_buf;
+    // =================================================
+
+    // ---- One MAT file per PRN ----
+    for (const auto& kv : prn_phase_map)
+    {
+        const int prn = kv.first;
+        const auto& phase_series = kv.second;
+        const std::size_t N = phase_series.size();
+        if (N == 0) continue;
+
+        std::array<size_t, 2> dims{1, N};
+
+        std::ostringstream oss;
+        oss << "PVT_extra_PRN" << prn << "_" << time_str << ".mat";
+        const fs::path mat_path        = fs::path(date_dir) / oss.str();
+        const std::string mat_filename = mat_path.string();
+
+        mat_t* matfp = Mat_CreateVer(mat_filename.c_str(), nullptr, MAT_FT_MAT73);
+        if (!matfp)
+        {
+            std::cerr << "Could not create MAT file: " << mat_filename << "\n";
+            continue;
+        }
+
+        auto write_vec = [&](const char* name, const std::vector<double>& v)
+        {
+            matvar_t* mv = Mat_VarCreate(name,
+                                         MAT_C_DOUBLE, MAT_T_DOUBLE,
+                                         2, dims.data(),
+                                         const_cast<double*>(v.data()),
+                                         MAT_F_DONT_COPY_DATA);
+            Mat_VarWrite(matfp, mv, MAT_COMPRESSION_ZLIB);
+            Mat_VarFree(mv);
+        };
+
+        // Single variable: carrier phase sequence
+        write_vec("Carrier_phase_rads", phase_series);
+
+        Mat_Close(matfp);
+
+        std::cout << "Saved extra PVT MAT file for PRN " << prn
+                  << ": " << mat_filename
+                  << " (N = " << N << " samples)\n";
+    }
+
+    return 0;
+}
+
 int32_t rtklib_pvt_gs::save_pvt_matfile() const
 {
     const std::string dump_filename = d_pvt_dump_filename;
+    std::cout << dump_filename << "\n";
     std::ifstream dump_file(dump_filename, std::ios::binary | std::ios::ate);
 
     if (!dump_file.is_open())
@@ -145,6 +289,7 @@ int32_t rtklib_pvt_gs::save_pvt_matfile() const
     //               raw_PR,
     //               corr_PR,
     //               Raw_Carrier_phase_rads,
+    //               if_carrier_phase_rads
     //               Corrected_Carrier_phase_rads,
     //               TOW_ms,
     //               Doppler_hz,
@@ -161,7 +306,7 @@ int32_t rtklib_pvt_gs::save_pvt_matfile() const
     //               Prompt_I,
     //               Prompt_Q,
     //               Tracking_sample_counter]
-    const int vars_per_record = 20;
+    const int vars_per_record = 21;
 
     // Total doubles in file
     const int64_t num_doubles = static_cast<int64_t>(file_size) / sizeof(double);
@@ -193,6 +338,7 @@ int32_t rtklib_pvt_gs::save_pvt_matfile() const
         std::vector<double> raw_pseudorange_m;
         std::vector<double> pseudorange_m;             // corrected PR
         std::vector<double> carrier_phase_raw_rads;    // BEFORE RX clock offset
+        std::vector<double> carrier_phase_if_rads;     // BEFORE RX clock offset
         std::vector<double> carrier_phase_corr_rads;   // AFTER RX clock offset
         std::vector<double> doppler_hz;
         std::vector<double> code_phase_samples;
@@ -220,6 +366,7 @@ int32_t rtklib_pvt_gs::save_pvt_matfile() const
         double raw_pr                   = 0.0;
         double corr_pr                  = 0.0;
         double raw_carrier              = 0.0;
+        double if_carrier               = 0.0;
         double corrected_carrier        = 0.0;
         double tow                      = 0.0;
         double doppler                  = 0.0;
@@ -242,6 +389,7 @@ int32_t rtklib_pvt_gs::save_pvt_matfile() const
         dump_file.read(reinterpret_cast<char*>(&raw_pr),                 sizeof(double));
         dump_file.read(reinterpret_cast<char*>(&corr_pr),                sizeof(double));
         dump_file.read(reinterpret_cast<char*>(&raw_carrier),            sizeof(double));
+        dump_file.read(reinterpret_cast<char*>(&if_carrier),             sizeof(double));
         dump_file.read(reinterpret_cast<char*>(&corrected_carrier),      sizeof(double));
         dump_file.read(reinterpret_cast<char*>(&tow),                    sizeof(double));
         dump_file.read(reinterpret_cast<char*>(&doppler),                sizeof(double));
@@ -274,6 +422,7 @@ int32_t rtklib_pvt_gs::save_pvt_matfile() const
         series.raw_pseudorange_m.push_back(raw_pr);
         series.pseudorange_m.push_back(corr_pr);
         series.carrier_phase_raw_rads.push_back(raw_carrier);
+        series.carrier_phase_if_rads.push_back(if_carrier);
         series.carrier_phase_corr_rads.push_back(corrected_carrier);
         series.doppler_hz.push_back(doppler);
         series.code_phase_samples.push_back(code_ph_samples);
@@ -350,8 +499,6 @@ int32_t rtklib_pvt_gs::save_pvt_matfile() const
             continue;
         }
 
-        matvar_t* matvar = nullptr;
-
         auto write_vec = [&](const char* name, const std::vector<double>& v)
         {
             matvar_t* mv = Mat_VarCreate(name,
@@ -363,26 +510,27 @@ int32_t rtklib_pvt_gs::save_pvt_matfile() const
             Mat_VarFree(mv);
         };
 
-        write_vec("TOW_at_current_symbol_ms", series.tow_ms);
-        write_vec("Raw_Pseudorange_m",        series.raw_pseudorange_m);
-        write_vec("Pseudorange_m",            series.pseudorange_m);
-        write_vec("Raw_Carrier_phase_rads",   series.carrier_phase_raw_rads);
-        write_vec("Corrected_Carrier_phase_rads", series.carrier_phase_corr_rads);
-        write_vec("Carrier_Doppler_hz",       series.doppler_hz);
-        write_vec("Code_phase_samples",       series.code_phase_samples);
-        write_vec("Code_phase_step_chips",    series.code_phase_step_chips);
-        write_vec("Code_phase_rate_step_chips", series.code_phase_rate_step_chips);
-        write_vec("Rem_code_phase_samples",   series.rem_code_phase_samples);
+        write_vec("TOW_at_current_symbol_ms",      series.tow_ms);
+        write_vec("Raw_Pseudorange_m",             series.raw_pseudorange_m);
+        write_vec("Pseudorange_m",                 series.pseudorange_m);
+        write_vec("Raw_Carrier_phase_rads",        series.carrier_phase_raw_rads);
+        write_vec("IF_Carrier_phase_rads",         series.carrier_phase_if_rads);
+        write_vec("Corrected_Carrier_phase_rads",  series.carrier_phase_corr_rads);
+        write_vec("Carrier_Doppler_hz",            series.doppler_hz);
 
-        write_vec("carrier_lock_test",        series.carrier_lock_test);
-        write_vec("CN0_SNV_dB_Hz",            series.CN0_SNV_dB_Hz);
-        write_vec("abs_E",                    series.abs_E);
-        write_vec("abs_P",                    series.abs_P);
-        write_vec("abs_L",                    series.abs_L);
-        write_vec("code_error_filt_chips",    series.code_error_filt_chips);
-        write_vec("Prompt_I",                 series.Prompt_I);
-        write_vec("Prompt_Q",                 series.Prompt_Q);
-        write_vec("Tracking_sample_counter",  series.Tracking_sample_counter);
+        write_vec("Code_phase_samples",            series.code_phase_samples);
+        write_vec("Code_phase_step_chips",         series.code_phase_step_chips);
+        write_vec("Code_phase_rate_step_chips",    series.code_phase_rate_step_chips);
+        write_vec("Rem_code_phase_samples",        series.rem_code_phase_samples);
+        write_vec("carrier_lock_test",             series.carrier_lock_test);
+        write_vec("CN0_SNV_dB_Hz",                 series.CN0_SNV_dB_Hz);
+        write_vec("abs_E",                         series.abs_E);
+        write_vec("abs_P",                         series.abs_P);
+        write_vec("abs_L",                         series.abs_L);
+        write_vec("code_error_filt_chips",         series.code_error_filt_chips);
+        write_vec("Prompt_I",                      series.Prompt_I);
+        write_vec("Prompt_Q",                      series.Prompt_Q);
+        write_vec("Tracking_sample_counter",       series.Tracking_sample_counter);
 
         Mat_Close(matfp);
 
@@ -544,29 +692,37 @@ rtklib_pvt_gs::rtklib_pvt_gs(uint32_t nchannels,
         }
 
     if (d_pvt_dump == true)
+    {
+        if (d_pvt_dump_file.is_open() == false)
         {
-            if (d_pvt_dump_file.is_open() == false)
+            try
             {
-                try
-                {
-                    // same style as telemetry decoder
-                    d_pvt_dump_filename = "./log/PVT/pvt_dump.dat";
+                // Main dump file
+                d_pvt_dump_filename = "./log/PVT/pvt_dump.dat";
         
-                    d_pvt_dump_file.exceptions(std::ofstream::failbit | std::ofstream::badbit);
-                    d_pvt_dump_file.open(d_pvt_dump_filename.c_str(),
-                                         std::ios::out | std::ios::binary);
+                d_pvt_dump_file.exceptions(std::ofstream::failbit | std::ofstream::badbit);
+                d_pvt_dump_file.open(d_pvt_dump_filename.c_str(),
+                                     std::ios::out | std::ios::binary);
         
-                    LOG(INFO) << "PVT dump enabled. Log file: "
-                              << d_pvt_dump_filename.c_str();
-                }
-                catch (const std::ofstream::failure& e)
-                {
-                    LOG(WARNING) << "PVT Exception opening dump file "
-                                 << e.what();
-                    d_pvt_dump = false;
-                }
+                // *** NEW: Extra dump file ***
+                d_pvt_dump_extra_filename = "./log/PVT/pvt_dump_extra.dat";
+        
+                d_pvt_dump_extra_file.exceptions(std::ofstream::failbit | std::ofstream::badbit);
+                d_pvt_dump_extra_file.open(d_pvt_dump_extra_filename.c_str(),
+                                           std::ios::out | std::ios::binary);
+        
+                LOG(INFO) << "PVT dump enabled. Log files: "
+                          << d_pvt_dump_filename.c_str() << " and "
+                          << d_pvt_dump_extra_filename.c_str();
+            }
+            catch (const std::ofstream::failure& e)
+            {
+                LOG(WARNING) << "PVT Exception opening dump file: "
+                             << e.what();
+                d_pvt_dump = false;
             }
         }
+    }
     
     // initialize kml_printer
     const std::string kml_dump_filename = d_dump_filename;
@@ -915,6 +1071,7 @@ rtklib_pvt_gs::~rtklib_pvt_gs()
         }
     
     save_pvt_matfile();
+    save_pvt_extra_matfile();
 
     try
         {
@@ -2200,15 +2357,18 @@ void rtklib_pvt_gs::apply_rx_clock_offset(std::map<int, Gnss_Synchro>& observabl
             //std::cout << "[DEBUG] AFTER PR    " << observables_iter->second.Pseudorange_m << " m\n";
             const auto it_freq_map = SIGNAL_FREQ_MAP.find(std::string(observables_iter->second.Signal, 2));
             const double raw_carrier = syn.Carrier_phase_rads;  // raw carrier phase
-            observables_iter->second.Carrier_phase_rads -= rx_clock_offset_s * it_freq_map->second * TWO_PI;
-            const double corrected_carrier = syn.Carrier_phase_rads;
+            if (it_freq_map != SIGNAL_FREQ_MAP.cend())
+                {
+                    observables_iter->second.Carrier_phase_rads -= rx_clock_offset_s * it_freq_map->second * TWO_PI;
+                }
+            const double if_carrier = observables_iter->second.Carrier_phase_rads;
+            const double corrected_carrier = raw_carrier - rx_clock_offset_s * it_freq_map->second * TWO_PI;
             const double corr_pr = syn.Pseudorange_m;       // corrected pseudorange
             const double doppler = syn.Carrier_Doppler_hz;  // raw carrier doppler
             const double code_phase_samples = syn.Code_phase_samples;  // raw code phase
             const double code_phase_step_chips = syn.code_phase_step_chips;
             const double code_phase_rate_step_chips = syn.code_phase_rate_step_chips;
             const double rem_code_phase_samples = syn.rem_code_phase_samples;
-            std::cout<<"rem_code_phase_samples_pvt: "<<rem_code_phase_samples<<std::endl;
 
             double tmp;
             tmp = prn_d;
@@ -2224,6 +2384,10 @@ void rtklib_pvt_gs::apply_rx_clock_offset(std::map<int, Gnss_Synchro>& observabl
             d_pvt_dump_file.write(reinterpret_cast<char*>(&tmp), sizeof(double));
     
             tmp = raw_carrier;
+            //std::cout << "Post-Clock Offset Carrier: " << carrier << " rad\n";
+            d_pvt_dump_file.write(reinterpret_cast<char*>(&tmp), sizeof(double));
+
+            tmp = if_carrier;
             //std::cout << "Post-Clock Offset Carrier: " << carrier << " rad\n";
             d_pvt_dump_file.write(reinterpret_cast<char*>(&tmp), sizeof(double));
 
@@ -2508,16 +2672,7 @@ int rtklib_pvt_gs::work(int noutput_items, gr_vector_const_void_star& input_item
                                     // store valid observables in a map.
                                     d_gnss_observables_map.insert(std::pair<int, Gnss_Synchro>(i, in[i][epoch]));
                                 }
-                            //디버깅 용으로 잠깐 보기
-                            /*for (const auto& entry : d_gnss_observables_map)
-                                {
-                                    //const auto& syn = entry.second;
-                                    std::cout << "CH " << entry.first
-                                              << "  PRN " << syn.PRN
-                                              << "  PR(m): " << syn.Pseudorange_m
-                                              << " TOW_at_current_symbol_ms: " << syn.TOW_at_current_symbol_ms
-                                              << "\n";
-                                }*/
+                            
                             if (d_rtcm_enabled)
                                 {
                                     try
@@ -2568,6 +2723,22 @@ int rtklib_pvt_gs::work(int noutput_items, gr_vector_const_void_star& input_item
                             d_channel_initialized.at(i) = false;  // the current channel is not reporting valid observable
                         }
                 }
+            
+            //디버깅 용으로 잠깐 보기
+            std::map<int, double> carrier_phase_by_prn;
+
+            for (const auto& entry : d_gnss_observables_map)
+            {
+                int prn = entry.second.PRN;
+                double phase = entry.second.Carrier_phase_rads;
+            
+                // Write PRN
+                d_pvt_dump_extra_file.write(reinterpret_cast<const char*>(&prn), sizeof(int));
+            
+                // Write carrier phase
+                d_pvt_dump_extra_file.write(reinterpret_cast<const char*>(&phase), sizeof(double));
+            }
+            
 
             // ############ 2. APPLY HAS CORRECTIONS IF AVAILABLE ####
             if (d_use_has_corrections && !d_gnss_observables_map.empty())
@@ -2592,14 +2763,6 @@ int rtklib_pvt_gs::work(int noutput_items, gr_vector_const_void_star& input_item
                             if (d_enable_rx_clock_correction == false)  // todo: currently only works if clock correction is disabled (computed clock offset is applied here)
                                 {
                                     // ************ Source TimeTag comparison with GNSS computed TOW *************
-                                    /*for (const auto& entry : d_gnss_observables_map)
-                                    {
-                                        const auto& syn = entry.second;
-                                        std::cout << "after pvt solver CH " << entry.first
-                                                  << "  PRN " << syn.PRN
-                                                  << "  PR(m): " << syn.Pseudorange_m
-                                                  << "\n";
-                                    }*/
                                     if (!d_TimeChannelTagTimestamps.empty())
                                         {
                                             double delta_rxtime_to_tag_ms;
@@ -2649,12 +2812,14 @@ int rtklib_pvt_gs::work(int noutput_items, gr_vector_const_void_star& input_item
                                 {
                                     if (d_enable_rx_clock_correction == true)
                                         {
-                                            /*for (const auto& entry : d_gnss_observables_map)
+                                            for (const auto& entry : d_gnss_observables_map)
                                             {
-                                                std::cout << "d_gnss_observables_map PRN: " << entry.second.PRN
-                                                          << ", Pseudorange: " << entry.second.Pseudorange_m
-                                                          << std::endl;
-                                            }*/
+                                                const auto& syn = entry.second;
+                                                std::cout << "After pvt solver CH " << entry.first
+                                                          << "  PRN " << syn.PRN
+                                                          << "  PR(m): " << syn.Carrier_phase_rads
+                                                          << "\n";
+                                            }
                                             d_gnss_observables_map_t0 = d_gnss_observables_map_t1;
                                             apply_rx_clock_offset(d_gnss_observables_map, Rx_clock_offset_s);
                                             if ((d_local_counter_ms - d_timestamp_rx_clock_offset_correction_msg_ms) > 300)
