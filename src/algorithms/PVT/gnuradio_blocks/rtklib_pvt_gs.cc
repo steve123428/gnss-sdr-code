@@ -272,8 +272,8 @@ int32_t rtklib_pvt_gs::save_pvt_matfile() const
 {
     const std::string dump_filename = d_pvt_dump_filename;
     std::cout << dump_filename << "\n";
-    std::ifstream dump_file(dump_filename, std::ios::binary | std::ios::ate);
 
+    std::ifstream dump_file(dump_filename, std::ios::binary | std::ios::ate);
     if (!dump_file.is_open())
     {
         std::cerr << "Cannot open PVT dump file: " << dump_filename << "\n";
@@ -289,7 +289,7 @@ int32_t rtklib_pvt_gs::save_pvt_matfile() const
     //               raw_PR,
     //               corr_PR,
     //               Raw_Carrier_phase_rads,
-    //               if_carrier_phase_rads
+    //               Input_Carrier_phase_rads,
     //               Corrected_Carrier_phase_rads,
     //               TOW_ms,
     //               Doppler_hz,
@@ -337,9 +337,11 @@ int32_t rtklib_pvt_gs::save_pvt_matfile() const
         std::vector<double> tow_ms;
         std::vector<double> raw_pseudorange_m;
         std::vector<double> pseudorange_m;             // corrected PR
+
         std::vector<double> carrier_phase_raw_rads;    // BEFORE RX clock offset
-        std::vector<double> carrier_phase_if_rads;     // BEFORE RX clock offset
+        std::vector<double> input_carrier_phase_rads;  // input carrier (ex: IF / accum)
         std::vector<double> carrier_phase_corr_rads;   // AFTER RX clock offset
+
         std::vector<double> doppler_hz;
         std::vector<double> code_phase_samples;
         std::vector<double> code_phase_step_chips;
@@ -366,7 +368,7 @@ int32_t rtklib_pvt_gs::save_pvt_matfile() const
         double raw_pr                   = 0.0;
         double corr_pr                  = 0.0;
         double raw_carrier              = 0.0;
-        double if_carrier               = 0.0;
+        double input_carrier_phase_rad  = 0.0;
         double corrected_carrier        = 0.0;
         double tow                      = 0.0;
         double doppler                  = 0.0;
@@ -384,12 +386,12 @@ int32_t rtklib_pvt_gs::save_pvt_matfile() const
         double Prompt_Q                 = 0.0;
         double Tracking_sample_counter  = 0.0;
 
-        // ORDER MUST MATCH apply_rx_clock_offset()
+        // ORDER MUST MATCH apply_rx_clock_offset() dump order
         dump_file.read(reinterpret_cast<char*>(&prn_d),                  sizeof(double));
         dump_file.read(reinterpret_cast<char*>(&raw_pr),                 sizeof(double));
         dump_file.read(reinterpret_cast<char*>(&corr_pr),                sizeof(double));
         dump_file.read(reinterpret_cast<char*>(&raw_carrier),            sizeof(double));
-        dump_file.read(reinterpret_cast<char*>(&if_carrier),             sizeof(double));
+        dump_file.read(reinterpret_cast<char*>(&input_carrier_phase_rad),sizeof(double));
         dump_file.read(reinterpret_cast<char*>(&corrected_carrier),      sizeof(double));
         dump_file.read(reinterpret_cast<char*>(&tow),                    sizeof(double));
         dump_file.read(reinterpret_cast<char*>(&doppler),                sizeof(double));
@@ -421,9 +423,11 @@ int32_t rtklib_pvt_gs::save_pvt_matfile() const
         series.tow_ms.push_back(tow_ms);
         series.raw_pseudorange_m.push_back(raw_pr);
         series.pseudorange_m.push_back(corr_pr);
+
         series.carrier_phase_raw_rads.push_back(raw_carrier);
-        series.carrier_phase_if_rads.push_back(if_carrier);
+        series.input_carrier_phase_rads.push_back(input_carrier_phase_rad);
         series.carrier_phase_corr_rads.push_back(corrected_carrier);
+
         series.doppler_hz.push_back(doppler);
         series.code_phase_samples.push_back(code_ph_samples);
         series.code_phase_step_chips.push_back(code_step_chips);
@@ -449,7 +453,7 @@ int32_t rtklib_pvt_gs::save_pvt_matfile() const
         return 1;
     }
 
-    // ======= same date/time dir logic as before =======
+    // ======= date/time dir logic =======
     namespace fs = std::filesystem;
 
     std::time_t now = std::time(nullptr);
@@ -475,7 +479,7 @@ int32_t rtklib_pvt_gs::save_pvt_matfile() const
     char time_buf[16];
     std::strftime(time_buf, sizeof(time_buf), "%H-%M-%S", &tm_now);
     std::string time_str = time_buf;
-    // =================================================
+    // ===================================
 
     // ---- One MAT file per PRN ----
     for (const auto& kv : prn_data)
@@ -489,7 +493,7 @@ int32_t rtklib_pvt_gs::save_pvt_matfile() const
 
         std::ostringstream oss;
         oss << "PVT_solution_PRN" << prn << "_" << time_str << ".mat";
-        const fs::path mat_path      = fs::path(date_dir) / oss.str();
+        const fs::path mat_path        = fs::path(date_dir) / oss.str();
         const std::string mat_filename = mat_path.string();
 
         mat_t* matfp = Mat_CreateVer(mat_filename.c_str(), nullptr, MAT_FT_MAT73);
@@ -514,7 +518,7 @@ int32_t rtklib_pvt_gs::save_pvt_matfile() const
         write_vec("Raw_Pseudorange_m",             series.raw_pseudorange_m);
         write_vec("Pseudorange_m",                 series.pseudorange_m);
         write_vec("Raw_Carrier_phase_rads",        series.carrier_phase_raw_rads);
-        write_vec("IF_Carrier_phase_rads",         series.carrier_phase_if_rads);
+        write_vec("Input_Carrier_phase_rads",      series.input_carrier_phase_rads);
         write_vec("Corrected_Carrier_phase_rads",  series.carrier_phase_corr_rads);
         write_vec("Carrier_Doppler_hz",            series.doppler_hz);
 
@@ -2361,8 +2365,7 @@ void rtklib_pvt_gs::apply_rx_clock_offset(std::map<int, Gnss_Synchro>& observabl
                 {
                     observables_iter->second.Carrier_phase_rads -= rx_clock_offset_s * it_freq_map->second * TWO_PI;
                 }
-            const double if_carrier = observables_iter->second.Carrier_phase_rads;
-            const double corrected_carrier = raw_carrier - rx_clock_offset_s * it_freq_map->second * TWO_PI;
+            const double corrected_carrier = observables_iter->second.Carrier_phase_rads;
             const double corr_pr = syn.Pseudorange_m;       // corrected pseudorange
             const double doppler = syn.Carrier_Doppler_hz;  // raw carrier doppler
             const double code_phase_samples = syn.Code_phase_samples;  // raw code phase
@@ -2387,7 +2390,7 @@ void rtklib_pvt_gs::apply_rx_clock_offset(std::map<int, Gnss_Synchro>& observabl
             //std::cout << "Post-Clock Offset Carrier: " << carrier << " rad\n";
             d_pvt_dump_file.write(reinterpret_cast<char*>(&tmp), sizeof(double));
 
-            tmp = if_carrier;
+            tmp = syn.input_carrier_phase;
             //std::cout << "Post-Clock Offset Carrier: " << carrier << " rad\n";
             d_pvt_dump_file.write(reinterpret_cast<char*>(&tmp), sizeof(double));
 

@@ -79,6 +79,7 @@ public:
     double code_phase_step_chips{};      //내가 추가한 변수임!!!!
     double code_phase_rate_step_chips{}; //내가 추가한 변수임!!!!
     double rem_code_phase_samples{};     //내가 추가한 변수임!!!!
+    double input_carrier_phase{};
 
     // Telemetry Decoder
     uint32_t TOW_at_current_symbol_ms{};  //!< Set by Telemetry Decoder processing block
@@ -129,6 +130,7 @@ public:
                 this->code_phase_step_chips      = rhs.code_phase_step_chips;
                 this->code_phase_rate_step_chips = rhs.code_phase_rate_step_chips;
                 this->rem_code_phase_samples     = rhs.rem_code_phase_samples;
+                this->input_carrier_phase        = rhs.input_carrier_phase;
                 this->Tracking_sample_counter = rhs.Tracking_sample_counter;
                 this->correlation_length_ms = rhs.correlation_length_ms;
                 this->TOW_at_current_symbol_ms = rhs.TOW_at_current_symbol_ms;
@@ -185,6 +187,7 @@ public:
                 this->code_phase_step_chips      = other.code_phase_step_chips;
                 this->code_phase_rate_step_chips = other.code_phase_rate_step_chips;
                 this->rem_code_phase_samples     = other.rem_code_phase_samples;
+                this->input_carrier_phase        = other.input_carrier_phase;
                 this->Tracking_sample_counter = other.Tracking_sample_counter;
                 this->correlation_length_ms = other.correlation_length_ms;
                 this->TOW_at_current_symbol_ms = other.TOW_at_current_symbol_ms;
