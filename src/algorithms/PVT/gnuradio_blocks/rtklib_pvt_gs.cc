@@ -125,148 +125,6 @@ rtklib_pvt_gs_sptr rtklib_make_pvt_gs(uint32_t nchannels,
         rtk));
 }
 
-int32_t rtklib_pvt_gs::save_pvt_extra_matfile() const
-{
-    const std::string dump_filename = d_pvt_dump_extra_filename;
-    std::cout << dump_filename << "\n";
-
-    std::ifstream dump_file(dump_filename, std::ios::binary | std::ios::ate);
-    if (!dump_file.is_open())
-    {
-        std::cerr << "Cannot open extra PVT dump file: " << dump_filename << "\n";
-        return 1;
-    }
-
-    const std::ifstream::pos_type file_size = dump_file.tellg();
-    dump_file.seekg(0, std::ios::beg);
-
-    std::cout << "Extra PVT dump size: " << file_size << " bytes\n";
-
-    const std::size_t record_size = sizeof(int) + sizeof(double);
-    if (file_size <= 0 || file_size < static_cast<std::ifstream::pos_type>(record_size))
-    {
-        std::cerr << "Extra PVT dump file is too small\n";
-        return 1;
-    }
-
-    const std::int64_t num_bytes = static_cast<std::int64_t>(file_size);
-    const std::int64_t total_records    = num_bytes / static_cast<std::int64_t>(record_size);
-    const std::int64_t leftover_bytes   = num_bytes % static_cast<std::int64_t>(record_size);
-
-    if (leftover_bytes != 0)
-    {
-        std::cerr << "Warning: extra PVT dump has " << leftover_bytes
-                  << " leftover byte(s); ignoring partial last record.\n";
-    }
-
-    if (total_records <= 0)
-    {
-        std::cerr << "No full records in extra PVT dump\n";
-        return 1;
-    }
-
-    // PRN -> phase series
-    std::map<int, std::vector<double>> prn_phase_map;
-
-    for (std::int64_t i = 0; i < total_records; ++i)
-    {
-        int prn_raw = 0;
-        double phase = 0.0;
-
-        dump_file.read(reinterpret_cast<char*>(&prn_raw), sizeof(int));
-        dump_file.read(reinterpret_cast<char*>(&phase),   sizeof(double));
-
-        if (!dump_file.good())
-        {
-            std::cerr << "Error while reading extra PVT dump file\n";
-            return 1;
-        }
-
-        const int prn = prn_raw;
-        prn_phase_map[prn].push_back(phase);
-    }
-
-    dump_file.close();
-
-    if (prn_phase_map.empty())
-    {
-        std::cerr << "No PRN data parsed from extra PVT dump\n";
-        return 1;
-    }
-
-    // ======= date/time dir logic (same style as save_pvt_matfile) =======
-    namespace fs = std::filesystem;
-
-    std::time_t now = std::time(nullptr);
-    std::tm tm_now{};
-#ifndef _WIN32
-    tm_now = *std::localtime(&now);
-#else
-    localtime_s(&tm_now, &now);
-#endif
-
-    char date_buf[16];
-    std::strftime(date_buf, sizeof(date_buf), "%m-%d", &tm_now);
-    std::string date_dir = std::string("./") + date_buf;
-
-    std::error_code ec;
-    fs::create_directories(date_dir, ec);
-    if (ec)
-    {
-        std::cerr << "Could not create directory " << date_dir
-                  << " : " << ec.message() << "\n";
-    }
-
-    char time_buf[16];
-    std::strftime(time_buf, sizeof(time_buf), "%H-%M-%S", &tm_now);
-    std::string time_str = time_buf;
-    // =================================================
-
-    // ---- One MAT file per PRN ----
-    for (const auto& kv : prn_phase_map)
-    {
-        const int prn = kv.first;
-        const auto& phase_series = kv.second;
-        const std::size_t N = phase_series.size();
-        if (N == 0) continue;
-
-        std::array<size_t, 2> dims{1, N};
-
-        std::ostringstream oss;
-        oss << "PVT_extra_PRN" << prn << "_" << time_str << ".mat";
-        const fs::path mat_path        = fs::path(date_dir) / oss.str();
-        const std::string mat_filename = mat_path.string();
-
-        mat_t* matfp = Mat_CreateVer(mat_filename.c_str(), nullptr, MAT_FT_MAT73);
-        if (!matfp)
-        {
-            std::cerr << "Could not create MAT file: " << mat_filename << "\n";
-            continue;
-        }
-
-        auto write_vec = [&](const char* name, const std::vector<double>& v)
-        {
-            matvar_t* mv = Mat_VarCreate(name,
-                                         MAT_C_DOUBLE, MAT_T_DOUBLE,
-                                         2, dims.data(),
-                                         const_cast<double*>(v.data()),
-                                         MAT_F_DONT_COPY_DATA);
-            Mat_VarWrite(matfp, mv, MAT_COMPRESSION_ZLIB);
-            Mat_VarFree(mv);
-        };
-
-        // Single variable: carrier phase sequence
-        write_vec("Carrier_phase_rads", phase_series);
-
-        Mat_Close(matfp);
-
-        std::cout << "Saved extra PVT MAT file for PRN " << prn
-                  << ": " << mat_filename
-                  << " (N = " << N << " samples)\n";
-    }
-
-    return 0;
-}
 
 int32_t rtklib_pvt_gs::save_pvt_matfile() const
 {
@@ -1075,7 +933,6 @@ rtklib_pvt_gs::~rtklib_pvt_gs()
         }
     
     save_pvt_matfile();
-    save_pvt_extra_matfile();
 
     try
         {
@@ -2726,22 +2583,6 @@ int rtklib_pvt_gs::work(int noutput_items, gr_vector_const_void_star& input_item
                             d_channel_initialized.at(i) = false;  // the current channel is not reporting valid observable
                         }
                 }
-            
-            //디버깅 용으로 잠깐 보기
-            std::map<int, double> carrier_phase_by_prn;
-
-            for (const auto& entry : d_gnss_observables_map)
-            {
-                int prn = entry.second.PRN;
-                double phase = entry.second.Carrier_phase_rads;
-            
-                // Write PRN
-                d_pvt_dump_extra_file.write(reinterpret_cast<const char*>(&prn), sizeof(int));
-            
-                // Write carrier phase
-                d_pvt_dump_extra_file.write(reinterpret_cast<const char*>(&phase), sizeof(double));
-            }
-            
 
             // ############ 2. APPLY HAS CORRECTIONS IF AVAILABLE ####
             if (d_use_has_corrections && !d_gnss_observables_map.empty())
