@@ -1474,11 +1474,24 @@ void dll_pll_veml_tracking::log_data(int tracking_state)
                     uint32_t prn_ = d_acquisition_gnss_synchro->PRN;
                     d_dump_file.write(reinterpret_cast<char *>(&prn_), sizeof(uint32_t));
                     // UTC time
-                    /*auto now = std::chrono::system_clock::now();
+                    auto now = std::chrono::system_clock::now();
                     auto duration = now.time_since_epoch();
                     int64_t milliseconds = std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
-                    d_dump_file.write(reinterpret_cast<char *>(&milliseconds), sizeof(int64_t));*/
+                    d_dump_file.write(reinterpret_cast<char *>(&milliseconds), sizeof(int64_t));
+                    // state
                     d_dump_file.write(reinterpret_cast<char*>(&state), sizeof(int32_t));
+                    // d_rem_code_phase_chips
+                    tmp_float = static_cast<float>(d_rem_code_phase_chips);
+                    d_dump_file.write(reinterpret_cast<char *>(&tmp_float), sizeof(float));
+                    // d_rem_carr_phase_rad
+                    tmp_float = static_cast<float>(d_rem_carr_phase_rad);
+                    d_dump_file.write(reinterpret_cast<char *>(&tmp_float), sizeof(float));
+                    // abs_code_phase
+                    tmp_float = static_cast<float>(fmod((this->nitems_read(0) + d_current_prn_length_samples + d_rem_code_phase_samples) * d_code_freq_chips / d_trk_parameters.fs_in, 1023));
+                    d_dump_file.write(reinterpret_cast<char *>(&tmp_float), sizeof(float));
+                    // full_code_phase_samples
+                    tmp_float = static_cast<float>(this->nitems_read(0) + d_current_prn_length_samples + d_rem_code_phase_samples);
+                    d_dump_file.write(reinterpret_cast<char *>(&tmp_float), sizeof(float));
                 }
             catch (const std::ofstream::failure &e)
                 {
@@ -1492,7 +1505,7 @@ int32_t dll_pll_veml_tracking::save_matfile() const
     // READ DUMP FILE
     std::ifstream::pos_type size;
     const int32_t number_of_double_vars = 1;
-    const int32_t number_of_float_vars = 22;    
+    const int32_t number_of_float_vars = 27;    
     const int32_t epoch_size_bytes = sizeof(uint64_t) + sizeof(double) * number_of_double_vars +
                                      sizeof(float) * number_of_float_vars + sizeof(double) + sizeof(int32_t);
     std::ifstream dump_file;
@@ -1546,8 +1559,13 @@ int32_t dll_pll_veml_tracking::save_matfile() const
     auto aux1 = std::vector<float>(num_epoch);
     auto aux2 = std::vector<double>(num_epoch);
     auto PRN = std::vector<uint32_t>(num_epoch);
-    //auto utc_millis = std::vector<int64_t>(num_epoch);  // <<< MODIFIED
-    auto state = std::vector<int32_t>(num_epoch);  // <<< MODIFIED
+    // added
+    auto utc_millis = std::vector<int64_t>(num_epoch);  
+    auto state = std::vector<int32_t>(num_epoch); 
+    auto rem_code_phase_chips = std::vector<float>(num_epoch);  
+    auto rem_carr_phase_rad = std::vector<float>(num_epoch);  
+    auto abs_code_phase = std::vector<float>(num_epoch);  
+    auto full_code_phase_samples = std::vector<float>(num_epoch);  
     try
         {
             if (dump_file.is_open())
@@ -1576,8 +1594,13 @@ int32_t dll_pll_veml_tracking::save_matfile() const
                             dump_file.read(reinterpret_cast<char *>(&aux1[i]), sizeof(float));
                             dump_file.read(reinterpret_cast<char *>(&aux2[i]), sizeof(double));
                             dump_file.read(reinterpret_cast<char *>(&PRN[i]), sizeof(uint32_t));
-                            //dump_file.read(reinterpret_cast<char *>(&utc_millis[i]), sizeof(int64_t));  // <<< MODIFIED
-                            dump_file.read(reinterpret_cast<char *>(&state[i]), sizeof(int32_t));  // <<< MODIFIED
+                            // added
+                            dump_file.read(reinterpret_cast<char *>(&utc_millis[i]), sizeof(int64_t));  
+                            dump_file.read(reinterpret_cast<char *>(&state[i]), sizeof(int32_t));  
+                            dump_file.read(reinterpret_cast<char *>(&rem_code_phase_chips[i]), sizeof(float));  
+                            dump_file.read(reinterpret_cast<char *>(&rem_carr_phase_rad[i]), sizeof(float));  
+                            dump_file.read(reinterpret_cast<char *>(&abs_code_phase[i]), sizeof(float));
+                            dump_file.read(reinterpret_cast<char *>(&full_code_phase_samples[i]), sizeof(float));
                         }
                 }
             dump_file.close();
@@ -1686,11 +1709,28 @@ int32_t dll_pll_veml_tracking::save_matfile() const
             Mat_VarWrite(matfp, matvar, MAT_COMPRESSION_ZLIB);
             Mat_VarFree(matvar);
 
-            //matvar = Mat_VarCreate("utc_millis", MAT_C_INT64, MAT_T_INT64, 2, dims.data(), utc_millis.data(), 0);  // <<< MODIFIED
-            //Mat_VarWrite(matfp, matvar, MAT_COMPRESSION_ZLIB);
-            //Mat_VarFree(matvar);
+            // added
+            matvar = Mat_VarCreate("utc_millis", MAT_C_INT64, MAT_T_INT64, 2, dims.data(), utc_millis.data(), 0);  
+            Mat_VarWrite(matfp, matvar, MAT_COMPRESSION_ZLIB);
+            Mat_VarFree(matvar);
 
             matvar = Mat_VarCreate("tracking_state", MAT_C_INT32, MAT_T_INT32, 2, dims.data(), state.data(), 0);
+            Mat_VarWrite(matfp, matvar, MAT_COMPRESSION_ZLIB);
+            Mat_VarFree(matvar);
+
+            matvar = Mat_VarCreate("rem_code_phase_chips", MAT_C_SINGLE, MAT_T_SINGLE, 2, dims.data(), rem_code_phase_chips.data(), 0);  
+            Mat_VarWrite(matfp, matvar, MAT_COMPRESSION_ZLIB);
+            Mat_VarFree(matvar);
+
+            matvar = Mat_VarCreate("rem_carr_phase_rad", MAT_C_SINGLE, MAT_T_SINGLE, 2, dims.data(), rem_carr_phase_rad.data(), 0);  
+            Mat_VarWrite(matfp, matvar, MAT_COMPRESSION_ZLIB);
+            Mat_VarFree(matvar);
+
+            matvar = Mat_VarCreate("abs_code_phase", MAT_C_SINGLE, MAT_T_SINGLE, 2, dims.data(), abs_code_phase.data(), 0);  
+            Mat_VarWrite(matfp, matvar, MAT_COMPRESSION_ZLIB);
+            Mat_VarFree(matvar);
+
+            matvar = Mat_VarCreate("full_code_phase_samples", MAT_C_SINGLE, MAT_T_SINGLE, 2, dims.data(), full_code_phase_samples.data(), 0);  
             Mat_VarWrite(matfp, matvar, MAT_COMPRESSION_ZLIB);
             Mat_VarFree(matvar);
         }
@@ -1761,6 +1801,11 @@ int dll_pll_veml_tracking::general_work(int noutput_items __attribute__((unused)
     Gnss_Synchro current_synchro_data = Gnss_Synchro();
     current_synchro_data.Flag_valid_symbol_output = false;
     bool loss_of_lock = false;
+
+    // // PRN counter
+    // static std::map<int, int> prn_counter;
+    // static std::map<int, int> prn_first;
+    // int prn = d_acquisition_gnss_synchro->PRN;
 
     if (d_pull_in_transitory == true)
         {
@@ -1858,6 +1903,9 @@ int dll_pll_veml_tracking::general_work(int noutput_items __attribute__((unused)
                         // enable write dump file this cycle (valid DLL/PLL cycle)
                         log_data(d_state);
 
+                        // if (prn_counter[prn] < 500000)
+                        //     prn_counter[prn]++;
+
                         if (!d_pull_in_transitory)
                             {
                                 if (d_secondary)
@@ -1883,8 +1931,15 @@ int dll_pll_veml_tracking::general_work(int noutput_items __attribute__((unused)
                                         if (d_Prompt_circular_buffer.size() == d_secondary_code_length)
                                             {
                                                 next_state = acquire_secondary();
+                                                // if (prn_counter[prn] < 45200)
+                                                // {
+                                                //     if (prn_counter[prn] % 10000 == 0)
+                                                //         std::cout << "PRN " << prn << ", conter: " << prn_counter[prn] << '\n';
+                                                //     next_state = false;
+                                                // }
                                                 if (next_state)
                                                     {
+                                                        // std::cout << "go to next state PRN " << prn << ", conter: " << prn_counter[prn] << '\n';
                                                         LOG(INFO) << d_systemName << " " << d_signal_pretty_name << " tracking bit synchronization locked in channel " << d_channel
                                                                   << " for satellite " << Gnss_Satellite(d_systemName, d_acquisition_gnss_synchro->PRN);
                                                         //std::cout << d_systemName << " " << d_signal_pretty_name << " tracking bit synchronization locked in channel " << d_channel
@@ -1951,6 +2006,7 @@ int dll_pll_veml_tracking::general_work(int noutput_items __attribute__((unused)
                                     }
                                 else
                                     {
+                                        // std::cout << "go to state 4 for PRN: " << prn << " counter: " << prn_counter[prn] << '\n';
                                         d_state = 4;
                                     }
                             }
@@ -2053,7 +2109,7 @@ int dll_pll_veml_tracking::general_work(int noutput_items __attribute__((unused)
                                 current_synchro_data.abs_E = std::abs(d_E_accu);
                                 current_synchro_data.abs_P = std::abs(d_P_accu);
                                 current_synchro_data.abs_L = std::abs(d_L_accu);
-                                current_synchro_data.abs_VL = std::abs(d_VL_accu);
+                                current_synchro_data.abs_VL = std::abs(d_VL_accu); 
                                 d_P_data_accu = gr_complex(0.0, 0.0);
                             }
 
