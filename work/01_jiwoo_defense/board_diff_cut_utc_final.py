@@ -41,7 +41,11 @@ PLOTTING_DATA = [
     "Doppler Frequency (Hz)",
     "Accumulated Carrier Phase (rad)",
     "Normalized Code Phase (%)",
-    # "state"
+    "state",
+    "code_phase_in_samples",
+    "total_samples",
+    "rem_code_phase_chips"
+
 ]
 
 # ------------------ 데이터 검색 ---------------------
@@ -280,8 +284,8 @@ def compare_files(file1, file2, cut_start=None, cut_end=None, use_utc=False):
 
         # -------- full_code_phase chip 정규화 --------
         if label == "Normalized Code Phase (%)":
-            v1 = (v1 / samples_per_chip) % 1023 / 10.23
-            v2 = (v2 / samples_per_chip) % 1023 / 10.23
+            v1 = (v1 / samples_per_chip) % 1023 / 1.023
+            v2 = (v2 / samples_per_chip) % 1023 / 1.023
             diff = v1 - v2
 
         results[label] = compute_stats(v1, v2, diff)

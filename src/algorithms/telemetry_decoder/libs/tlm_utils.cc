@@ -29,8 +29,9 @@ int save_tlm_matfile(const std::string &dumpfile)
     std::ifstream::pos_type size;
     const int32_t number_of_double_vars = 14;
     const int32_t number_of_int_vars = 2;
+    const int32_t number_of_int64_vars = 1;
     const int32_t epoch_size_bytes = sizeof(uint64_t) + sizeof(double) * number_of_double_vars +
-                                     sizeof(int32_t) * number_of_int_vars;
+                                     sizeof(int32_t) * number_of_int_vars + sizeof(int64_t) * number_of_int64_vars;
     std::ifstream dump_file;
     const std::string &dump_filename_(dumpfile);
 
@@ -79,6 +80,7 @@ int save_tlm_matfile(const std::string &dumpfile)
     auto abs_P = std::vector<double>(num_epoch);
     auto abs_L = std::vector<double>(num_epoch);
     auto abs_VL = std::vector<double>(num_epoch);
+    auto utc_millis = std::vector<int64_t>(num_epoch);
 
     try
         {
@@ -103,6 +105,7 @@ int save_tlm_matfile(const std::string &dumpfile)
                             dump_file.read(reinterpret_cast<char *>(&abs_P[i]), sizeof(double));
                             dump_file.read(reinterpret_cast<char *>(&abs_L[i]), sizeof(double));
                             dump_file.read(reinterpret_cast<char *>(&abs_VL[i]), sizeof(double));
+                            dump_file.read(reinterpret_cast<char *>(&utc_millis[i]), sizeof(int64_t));
                         }
                 }
             dump_file.close();
@@ -190,6 +193,10 @@ int save_tlm_matfile(const std::string &dumpfile)
                     Mat_VarFree(matvar);
 
                     matvar = Mat_VarCreate("abs_VL", MAT_C_DOUBLE, MAT_T_DOUBLE, 2, dims.data(), abs_VL.data(), 0);
+                    Mat_VarWrite(matfp, matvar, MAT_COMPRESSION_ZLIB);
+                    Mat_VarFree(matvar);
+
+                    matvar = Mat_VarCreate("utc_millis", MAT_C_INT64, MAT_T_INT64, 2, dims.data(), utc_millis.data(), 0);
                     Mat_VarWrite(matfp, matvar, MAT_COMPRESSION_ZLIB);
                     Mat_VarFree(matvar);
                 }

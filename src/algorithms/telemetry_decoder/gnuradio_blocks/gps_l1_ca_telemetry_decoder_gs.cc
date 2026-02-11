@@ -38,6 +38,10 @@
 #include <utility>          // for std::move
 #include <vector>
 
+#include <chrono>
+#include <iomanip>   // <<< MODIFIED for std::put_time
+#include <ctime>     // <<< MODIFIED for std::gmtime
+
 #if USE_GLOG_AND_GFLAGS
 #include <glog/logging.h>
 #else
@@ -713,6 +717,11 @@ int gps_l1_ca_telemetry_decoder_gs::general_work(int noutput_items __attribute__
                             d_dump_file.write(reinterpret_cast<char *>(&tmp_double), sizeof(double));
                             tmp_double = static_cast<double>(current_symbol.abs_VL);
                             d_dump_file.write(reinterpret_cast<char *>(&tmp_double), sizeof(double));
+                            // UTC time
+                            auto now = std::chrono::system_clock::now();
+                            auto duration = now.time_since_epoch();
+                            int64_t milliseconds = std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
+                            d_dump_file.write(reinterpret_cast<char *>(&milliseconds), sizeof(int64_t));
                         }
                     catch (const std::ofstream::failure &e)
                         {
