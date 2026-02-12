@@ -339,6 +339,7 @@ int32_t rtklib_pvt_gs::save_pvt_matfile() const
     std::string time_str = time_buf;
     // ===================================
 
+
     // ---- One MAT file per PRN ----
     for (const auto& kv : prn_data)
     {
@@ -350,8 +351,8 @@ int32_t rtklib_pvt_gs::save_pvt_matfile() const
         std::array<size_t, 2> dims{1, N};
 
         std::ostringstream oss;
-        oss << "PVT_solution_PRN" << prn << "_" << time_str << ".mat";
-        const fs::path mat_path        = fs::path(date_dir) / oss.str();
+        oss << "PVT_PRN" << prn << ".mat";
+        const fs::path mat_path        = fs::path(dump_filename).parent_path().string() + fs::path::preferred_separator + oss.str();
         const std::string mat_filename = mat_path.string();
 
         mat_t* matfp = Mat_CreateVer(mat_filename.c_str(), nullptr, MAT_FT_MAT73);
@@ -560,14 +561,14 @@ rtklib_pvt_gs::rtklib_pvt_gs(uint32_t nchannels,
             try
             {
                 // Main dump file
-                d_pvt_dump_filename = "./log/PVT/pvt_dump.dat";
+                d_pvt_dump_filename = fs::path(conf_.dump_filename).parent_path().string() + fs::path::preferred_separator + "pvt_dump.dat";
         
                 d_pvt_dump_file.exceptions(std::ofstream::failbit | std::ofstream::badbit);
                 d_pvt_dump_file.open(d_pvt_dump_filename.c_str(),
                                      std::ios::out | std::ios::binary);
         
                 // *** NEW: Extra dump file ***
-                d_pvt_dump_extra_filename = "./log/PVT/pvt_dump_extra.dat";
+                d_pvt_dump_extra_filename = fs::path(conf_.dump_filename).parent_path().string() + fs::path::preferred_separator + "pvt_dump_extra.dat";
         
                 d_pvt_dump_extra_file.exceptions(std::ofstream::failbit | std::ofstream::badbit);
                 d_pvt_dump_extra_file.open(d_pvt_dump_extra_filename.c_str(),

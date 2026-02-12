@@ -80,6 +80,7 @@ public:
     double code_phase_rate_step_chips{}; //내가 추가한 변수임!!!!
     double rem_code_phase_samples{};     //내가 추가한 변수임!!!!
     double input_carrier_phase{};
+    int32_t tracking_state{};
 
     // Telemetry Decoder
     uint32_t TOW_at_current_symbol_ms{};  //!< Set by Telemetry Decoder processing block
@@ -155,6 +156,8 @@ public:
                 this->abs_P = rhs.abs_P;
                 this->abs_L = rhs.abs_L;
                 this->abs_VL = rhs.abs_VL;
+                //
+                this->tracking_state = rhs.tracking_state;
             }
         return *this;
     };
@@ -212,6 +215,8 @@ public:
                 this->abs_P = other.abs_P;
                 this->abs_L = other.abs_L;
                 this->abs_VL = other.abs_VL;
+                //
+                this->tracking_state = other.tracking_state;
 
                 // Leave the source object in a valid but unspecified state
                 other.Signal[0] = '\0';

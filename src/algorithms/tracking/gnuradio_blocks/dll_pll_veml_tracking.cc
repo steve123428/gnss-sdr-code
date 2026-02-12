@@ -1821,6 +1821,7 @@ int dll_pll_veml_tracking::general_work(int noutput_items __attribute__((unused)
         {
         case 0:  // Standby - Consume samples at full throttle, do nothing
             {
+                current_synchro_data.tracking_state = d_state;
                 // d_sample_counter += static_cast<uint64_t>(ninput_items[0]);
                 consume_each(ninput_items[0]);
                 return 0;
@@ -1828,6 +1829,7 @@ int dll_pll_veml_tracking::general_work(int noutput_items __attribute__((unused)
             }
         case 1:  // Pull-in
             {
+                current_synchro_data.tracking_state = d_state;
                 // Signal alignment (skip samples until the incoming signal is aligned with local replica)
                 // const int64_t acq_trk_diff_samples = static_cast<int64_t>(d_sample_counter) - static_cast<int64_t>(d_acq_sample_stamp);
                 const int64_t acq_trk_diff_samples = static_cast<int64_t>(this->nitems_read(0)) - static_cast<int64_t>(d_acq_sample_stamp);
@@ -1860,6 +1862,7 @@ int dll_pll_veml_tracking::general_work(int noutput_items __attribute__((unused)
             }
         case 2:  // Wide tracking and symbol synchronization
             {
+                current_synchro_data.tracking_state = d_state;
                 do_correlation_step(in);
                 // Save single correlation step variables
                 if (d_veml)
@@ -2109,7 +2112,8 @@ int dll_pll_veml_tracking::general_work(int noutput_items __attribute__((unused)
                                 current_synchro_data.abs_E = std::abs(d_E_accu);
                                 current_synchro_data.abs_P = std::abs(d_P_accu);
                                 current_synchro_data.abs_L = std::abs(d_L_accu);
-                                current_synchro_data.abs_VL = std::abs(d_VL_accu); 
+                                current_synchro_data.abs_VL = std::abs(d_VL_accu);
+                                current_synchro_data.tracking_state = d_state; 
                                 d_P_data_accu = gr_complex(0.0, 0.0);
                             }
 

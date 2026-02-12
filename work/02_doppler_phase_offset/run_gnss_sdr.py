@@ -90,7 +90,7 @@ def generate_log_paths():
         "tracking": os.path.join(base_path, "tracking_ch"),
         "telemetry": os.path.join(base_path, "telemetry_1C"),
         "observables": os.path.join(base_path, "observables"),
-        # "pvt": os.path.join(base_path, "PVT", "pvt")
+        "pvt": os.path.join(base_path, "pvt")
     }
     
     return log_paths
@@ -152,6 +152,16 @@ def update_tracking_dump_filename(content, log_paths, signal="1C"):
         print(f"  - Observables dump_filename updated: {log_paths['observables']}")
     else:
         print(f"  - Warning: Observables_{signal}.dump_filename not found in config")
+
+    # 패턴: PVT.dump_filename=...
+    pattern = r'(PVT\.dump_filename\s*=\s*).*'
+    replacement = rf'\g<1>{log_paths["pvt"]}'
+
+    if re.search(pattern, content):
+        content = re.sub(pattern, replacement, content)
+        print(f"  - PVT dump_filename updated: {log_paths['pvt']}")
+    else:
+        print(f"  - Warning: PVT.dump_filename not found in config")
     
     return content
 

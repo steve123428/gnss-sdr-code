@@ -258,7 +258,8 @@ int32_t hybrid_observables_gs::save_matfile() const
     std::ifstream::pos_type size;
     const int32_t number_of_double_vars = 7;
     const int32_t number_of_int64_vars = 1;
-    const int32_t epoch_size_bytes = sizeof(double) * number_of_double_vars * d_nchannels_out + sizeof(int64_t) * number_of_int64_vars * d_nchannels_out;
+    const int32_t number_of_int32_vars = 1;
+    const int32_t epoch_size_bytes = sizeof(double) * number_of_double_vars * d_nchannels_out + sizeof(int64_t) * number_of_int64_vars * d_nchannels_out + sizeof(int32_t) * number_of_int32_vars * d_nchannels_out;
     std::ifstream dump_file;
     std::cout << "Generating .mat file for " << dump_filename << '\n';
     dump_file.exceptions(std::ifstream::failbit | std::ifstream::badbit);
@@ -292,6 +293,7 @@ int32_t hybrid_observables_gs::save_matfile() const
     auto PRN = std::vector<std::vector<double>>(d_nchannels_out, std::vector<double>(num_epoch));
     auto Flag_valid_pseudorange = std::vector<std::vector<double>>(d_nchannels_out, std::vector<double>(num_epoch));
     auto utc_millis = std::vector<std::vector<int64_t>>(d_nchannels_out, std::vector<int64_t>(num_epoch));  
+    auto tracking_state = std::vector<std::vector<int32_t>>(d_nchannels_out, std::vector<int32_t>(num_epoch));
 
     try
         {
@@ -309,6 +311,7 @@ int32_t hybrid_observables_gs::save_matfile() const
                                     dump_file.read(reinterpret_cast<char *>(&PRN[chan][i]), sizeof(double));
                                     dump_file.read(reinterpret_cast<char *>(&Flag_valid_pseudorange[chan][i]), sizeof(double));
                                     dump_file.read(reinterpret_cast<char *>(&utc_millis[chan][i]), sizeof(int64_t)); 
+                                    dump_file.read(reinterpret_cast<char *>(&tracking_state[chan][i]), sizeof(int32_t));
                                 }
                         }
                 }
@@ -328,6 +331,7 @@ int32_t hybrid_observables_gs::save_matfile() const
     auto PRN_aux = std::vector<double>(d_nchannels_out * num_epoch);
     auto Flag_valid_pseudorange_aux = std::vector<double>(d_nchannels_out * num_epoch);
     auto utc_millis_aux = std::vector<int64_t>(d_nchannels_out * num_epoch);
+    auto tracking_state_aux = std::vector<int32_t>(d_nchannels_out * num_epoch);
 
     uint32_t k = 0U;
     for (int64_t j = 0; j < num_epoch; j++)
@@ -342,6 +346,7 @@ int32_t hybrid_observables_gs::save_matfile() const
                     PRN_aux[k] = PRN[i][j];
                     Flag_valid_pseudorange_aux[k] = Flag_valid_pseudorange[i][j];
                     utc_millis_aux[k] = utc_millis[i][j];
+                    tracking_state_aux[k] = tracking_state[i][j];
                     k++;
                 }
         }
@@ -389,6 +394,10 @@ int32_t hybrid_observables_gs::save_matfile() const
 
             // added
             matvar = Mat_VarCreate("utc_millis", MAT_C_INT64, MAT_T_INT64, 2, dims.data(), utc_millis_aux.data(), MAT_F_DONT_COPY_DATA);  
+            Mat_VarWrite(matfp, matvar, MAT_COMPRESSION_ZLIB);
+            Mat_VarFree(matvar);
+
+            matvar = Mat_VarCreate("tracking_state", MAT_C_INT32, MAT_T_INT32, 2, dims.data(), tracking_state_aux.data(), MAT_F_DONT_COPY_DATA);
             Mat_VarWrite(matfp, matvar, MAT_COMPRESSION_ZLIB);
             Mat_VarFree(matvar);
         }
@@ -881,6 +890,9 @@ int hybrid_observables_gs::general_work(int noutput_items __attribute__((unused)
                                     auto duration = now.time_since_epoch();
                                     int64_t milliseconds = std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
                                     d_dump_file.write(reinterpret_cast<char *>(&milliseconds), sizeof(int64_t));
+                                    // tracking state
+                                    int32_t tmp_tracking_state = static_cast<int32_t>(out[i][0].tracking_state);
+                                    d_dump_file.write(reinterpret_cast<char *>(&tmp_tracking_state), sizeof(int32_t));
                                 }
                         }
                     catch (const std::ofstream::failure &e)
